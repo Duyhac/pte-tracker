@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PTE 55 Tracker MVP</title>
+
+<style>
+:root{
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#f8fafc;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  padding:20px;
+}
+
+.container{
+  max-width:1400px;
+  margin:auto;
+}
+
+h1{
+  margin-bottom:10px;
+}
+
+.subtitle{
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+.dashboard{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:16px;
+}
+
+.label{
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:8px;
+}
+
+.value{
+  font-size:32px;
+  font-weight:bold;
+}
+
+.section{
+  background:var(--card);
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.section h2{
+  margin-bottom:15px;
+}
+
+.task-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:15px;
+}
+
+.task-card{
+  background:#111827;
+  border-radius:10px;
+  padding:15px;
+}
+
+.task-name{
+  font-weight:bold;
+  margin-bottom:4px;
+}
+
+.task-vi{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+textarea{
+  width:100%;
+  min-height:90px;
+  background:#020617;
+  color:white;
+  border:1px solid #334155;
+  border-radius:8px;
+  padding:10px;
+}
+
+.stats{
+  margin-top:10px;
+  font-size:14px;
+}
+
+@media(max-width:700px){
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>PTE 55 MASTER TRACKER</h1>
+
+<div class="subtitle">
+PTE Academic Platform • Mục tiêu 55+
+</div>
+
+<div class="dashboard">
+
+<div class="card">
+<div class="label">Ngày còn lại</div>
+<div class="value" id="daysLeft">0</div>
+</div>
+
+<div class="card">
+<div class="label">Overall Prediction</div>
+<div class="value" id="overallPrediction">30</div>
+</div>
+
+<div class="card">
+<div class="label">Tổng Accuracy</div>
+<div class="value" id="overallAccuracy">0%</div>
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>22 Tasks</h2>
+
+<div
+id="taskContainer"
+class="task-grid">
+</div>
+
+</div>
+
+<script>
+
+const TASKS = [
+
+["Read Aloud","Đọc thành tiếng"],
+["Repeat Sentence","Nhắc lại câu"],
+["Describe Image","Mô tả hình ảnh"],
+["Retell Lecture","Kể lại bài giảng"],
+["Answer Short Question","Trả lời câu hỏi ngắn"],
+
+["Summarize Group Discussion","Tóm tắt thảo luận nhóm"],
+["Respond To Situation","Phản hồi tình huống"],
+
+["Summarize Written Text","Tóm tắt văn bản"],
+["Write Essay","Viết luận"],
+
+["Reading MCQ Multiple","Đọc MCQ nhiều đáp án"],
+["Reading MCQ Single","Đọc MCQ một đáp án"],
+
+["Re-order Paragraphs","Sắp xếp đoạn văn"],
+
+["Reading & Writing FIB","Điền từ đọc + viết"],
+
+["Summarize Spoken Text","Tóm tắt bài nghe"],
+
+["Listening MCQ Multiple","Nghe MCQ nhiều đáp án"],
+["Listening MCQ Single","Nghe MCQ một đáp án"],
+
+["Fill In The Blanks","Điền từ bài nghe"],
+
+["Highlight Correct Summary","Chọn tóm tắt đúng"],
+
+["Select Missing Word","Chọn từ bị thiếu"],
+
+["Highlight Incorrect Words","Tô từ sai"],
+
+["Write From Dictation","Nghe và viết lại"],
+
+["Integrated Practice","Luyện tích hợp"]
+
+];
+
+const examDate =
+new Date("2026-07-20");
+
+const diff =
+Math.ceil(
+(examDate - new Date())
+/
+86400000
+);
+
+document.getElementById(
+"daysLeft"
+).innerText = diff;
+// =========================
+// STORAGE
+// =========================
+
+function loadData(){
+
+const raw =
+localStorage.getItem(
+"pte_mvp_data"
+);
+
+if(!raw){
+
+return {};
+
+}
+
+try{
+
+return JSON.parse(raw);
+
+}
+catch{
+
+return {};
+
+}
+
+}
+
+function saveData(data){
+
+localStorage.setItem(
+"pte_mvp_data",
+JSON.stringify(data)
+);
+
+}
+
+const DATA =
+loadData();
+
+// =========================
+// CREATE TASK CARDS
+// =========================
+
+const taskContainer =
+document.getElementById(
+"taskContainer"
+);
+
+TASKS.forEach(task=>{
+
+const en = task[0];
+const vi = task[1];
+
+const savedText =
+DATA[en] || "";
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"task-card";
+
+card.innerHTML =
+
+`
+<div class="task-name">
+${en}
+</div>
+
+<div class="task-vi">
+${vi}
+</div>
+
+<textarea
+id="input_${en}"
+placeholder="Ví dụ:
+12/24
+15/24
+8/20">${savedText}</textarea>
+
+<div
+class="stats"
+id="stats_${en}">
+0 / 0 (0%)
+</div>
+`;
+
+taskContainer.appendChild(
+card
+);
+
+});
+
+// =========================
+// CALCULATE TASK
+// =========================
+
+function calculateTask(text){
+
+let raw = 0;
+let max = 0;
+
+const lines =
+text
+.split("\n")
+.map(x=>x.trim())
+.filter(Boolean);
+
+lines.forEach(line=>{
+
+const match =
+line.match(
+/(\d+)\s*\/\s*(\d+)/
+);
+
+if(!match){
+
+return;
+
+}
+
+raw +=
+Number(match[1]);
+
+max +=
+Number(match[2]);
+
+});
+
+const accuracy =
+
+max > 0
+
+?
+
+(raw/max)*100
+
+:
+
+0;
+
+return {
+
+raw,
+max,
+accuracy
+
+};
+
+}
+
+// =========================
+// UPDATE ALL
+// =========================
+
+function updateAll(){
+
+let totalRaw = 0;
+let totalMax = 0;
+
+TASKS.forEach(task=>{
+
+const en = task[0];
+
+const textarea =
+document.getElementById(
+`input_${en}`
+);
+
+const text =
+textarea.value;
+
+DATA[en] = text;
+
+const result =
+calculateTask(
+text
+);
+
+totalRaw +=
+result.raw;
+
+totalMax +=
+result.max;
+
+document
+.getElementById(
+`stats_${en}`
+)
+.innerHTML =
+
+`
+<b>
+${result.raw}
+/
+${result.max}
+</b>
+
+&nbsp;
+
+(${result.accuracy.toFixed(1)}%)
+`;
+
+});
+
+saveData(DATA);
+
+// =========================
+// OVERALL
+// =========================
+
+const overallAccuracy =
+
+totalMax > 0
+
+?
+
+(totalRaw/totalMax)*100
+
+:
+
+0;
+
+document
+.getElementById(
+"overallAccuracy"
+)
+.innerText =
+
+overallAccuracy
+.toFixed(1)
+
++
+
+"%";
+
+// =========================
+// SIMPLE PREDICTION
+// =========================
+
+// baseline 30
+
+let prediction =
+
+30 +
+
+(
+overallAccuracy
+*
+0.35
+);
+
+prediction =
+Math.min(
+90,
+prediction
+);
+
+document
+.getElementById(
+"overallPrediction"
+)
+.innerText =
+
+prediction
+.toFixed(0);
+
+}
+
+// =========================
+// EVENTS
+// =========================
+
+TASKS.forEach(task=>{
+
+const en = task[0];
+
+const textarea =
+document.getElementById(
+`input_${en}`
+);
+
+textarea.addEventListener(
+"input",
+updateAll
+);
+
+});
+
+// =========================
+// FIRST LOAD
+// =========================
+
+updateAll();
+// ======================================
+// DAILY HISTORY
+// ======================================
+
+function getToday(){
+
+const d = new Date();
+
+const yyyy = d.getFullYear();
+
+const mm =
+String(
+d.getMonth()+1
+).padStart(2,"0");
+
+const dd =
+String(
+d.getDate()
+).padStart(2,"0");
+
+return `${yyyy}-${mm}-${dd}`;
+
+}
+
+if(!DATA.__history){
+
+DATA.__history = [];
+
+}
+
+function saveDailySnapshot(){
+
+let totalRaw = 0;
+let totalMax = 0;
+
+TASKS.forEach(task=>{
+
+const result =
+calculateTask(
+DATA[task[0]] || ""
+);
+
+totalRaw += result.raw;
+totalMax += result.max;
+
+});
+
+const accuracy =
+
+totalMax > 0
+
+?
+
+(totalRaw/totalMax)*100
+
+:
+
+0;
+
+const today =
+getToday();
+
+const existing =
+DATA.__history.find(
+x=>x.date===today
+);
+
+if(existing){
+
+existing.accuracy =
+accuracy;
+
+existing.prediction =
+calculatePrediction();
+
+}
+else{
+
+DATA.__history.push({
+
+date:today,
+
+accuracy:
+accuracy,
+
+prediction:
+calculatePrediction()
+
+});
+
+}
+
+saveData(DATA);
+
+}
+
+// ======================================
+// GOAL TRACKER
+// ======================================
+
+function renderGoalTracker(){
+
+let html =
+
+`
+<div class="kpi-card">
+
+<div class="kpi-title">
+Mục tiêu Overall
+</div>
+
+`;
+
+const overall =
+
+parseFloat(
+document
+.getElementById(
+"overallPrediction"
+)
+.innerText
+);
+
+const remain =
+
+Math.max(
+0,
+55-overall
+);
+
+html +=
+
+`
+<div class="kpi-score">
+${overall}
+ / 55
+</div>
+
+<div>
+Còn thiếu:
+${remain.toFixed(1)}
+điểm
+</div>
+
+</div>
+`;
+
+const container =
+document.getElementById(
+"todayKPI"
+);
+
+container.insertAdjacentHTML(
+"beforeend",
+html
+);
+
+}
+
+// ======================================
+// STUDY PLAN
+// ======================================
+
+function renderStudyPlan(){
+
+const box =
+document.getElementById(
+"studyPlan"
+);
+
+const day =
+new Date().getDay();
+
+// 0 CN
+// 1 T2
+// 2 T3
+// 3 T4
+// 4 T5
+// 5 T6
+// 6 T7
+
+let plan = [];
+
+let mode = "FULL";
+
+if(
+day===2 ||
+day===3 ||
+day===5
+){
+
+mode="LIGHT";
+
+}
+
+if(mode==="LIGHT"){
+
+plan=[
+
+"Repeat Sentence (20)",
+
+"Write From Dictation (20)",
+
+"Read Aloud (15)",
+
+"Reading & Writing FIB (10)",
+
+"Fill In The Blanks (10)"
+
+];
+
+}
+else{
+
+plan=[
+
+"Repeat Sentence (40)",
+
+"Write From Dictation (40)",
+
+"Read Aloud (30)",
+
+"Reading & Writing FIB (25)",
+
+"Fill In The Blanks (25)",
+
+"Describe Image (15)",
+
+"Retell Lecture (10)"
+
+];
+
+}
+
+box.innerHTML =
+
+`
+<div class="plan-day">
+
+<h3>
+Kế hoạch hôm nay
+</h3>
+
+<p>
+Chế độ:
+<b>${mode}</b>
+</p>
+
+<ul>
+
+${plan.map(
+x=>`<li>${x}</li>`
+).join("")}
+
+</ul>
+
+</div>
+`;
+
+}
+
+// ======================================
+// EXPORT JSON
+// ======================================
+
+document
+.getElementById(
+"exportJSON"
+)
+.addEventListener(
+"click",
+()=>{
+
+const blob =
+new Blob(
+
+[
+JSON.stringify(
+DATA,
+null,
+2
+)
+],
+
+{
+type:
+"application/json"
+}
+
+);
+
+const a =
+document.createElement(
+"a"
+);
+
+a.href =
+URL.createObjectURL(
+blob
+);
+
+a.download =
+"pte_tracker_backup.json";
+
+a.click();
+
+}
+);
+
+// ======================================
+// IMPORT JSON
+// ======================================
+
+document
+.getElementById(
+"importJSON"
+)
+.addEventListener(
+"click",
+()=>{
+
+document
+.getElementById(
+"importFile"
+)
+.click();
+
+}
+);
+
+document
+.getElementById(
+"importFile"
+)
+.addEventListener(
+"change",
+e=>{
+
+const file =
+e.target.files[0];
+
+if(!file) return;
+
+const reader =
+new FileReader();
+
+reader.onload =
+function(){
+
+const imported =
+
+JSON.parse(
+reader.result
+);
+
+Object.keys(imported)
+.forEach(k=>{
+
+DATA[k] =
+imported[k];
+
+});
+
+saveData(DATA);
+
+location.reload();
+
+};
+
+reader.readAsText(
+file
+);
+
+}
+);
+
+// ======================================
+// RESET
+// ======================================
+
+document
+.getElementById(
+"resetAll"
+)
+.addEventListener(
+"click",
+()=>{
+
+const ok =
+confirm(
+
+"Xóa toàn bộ dữ liệu?"
+
+);
+
+if(!ok) return;
+
+localStorage.removeItem(
+"pte_mvp_data"
+);
+
+location.reload();
+
+}
+);
+
+// ======================================
+// PATCH UPDATE
+// ======================================
+
+const oldUpdate =
+updateAll;
+
+updateAll =
+function(){
+
+oldUpdate();
+
+saveDailySnapshot();
+
+renderStudyPlan();
+
+renderGoalTracker();
+
+};
+
+// ======================================
+// INIT
+// ======================================
+
+renderStudyPlan();
+
+renderGoalTracker();
+
+saveDailySnapshot();
+
+updateAll();
+// ======================================
+// DAILY HISTORY
+// ======================================
+
+function getToday(){
+
+const d = new Date();
+
+const yyyy = d.getFullYear();
+
+const mm =
+String(
+d.getMonth()+1
+).padStart(2,"0");
+
+const dd =
+String(
+d.getDate()
+).padStart(2,"0");
+
+return `${yyyy}-${mm}-${dd}`;
+
+}
+
+if(!DATA.__history){
+
+DATA.__history = [];
+
+}
+
+function saveDailySnapshot(){
+
+let totalRaw = 0;
+let totalMax = 0;
+
+TASKS.forEach(task=>{
+
+const result =
+calculateTask(
+DATA[task[0]] || ""
+);
+
+totalRaw += result.raw;
+totalMax += result.max;
+
+});
+
+const accuracy =
+
+totalMax > 0
+
+?
+
+(totalRaw/totalMax)*100
+
+:
+
+0;
+
+const today =
+getToday();
+
+const existing =
+DATA.__history.find(
+x=>x.date===today
+);
+
+if(existing){
+
+existing.accuracy =
+accuracy;
+
+existing.prediction =
+calculatePrediction();
+
+}
+else{
+
+DATA.__history.push({
+
+date:today,
+
+accuracy:
+accuracy,
+
+prediction:
+calculatePrediction()
+
+});
+
+}
+
+saveData(DATA);
+
+}
+
+// ======================================
+// GOAL TRACKER
+// ======================================
+
+function renderGoalTracker(){
+
+let html =
+
+`
+<div class="kpi-card">
+
+<div class="kpi-title">
+Mục tiêu Overall
+</div>
+
+`;
+
+const overall =
+
+parseFloat(
+document
+.getElementById(
+"overallPrediction"
+)
+.innerText
+);
+
+const remain =
+
+Math.max(
+0,
+55-overall
+);
+
+html +=
+
+`
+<div class="kpi-score">
+${overall}
+ / 55
+</div>
+
+<div>
+Còn thiếu:
+${remain.toFixed(1)}
+điểm
+</div>
+
+</div>
+`;
+
+const container =
+document.getElementById(
+"todayKPI"
+);
+
+container.insertAdjacentHTML(
+"beforeend",
+html
+);
+
+}
+
+// ======================================
+// STUDY PLAN
+// ======================================
+
+function renderStudyPlan(){
+
+const box =
+document.getElementById(
+"studyPlan"
+);
+
+const day =
+new Date().getDay();
+
+// 0 CN
+// 1 T2
+// 2 T3
+// 3 T4
+// 4 T5
+// 5 T6
+// 6 T7
+
+let plan = [];
+
+let mode = "FULL";
+
+if(
+day===2 ||
+day===3 ||
+day===5
+){
+
+mode="LIGHT";
+
+}
+
+if(mode==="LIGHT"){
+
+plan=[
+
+"Repeat Sentence (20)",
+
+"Write From Dictation (20)",
+
+"Read Aloud (15)",
+
+"Reading & Writing FIB (10)",
+
+"Fill In The Blanks (10)"
+
+];
+
+}
+else{
+
+plan=[
+
+"Repeat Sentence (40)",
+
+"Write From Dictation (40)",
+
+"Read Aloud (30)",
+
+"Reading & Writing FIB (25)",
+
+"Fill In The Blanks (25)",
+
+"Describe Image (15)",
+
+"Retell Lecture (10)"
+
+];
+
+}
+
+box.innerHTML =
+
+`
+<div class="plan-day">
+
+<h3>
+Kế hoạch hôm nay
+</h3>
+
+<p>
+Chế độ:
+<b>${mode}</b>
+</p>
+
+<ul>
+
+${plan.map(
+x=>`<li>${x}</li>`
+).join("")}
+
+</ul>
+
+</div>
+`;
+
+}
+
+// ======================================
+// EXPORT JSON
+// ======================================
+
+document
+.getElementById(
+"exportJSON"
+)
+.addEventListener(
+"click",
+()=>{
+
+const blob =
+new Blob(
+
+[
+JSON.stringify(
+DATA,
+null,
+2
+)
+],
+
+{
+type:
+"application/json"
+}
+
+);
+
+const a =
+document.createElement(
+"a"
+);
+
+a.href =
+URL.createObjectURL(
+blob
+);
+
+a.download =
+"pte_tracker_backup.json";
+
+a.click();
+
+}
+);
+
+// ======================================
+// IMPORT JSON
+// ======================================
+
+document
+.getElementById(
+"importJSON"
+)
+.addEventListener(
+"click",
+()=>{
+
+document
+.getElementById(
+"importFile"
+)
+.click();
+
+}
+);
+
+document
+.getElementById(
+"importFile"
+)
+.addEventListener(
+"change",
+e=>{
+
+const file =
+e.target.files[0];
+
+if(!file) return;
+
+const reader =
+new FileReader();
+
+reader.onload =
+function(){
+
+const imported =
+
+JSON.parse(
+reader.result
+);
+
+Object.keys(imported)
+.forEach(k=>{
+
+DATA[k] =
+imported[k];
+
+});
+
+saveData(DATA);
+
+location.reload();
+
+};
+
+reader.readAsText(
+file
+);
+
+}
+);
+
+// ======================================
+// RESET
+// ======================================
+
+document
+.getElementById(
+"resetAll"
+)
+.addEventListener(
+"click",
+()=>{
+
+const ok =
+confirm(
+
+"Xóa toàn bộ dữ liệu?"
+
+);
+
+if(!ok) return;
+
+localStorage.removeItem(
+"pte_mvp_data"
+);
+
+location.reload();
+
+}
+);
+
+// ======================================
+// PATCH UPDATE
+// ======================================
+
+const oldUpdate =
+updateAll;
+
+updateAll =
+function(){
+
+oldUpdate();
+
+saveDailySnapshot();
+
+renderStudyPlan();
+
+renderGoalTracker();
+
+};
+
+// ======================================
+// INIT
+// ======================================
+
+renderStudyPlan();
+
+renderGoalTracker();
+
+saveDailySnapshot();
+
+updateAll();
+// ======================================
+// CHART CONTAINERS
+// ======================================
+
+if(!document.getElementById("historyPanel")){
+
+const chartPanel =
+document.createElement("div");
+
+chartPanel.className = "section";
+
+chartPanel.id = "historyPanel";
+
+chartPanel.innerHTML = `
+
+<h2>
+Biểu đồ tiến bộ
+</h2>
+
+<canvas
+id="progressChart"
+height="120">
+</canvas>
+
+<br>
+
+<canvas
+id="predictionChart"
+height="120">
+</canvas>
+
+`;
+
+document
+.querySelector(".container")
+.appendChild(chartPanel);
+
+}
+
+// ======================================
+// CHARTS
+// ======================================
+
+let progressChart = null;
+let predictionChart = null;
+
+function renderCharts(){
+
+if(!DATA.__history){
+
+return;
+
+}
+
+const labels =
+DATA.__history.map(
+x=>x.date
+);
+
+const accuracyData =
+DATA.__history.map(
+x=>Number(
+x.accuracy.toFixed(1)
+)
+);
+
+const predictionData =
+DATA.__history.map(
+x=>Number(
+x.prediction.toFixed(1)
+)
+);
+
+// ==========================
+// ACCURACY CHART
+// ==========================
+
+const ctx1 =
+document
+.getElementById(
+"progressChart"
+)
+.getContext("2d");
+
+if(progressChart){
+
+progressChart.destroy();
+
+}
+
+progressChart =
+new Chart(ctx1,{
+
+type:"line",
+
+data:{
+
+labels,
+
+datasets:[{
+
+label:
+"Accuracy %",
+
+data:
+accuracyData,
+
+tension:0.3
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+display:true
+}
+
+}
+
+}
+
+});
+
+// ==========================
+// PREDICTION CHART
+// ==========================
+
+const ctx2 =
+document
+.getElementById(
+"predictionChart"
+)
+.getContext("2d");
+
+if(predictionChart){
+
+predictionChart.destroy();
+
+}
+
+predictionChart =
+new Chart(ctx2,{
+
+type:"line",
+
+data:{
+
+labels,
+
+datasets:[{
+
+label:
+"Overall Prediction",
+
+data:
+predictionData,
+
+tension:0.3
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+display:true
+}
+
+}
+
+}
+
+});
+
+}
+
+// ======================================
+// CSV EXPORT
+// ======================================
+
+document
+.getElementById(
+"exportCSV"
+)
+.addEventListener(
+"click",
+()=>{
+
+let csv =
+"Task,Raw,Max,Accuracy\n";
+
+TASKS.forEach(task=>{
+
+const name =
+task[0];
+
+const result =
+calculateTask(
+DATA[name] || ""
+);
+
+csv +=
+
+`"${name}",${result.raw},${result.max},${result.accuracy.toFixed(2)}\n`;
+
+});
+
+const blob =
+new Blob(
+[csv],
+{
+type:
+"text/csv"
+}
+);
+
+const a =
+document.createElement(
+"a"
+);
+
+a.href =
+URL.createObjectURL(
+blob
+);
+
+a.download =
+"pte_scores.csv";
+
+a.click();
+
+}
+);
+
+// ======================================
+// ADVANCED GOAL TRACKER
+// ======================================
+
+function renderAdvancedGoals(){
+
+const kpi =
+document.getElementById(
+"todayKPI"
+);
+
+const goals = [
+
+{
+name:"Repeat Sentence",
+target:70
+},
+
+{
+name:"Write From Dictation",
+target:70
+},
+
+{
+name:"Read Aloud",
+target:75
+},
+
+{
+name:"Reading & Writing FIB",
+target:70
+},
+
+{
+name:"Fill In The Blanks",
+target:70
+}
+
+];
+
+goals.forEach(g=>{
+
+const result =
+calculateTask(
+DATA[g.name] || ""
+);
+
+const remain =
+
+Math.max(
+0,
+g.target -
+result.accuracy
+);
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"kpi-card";
+
+div.innerHTML =
+
+`
+<div class="kpi-title">
+${g.name}
+</div>
+
+<div class="kpi-score">
+${result.accuracy.toFixed(1)}%
+</div>
+
+<div>
+Target:
+${g.target}%
+</div>
+
+<div>
+Thiếu:
+${remain.toFixed(1)}%
+</div>
+`;
+
+kpi.appendChild(div);
+
+});
+
+}
+
+// ======================================
+// WEEKLY REPORT
+// ======================================
+
+function generateWeeklyReport(){
+
+if(
+!DATA.__history ||
+DATA.__history.length < 2
+){
+
+return;
+
+}
+
+const first =
+DATA.__history[0];
+
+const last =
+DATA.__history[
+DATA.__history.length-1
+];
+
+const improve =
+
+last.prediction -
+first.prediction;
+
+console.log(
+
+"Weekly Progress:",
+improve
+
+);
+
+}
+
+// ======================================
+// PATCH UPDATE
+// ======================================
+
+const updateAllBackup =
+updateAll;
+
+updateAll =
+function(){
+
+updateAllBackup();
+
+renderCharts();
+
+renderAdvancedGoals();
+
+generateWeeklyReport();
+
+};
+
+// ======================================
+// INIT
+// ======================================
+
+renderCharts();
+
+renderAdvancedGoals();
+
+generateWeeklyReport();
+
+updateAll();
+</script>
