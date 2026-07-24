@@ -3,1795 +3,981 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PTE 55 Tracker MVP</title>
-
+<title>PTE 55+ Final Sprint Tracker</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{
-  --bg:#0f172a;
-  --card:#1e293b;
-  --text:#f8fafc;
-  --muted:#94a3b8;
-  --accent:#38bdf8;
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700;800&display=swap');
+
+:root {
+  --bg: #060a14;
+  --surface: #0d1525;
+  --card: #111c30;
+  --border: #1e3050;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --dim: #334155;
+
+  --red: #ef4444;
+  --red-glow: #ef444433;
+  --orange: #f97316;
+  --yellow: #eab308;
+  --green: #22c55e;
+  --green-glow: #22c55e22;
+  --blue: #38bdf8;
+  --blue-glow: #38bdf822;
+  --purple: #a78bfa;
+
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', Arial, sans-serif;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:var(--sans); padding:20px; line-height:1.5; }
+.container { max-width:1160px; margin:auto; }
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  padding:20px;
-}
+/* ── HEADER ── */
+.header { border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 28px; }
+.header-top { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:16px; }
+.title-block h1 { font-size:28px; font-weight:800; letter-spacing:-0.5px; line-height:1.1; }
+.title-block h1 span { color: var(--red); }
+.title-block .sub { color:var(--muted); font-size:13px; margin-top:6px; font-family:var(--mono); }
+.countdown-box { background:var(--card); border:1px solid var(--red); border-radius:12px; padding:14px 24px; text-align:center; box-shadow:0 0 20px var(--red-glow); min-width:140px; }
+.countdown-box .num { font-size:52px; font-weight:800; color:var(--red); line-height:1; font-family:var(--mono); }
+.countdown-box .lbl { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
 
-.container{
-  max-width:1400px;
-  margin:auto;
-}
+/* ── ALERT ── */
+.alert { background:linear-gradient(135deg,#1a0a0a,#0d1525); border:1px solid var(--red); border-radius:10px; padding:14px 18px; font-size:13px; color:#fca5a5; margin-bottom:24px; display:flex; gap:12px; align-items:flex-start; }
+.alert.good { border-color: var(--green); color:#bbf7d0; background:linear-gradient(135deg,#08170c,#0d1525); }
+.alert-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
 
-h1{
-  margin-bottom:10px;
-}
+/* ── FILTER ── */
+.filter-bar { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.filter-btn { padding:6px 18px; border-radius:30px; font-size:12px; cursor:pointer; background:var(--card); color:var(--muted); border:1px solid var(--border); font-weight:600; font-family:var(--mono); transition:.2s; }
+.filter-btn.active { background:var(--blue); color:#000; border-color:var(--blue); }
+.filter-btn:hover { opacity:.85; }
 
-.subtitle{
-  color:var(--muted);
-  margin-bottom:20px;
-}
+/* ── SCORES GRID ── */
+.scores-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:16px; }
+.score-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
+.score-card .label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
+.score-card .val { font-size:22px; font-weight:700; font-family:var(--mono); }
+.score-card .gap-tag { font-size:10px; font-family:var(--mono); margin-top:2px; }
+.c-red{color:var(--red)} .c-orange{color:var(--orange)} .c-yellow{color:var(--yellow)} .c-green{color:var(--green)} .c-blue{color:var(--blue)} .c-muted{color:var(--muted)}
+.score-card.urgent { border-color:var(--red); background:linear-gradient(135deg,#1a0808,#111c30); }
+.score-card.warn { border-color:var(--yellow); }
+.score-card.ok { border-color:var(--green); }
 
-.dashboard{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:15px;
-  margin-bottom:25px;
-}
+/* ── DASH ── */
+.dashboard { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:28px; }
+.dash-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
+.dash-card .label { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; font-family:var(--mono); }
+.dash-card .value { font-size:20px; font-weight:800; font-family:var(--mono); }
 
-.card{
-  background:var(--card);
-  border-radius:12px;
-  padding:16px;
-}
+.pte-score-table { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+.pte-overall-row { display:flex; align-items:baseline; gap:14px; padding-bottom:16px; margin-bottom:16px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+.pte-overall-label { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); }
+.pte-overall-value { font-size:36px; font-weight:900; font-family:var(--mono); line-height:1; }
+.pte-overall-target { font-size:11px; color:var(--muted); font-family:var(--mono); }
+.pte-skill-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+.pte-skill-card { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
+.pte-skill-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+.pte-skill-name { font-size:13px; font-weight:700; }
+.pte-skill-score { font-size:22px; font-weight:900; font-family:var(--mono); }
+.pte-task-list { display:flex; flex-direction:column; gap:5px; }
+.pte-task-row { display:grid; grid-template-columns:38px 1fr auto; gap:8px; align-items:center; font-size:11px; }
+.pte-task-id { font-family:var(--mono); font-weight:700; color:var(--muted); }
+.pte-task-name { color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pte-task-pct { font-family:var(--mono); font-weight:700; text-align:right; }
 
-.label{
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:8px;
-}
+/* ── SECTION ── */
+.section { margin-bottom:32px; }
+.section-title { display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+.section-title h2 { font-size:16px; font-weight:700; }
+.section-title .tag { font-size:10px; padding:2px 10px; border-radius:20px; font-weight:700; font-family:var(--mono); }
+.tag-red{background:var(--red-glow);color:var(--red)} .tag-blue{background:var(--blue-glow);color:var(--blue)} .tag-green{background:var(--green-glow);color:var(--green)}
 
-.value{
-  font-size:32px;
-  font-weight:bold;
-}
+/* ── RA NOTE ── */
+.ra-note { background:linear-gradient(135deg,#0a1a2a,#111c30); border:1px solid var(--blue); border-radius:12px; padding:18px 20px; margin-bottom:14px; }
+.ra-note h3 { font-size:14px; color:var(--blue); margin-bottom:10px; }
+.ra-note-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media(max-width:600px){ .ra-note-grid{grid-template-columns:1fr;} }
+.ra-method { background:var(--bg); border-radius:8px; padding:12px 14px; border:1px solid var(--border); }
+.ra-method .method-label { font-size:10px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:6px; }
+.ra-method .method-name { font-size:14px; font-weight:700; color:var(--blue); margin-bottom:6px; }
+.ra-method ul { list-style:none; padding:0; font-size:12px; color:var(--text); }
+.ra-method ul li { padding:3px 0; display:flex; gap:6px; }
+.ra-method ul li::before { content:"→"; color:var(--blue); flex-shrink:0; }
 
-.section{
-  background:var(--card);
-  border-radius:12px;
-  padding:20px;
-  margin-bottom:20px;
-}
+/* ── PROJECTION ── */
+.projection { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:28px; }
+.proj-title { font-size:13px; color:var(--muted); margin-bottom:14px; }
+.proj-scenarios { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+@media(max-width:600px){ .proj-scenarios{grid-template-columns:1fr;} }
+.proj-scenario { background:var(--surface); border-radius:8px; padding:14px; border:1px solid var(--border); text-align:center; }
+.proj-scenario .scenario-name { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+.proj-scenario .score { font-size:32px; font-weight:800; font-family:var(--mono); }
+.proj-scenario .condition { font-size:10px; color:var(--muted); margin-top:6px; line-height:1.4; }
+.proj-scenario.pessimist .score { color:var(--red); }
+.proj-scenario.realistic .score { color:var(--yellow); }
+.proj-scenario.realistic { border-color:var(--yellow); }
+.proj-scenario.optimist .score { color:var(--green); }
 
-.section h2{
-  margin-bottom:15px;
-}
+/* ── DAYS GRID ── */
+.days-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+.day-card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:border-color .2s; }
+.day-card.today { border-color:var(--blue); box-shadow:0 0 16px var(--blue-glow); }
+.day-card.exam { border-color:var(--red); box-shadow:0 0 20px var(--red-glow); }
+.day-header { padding:12px 16px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
+.day-num { font-size:22px; font-weight:800; font-family:var(--mono); line-height:1; }
+.day-name { font-size:13px; color:var(--muted); }
+.day-badges { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+.badge { font-size:9px; padding:2px 8px; border-radius:10px; font-weight:700; font-family:var(--mono); white-space:nowrap; }
+.badge-today { background:var(--blue); color:#000; }
+.badge-light { background:#1e293b; color:var(--muted); }
+.badge-exam { background:var(--red); color:#fff; }
+.day-body { padding:14px 16px; }
+.focus-label { font-size:9px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:4px; }
+.focus-text { font-size:12px; font-weight:600; color:var(--blue); margin-bottom:12px; }
+.task-list { display:flex; flex-direction:column; gap:6px; }
+.task-row { display:flex; align-items:center; gap:8px; font-size:12px; }
+.task-pill { font-family:var(--mono); font-size:10px; font-weight:700; padding:2px 7px; border-radius:6px; white-space:nowrap; min-width:38px; text-align:center; }
+.pill-red{background:#ef444420;color:var(--red);border:1px solid #ef444440}
+.pill-orange{background:#f9731620;color:var(--orange);border:1px solid #f9731640}
+.pill-yellow{background:#eab30820;color:var(--yellow);border:1px solid #eab30840}
+.pill-green{background:#22c55e20;color:var(--green);border:1px solid #22c55e40}
+.pill-blue{background:#38bdf820;color:var(--blue);border:1px solid #38bdf840}
+.pill-gray{background:#33415520;color:var(--muted);border:1px solid #33415540}
+.task-name-text { flex:1; color:var(--text); }
+.task-reps { font-family:var(--mono); font-size:10px; color:var(--dim); white-space:nowrap; }
+.task-reps.boost { color:var(--red); font-weight:700; }
+.task-reps.daily { color:var(--green); }
+.day-note { margin-top:10px; padding:8px 10px; background:var(--surface); border-radius:6px; font-size:11px; color:var(--muted); border-left:2px solid var(--dim); }
+.day-note.critical { border-left-color:var(--red); color:#fca5a5; background:#1a080820; }
+.day-note.strategy { border-left-color:var(--blue); color:#93c5fd; }
+.hour-bar { margin-top:10px; display:flex; align-items:center; gap:8px; font-size:10px; color:var(--muted); font-family:var(--mono); }
+.hour-bar-bg { flex:1; height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+.hour-bar-fill { height:4px; border-radius:2px; background:var(--blue); }
 
-.task-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:15px;
-}
+/* ── STRATEGY ── */
+.strategy-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
+.strategy-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; }
+.strategy-card h3 { font-size:13px; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.strategy-card ul { list-style:none; padding:0; font-size:12px; color:var(--text); display:flex; flex-direction:column; gap:5px; }
+.strategy-card ul li { display:flex; gap:6px; line-height:1.4; }
+.strategy-card ul li .bullet { flex-shrink:0; color:var(--blue); }
 
-.task-card{
-  background:#111827;
-  border-radius:10px;
-  padding:15px;
-}
+/* ── RULES ── */
+.rules-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+.rule-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+.rule-num { font-size:28px; font-weight:800; color:var(--dim); font-family:var(--mono); margin-bottom:6px; }
+.rule-title { font-size:13px; font-weight:700; margin-bottom:4px; }
+.rule-text { font-size:11px; color:var(--muted); line-height:1.5; }
 
-.task-name{
-  font-weight:bold;
-  margin-bottom:4px;
-}
+/* ── ENTRY SECTION ── */
+.btn-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.btn-row button { background:var(--blue); color:#000; border:none; border-radius:8px; padding:8px 16px; font-weight:700; cursor:pointer; font-size:12px; font-family:var(--mono); transition:.2s; }
+.btn-row button:hover { opacity:.8; }
+.btn-row button.danger { background:var(--red); color:#fff; }
+.task-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
+.task-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:13px; }
+.task-card.st-intensive { border-color:var(--red); box-shadow:0 0 0 1px var(--red-glow); }
+.task-card.st-focus { border-color:var(--orange); }
+.task-card.st-maintain { border-color:var(--border); }
+.task-card.st-rest { opacity:.55; }
+.tc-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:2px; }
+.tc-name { font-weight:700; font-size:13px; }
+.tc-weight { font-size:10px; padding:1px 8px; border-radius:10px; background:var(--surface); color:var(--muted); font-family:var(--mono); white-space:nowrap; }
+.tc-vi { color:var(--muted); font-size:11px; margin-bottom:8px; }
+.entries-list { display:flex; flex-direction:column; gap:3px; margin-bottom:6px; }
+.entry-row { display:grid; grid-template-columns:1fr 46px 18px; align-items:center; gap:4px; }
+.entry-input { background:transparent; border:none; border-bottom:1px solid var(--border); color:var(--text); font-size:12px; padding:3px 4px; outline:none; width:100%; font-family:var(--mono); }
+.entry-input:focus { border-bottom-color:var(--blue); }
+.entry-pct { font-size:10px; text-align:right; font-weight:700; font-family:var(--mono); }
+.remove-btn { background:none; color:var(--dim); border:none; cursor:pointer; font-size:12px; padding:0; line-height:1; }
+.remove-btn:hover { color:var(--red); }
+.add-entry-btn { background:none; border:1px dashed var(--border); color:var(--muted); border-radius:6px; padding:4px 8px; font-size:10px; cursor:pointer; width:100%; transition:.2s; font-family:var(--mono); }
+.add-entry-btn:hover { border-color:var(--blue); color:var(--blue); }
+.task-total { margin-top:8px; padding-top:6px; border-top:1px solid var(--border); font-size:11px; display:flex; justify-content:space-between; font-family:var(--mono); }
+.tot-label { color:var(--muted); }
 
-.task-vi{
-  color:var(--muted);
-  font-size:13px;
-  margin-bottom:10px;
-}
+canvas { max-height:180px; }
 
-textarea{
-  width:100%;
-  min-height:90px;
-  background:#020617;
-  color:white;
-  border:1px solid #334155;
-  border-radius:8px;
-  padding:10px;
-}
-
-.stats{
-  margin-top:10px;
-  font-size:14px;
-}
-
-@media(max-width:700px){
-  .dashboard{
-    grid-template-columns:1fr;
-  }
-}
+.footer { border-top:1px solid var(--border); padding-top:16px; margin-top:32px; font-size:11px; color:var(--dim); font-family:var(--mono); text-align:center; }
 </style>
 </head>
-
 <body>
-
 <div class="container">
 
-<h1>PTE 55 MASTER TRACKER</h1>
-
-<div class="subtitle">
-PTE Academic Platform • Mục tiêu 55+
+<div class="header">
+  <div class="header-top">
+    <div class="title-block">
+      <h1>PTE <span>55+</span> — FINAL SPRINT</h1>
+      <div class="sub" id="subLine">Roadmap tự động · Thi: 20/07/2026</div>
+    </div>
+    <div class="countdown-box">
+      <div class="num" id="daysLeft">—</div>
+      <div class="lbl">ngày còn lại</div>
+    </div>
+  </div>
 </div>
 
-<div class="dashboard">
+<div class="alert" id="alertBox"></div>
 
-<div class="card">
-<div class="label">Ngày còn lại</div>
-<div class="value" id="daysLeft">0</div>
-</div>
-
-<div class="card">
-<div class="label">Overall Prediction</div>
-<div class="value" id="overallPrediction">30</div>
-</div>
-
-<div class="card">
-<div class="label">Tổng Accuracy</div>
-<div class="value" id="overallAccuracy">0%</div>
-</div>
-
+<div class="filter-bar">
+  <button class="filter-btn" data-range="today">📅 Hôm nay</button>
+  <button class="filter-btn" data-range="7days">📆 7 ngày</button>
+  <button class="filter-btn active" data-range="all">🗂 Tất cả</button>
 </div>
 
 <div class="section">
-
-<h2>22 Tasks</h2>
-
-<div
-id="taskContainer"
-class="task-grid">
+  <div class="section-title"><h2>📊 Điểm hiện tại theo task</h2><span class="tag tag-blue" id="scoreRangeTag">Tất cả</span></div>
+  <div class="scores-grid" id="scoresGrid"></div>
 </div>
+
+<div class="dashboard" id="dashGrid"></div>
+
+<div class="section">
+  <div class="section-title"><h2>🏆 Bảng điểm PTE — Mock test gần nhất</h2><span class="tag tag-blue" id="pteScoreDate"></span></div>
+  <div class="pte-score-table" id="pteScoreTable"></div>
+</div>
+
+<div class="section">
+  <div class="section-title"><h2>🎙️ Read Aloud — Chiến thuật sàn bảo vệ</h2><span class="tag tag-blue">fluency &gt; accuracy</span></div>
+  <div class="ra-note">
+    <h3>Vì sao ưu tiên fluency thay vì accuracy?</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">
+      RA tính theo Content + Pronunciation + Fluency — không đơn giản là số câu đúng/tổng. Nếu điểm RA không ổn định
+      trong vài ngày cuối, chuyển sang chiến lược phòng thủ sẽ an toàn hơn cố push accuracy.
+    </p>
+    <div class="ra-note-grid">
+      <div class="ra-method">
+        <div class="method-label">❌ Tránh trong giai đoạn nước rút</div>
+        <div class="method-name">Push accuracy % bằng mọi giá</div>
+        <ul>
+          <li>Cố đọc đúng từng từ → run lỗi khi nervous</li>
+          <li>Luyện quá nhiều bài mới → không kịp nhớ pattern</li>
+          <li>Target quá cao → không thực tế với số ngày còn lại</li>
+        </ul>
+      </div>
+      <div class="ra-method">
+        <div class="method-label">✅ Áp dụng ngay</div>
+        <div class="method-name">Giữ sàn ổn định + fluency</div>
+        <ul>
+          <li><strong>Fluency ưu tiên hơn accuracy</strong> — đọc trơn tru dù có lỗi nhỏ</li>
+          <li>Mỗi ngày chỉ luyện 5–6 bài RA, không cần nhiều hơn</li>
+          <li>Hít thở, dừng 1 giây, đọc với pace đều — không dừng giữa chừng</li>
+          <li>Đếm số lần đọc không dừng, không đếm % đúng</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><h2>📈 Dự báo điểm khi hết lộ trình</h2><span class="tag tag-blue" id="projTag">dựa trên data thực tế</span></div>
+  <div class="projection">
+    <div class="proj-title">Nếu bạn thực hiện đúng lộ trình bên dưới:</div>
+    <div class="proj-scenarios">
+      <div class="proj-scenario pessimist"><div class="scenario-name">Thực hiện 60%</div><div class="score" id="predPess">—</div><div class="condition">Bỏ vài ngày, không tập trung task yếu đủ</div></div>
+      <div class="proj-scenario realistic"><div class="scenario-name">🎯 Thực tế nhất</div><div class="score" id="predReal">—</div><div class="condition">Sprint đúng task yếu đều đặn, daily task không bỏ</div></div>
+      <div class="proj-scenario optimist"><div class="scenario-name">Nếu bứt phá</div><div class="score" id="predOpt">—</div><div class="condition">Các task SPRINT đều lên trên target</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><h2>📅 Lịch những ngày còn lại</h2><span class="tag tag-red" id="planTag"></span></div>
+  <div class="days-grid" id="daysGrid"></div>
+</div>
+
+<div class="section">
+  <div class="section-title"><h2>🧠 Chiến lược task ưu tiên</h2><span class="tag tag-blue">tự động chọn theo data</span></div>
+  <div class="strategy-grid" id="strategyGrid"></div>
+</div>
+
+<div class="section">
+  <div class="section-title"><h2>🏆 5 Quy tắc vàng nước rút</h2><span class="tag tag-red">không được bỏ</span></div>
+  <div class="rules-grid">
+    <div class="rule-card"><div class="rule-num">01</div><div class="rule-title">Task nặng nhất (theo weight) trong nhóm yếu — làm mỗi ngày</div><div class="rule-text">Streak quan trọng hơn số lượng. Xem thẻ INTENSIVE ở trên để biết task nào cần ưu tiên hôm nay.</div></div>
+    <div class="rule-card"><div class="rule-num">02</div><div class="rule-title">RS + WFD là core — làm ngay buổi sáng</div><div class="rule-text">Làm ngay sau khi thức dậy, trước khi làm bất kỳ task nào khác.</div></div>
+    <div class="rule-card"><div class="rule-num">03</div><div class="rule-title">Không học kỹ năng mới ở giai đoạn nước rút</div><div class="rule-text">Chỉ tập trung vào task đã có data và đang gần target.</div></div>
+    <div class="rule-card"><div class="rule-num">04</div><div class="rule-title">Ngủ đủ 7h — không thức khuya</div><div class="rule-text">Thiếu ngủ làm RS, WFD, SST rớt điểm ngay ngày hôm sau.</div></div>
+    <div class="rule-card"><div class="rule-num">05</div><div class="rule-title">Ngày thi: làm đúng thứ tự bài thi</div><div class="rule-text">Không bỏ câu, không nhảy qua. Panic = điểm rớt.</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><h2>📈 Xu hướng Prediction</h2><span class="tag tag-blue">theo lịch sử nhập điểm</span></div>
+  <canvas id="predChart" height="80"></canvas>
+</div>
+
+<div class="section">
+  <div class="section-title"><h2>📝 Nhập điểm — hôm nay</h2><span class="tag tag-green">nhập dạng số/số, vd: 9.8/13</span></div>
+  <div class="btn-row">
+    <button id="exportJSON">⬇ Export JSON</button>
+    <button id="importJSON">⬆ Import JSON</button>
+    <button id="resetAll" class="danger">🗑 Reset All</button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+  </div>
+  <div class="task-grid" id="taskContainer"></div>
+</div>
+
+<div class="footer">PTE 55+ Final Sprint Tracker · Dữ liệu lưu tại trình duyệt này · Good luck! 🔥</div>
 
 </div>
 
 <script>
-
+// ═══════════════════════════════════════════════════════════════════
+//  CONSTANTS
+// ═══════════════════════════════════════════════════════════════════
 const TASKS = [
-
-["Read Aloud","Đọc thành tiếng"],
-["Repeat Sentence","Nhắc lại câu"],
-["Describe Image","Mô tả hình ảnh"],
-["Retell Lecture","Kể lại bài giảng"],
-["Answer Short Question","Trả lời câu hỏi ngắn"],
-
-["Summarize Group Discussion","Tóm tắt thảo luận nhóm"],
-["Respond To Situation","Phản hồi tình huống"],
-
-["Summarize Written Text","Tóm tắt văn bản"],
-["Write Essay","Viết luận"],
-
-["Reading MCQ Multiple","Đọc MCQ nhiều đáp án"],
-["Reading MCQ Single","Đọc MCQ một đáp án"],
-
-["Re-order Paragraphs","Sắp xếp đoạn văn"],
-
-["Reading & Writing FIB","Điền từ đọc + viết"],
-
-["Summarize Spoken Text","Tóm tắt bài nghe"],
-
-["Listening MCQ Multiple","Nghe MCQ nhiều đáp án"],
-["Listening MCQ Single","Nghe MCQ một đáp án"],
-
-["Fill In The Blanks","Điền từ bài nghe"],
-
-["Highlight Correct Summary","Chọn tóm tắt đúng"],
-
-["Select Missing Word","Chọn từ bị thiếu"],
-
-["Highlight Incorrect Words","Tô từ sai"],
-
-["Write From Dictation","Nghe và viết lại"],
-
-["Integrated Practice","Luyện tích hợp"]
-
+  ["RA","Read Aloud","Đọc thành tiếng",4,"speaking"],
+  ["RS","Repeat Sentence","Nhắc lại câu",7,"speaking"],
+  ["DI","Describe Image","Mô tả hình ảnh",15,"speaking"],
+  ["RL","Retell Lecture","Kể lại bài giảng",6,"speaking"],
+  ["ASQ","Answer Short Question","Trả lời câu hỏi ngắn",2,"speaking"],
+  ["SGD","Summarise Group Discussion","Tóm tắt thảo luận nhóm",9,"speaking"],
+  ["RTS","Respond to a Situation","Phản hồi tình huống",6,"speaking"],
+  ["SWT","Summarize Written Text","Tóm tắt văn bản viết",7,"writing"],
+  ["WE","Write Essay","Viết luận",7,"writing"],
+  ["FIB","FIB – Dropdown","Điền từ (dropdown)",7,"reading"],
+  ["FDD","FIB – Drag & Drop","Kéo thả điền từ",6,"reading"],
+  ["ROP","Re-order Paragraph","Sắp xếp đoạn văn",5,"reading"],
+  ["SST","Summarize Spoken Text","Tóm tắt bài nghe",4,"listening"],
+  ["FIL","Fill In The Blanks","Điền từ bài nghe",3,"listening"],
+  ["SMW","Select Missing Word","Chọn từ còn thiếu",1,"listening"],
+  ["HIW","Highlight Incorrect Words","Đánh dấu từ sai",3,"listening"],
+  ["HCS","Highlight Correct Summary","Chọn tóm tắt đúng",2,"listening"],
+  ["WFD","Write from Dictation","Nghe và viết lại",5,"listening"],
 ];
+const KPI_TARGETS = { RA:60, RS:55, DI:55, RL:45, ASQ:50, SGD:50, RTS:50, SWT:60, WE:60, FIB:55, FDD:55, ROP:50, SST:55, FIL:55, SMW:50, HIW:50, HCS:50, WFD:55 };
+const DAILY_TASKS = ["RS","WFD"];
+const DOW_HOURS = { 1:10, 2:5, 3:2, 4:10, 5:2, 6:10, 0:10 };
+const MIN_PER_REP = { RA:1.5, RS:1.5, DI:2, RL:2.5, ASQ:1, SGD:3, RTS:2, SWT:10, WE:20, FIB:2, FDD:2.5, ROP:2, SST:10, FIL:2, SMW:1.5, HIW:1.5, HCS:1.5, WFD:3 };
+const MAX_REPS_OVERRIDE = { WE:2, SWT:3, SST:2, RL:8, ASQ:12, SGD:8, DI:12, RTS:12, FDD:10, ROP:12, SMW:12, HIW:12, HCS:12, RA:8, RS:20, FIB:15, FIL:15, WFD:20 };
+function capFor(id){ return MAX_REPS_OVERRIDE[id] || 12; }
 
-const examDate =
-new Date("2026-07-20");
-
-const diff =
-Math.ceil(
-(examDate - new Date())
-/
-86400000
-);
-
-document.getElementById(
-"daysLeft"
-).innerText = diff;
-// =========================
-// STORAGE
-// =========================
-
-function loadData(){
-
-const raw =
-localStorage.getItem(
-"pte_mvp_data"
-);
-
-if(!raw){
-
-return {};
-
-}
-
-try{
-
-return JSON.parse(raw);
-
-}
-catch{
-
-return {};
-
-}
-
-}
-
-function saveData(data){
-
-localStorage.setItem(
-"pte_mvp_data",
-JSON.stringify(data)
-);
-
-}
-
-const DATA =
-loadData();
-
-// =========================
-// CREATE TASK CARDS
-// =========================
-
-const taskContainer =
-document.getElementById(
-"taskContainer"
-);
-
-TASKS.forEach(task=>{
-
-const en = task[0];
-const vi = task[1];
-
-const savedText =
-DATA[en] || "";
-
-const card =
-document.createElement(
-"div"
-);
-
-card.className =
-"task-card";
-
-card.innerHTML =
-
-`
-<div class="task-name">
-${en}
-</div>
-
-<div class="task-vi">
-${vi}
-</div>
-
-<textarea
-id="input_${en}"
-placeholder="Ví dụ:
-12/24
-15/24
-8/20">${savedText}</textarea>
-
-<div
-class="stats"
-id="stats_${en}">
-0 / 0 (0%)
-</div>
-`;
-
-taskContainer.appendChild(
-card
-);
-
-});
-
-// =========================
-// CALCULATE TASK
-// =========================
-
-function calculateTask(text){
-
-let raw = 0;
-let max = 0;
-
-const lines =
-text
-.split("\n")
-.map(x=>x.trim())
-.filter(Boolean);
-
-lines.forEach(line=>{
-
-const match =
-line.match(
-/(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/
-);
-
-if(!match){
-
-return;
-
-}
-
-raw +=
-Number(match[1]);
-
-max +=
-Number(match[2]);
-
-});
-
-const accuracy =
-
-max > 0
-
-?
-
-(raw/max)*100
-
-:
-
-0;
-
-return {
-
-raw,
-max,
-accuracy
-
+const TIPS = {
+  SGD: ["Luyện ít nhất 2–3 bài mỗi lần ngồi vào, không ít hơn","Template cứng: “The discussion focused on… The first speaker argued… Another perspective was… In conclusion…”","Không cần dùng hết 90 giây — 60–70s đủ nếu trơn tru","Nghe kỹ 10s đầu và 10s cuối audio — cấu trúc bài hay nằm ở đó"],
+  SST: ["Ghi note theo keywords, không ghi câu đầy đủ","Summary cần: Topic sentence + 2 key points + concluding idea","Tránh dùng từ nguyên văn từ bài nghe — paraphrase ngay","Task 10 phút/bài nên không cần luyện quá nhiều bài/ngày"],
+  WFD: ["Daily task — không bỏ ngày nào","Nghe xong nhẩm lại nguyên câu trước khi gõ, luyện theo chunk","Chú ý articles (a/the), prepositions, -s/-es cuối từ","Chia đều 2 lần sáng/tối để không dồn cuối ngày"],
+  FIB: ["Đọc cả câu trước khi chọn — collocation quyết định đáp án","Luyện chung với FIL trong 1 session để tiết kiệm thời gian"],
+  FIL: ["Nghe tổng thể trước, điền sau — đừng điền realtime","Luyện chung với FIB trong 1 session"],
+  RS: ["Đang gần/đạt target — maintain, đừng đổi cách làm","Nếu đuối vào cuối ngày, để RS làm sau cùng"],
+  FDD: ["Nếu gap quá xa (>12%), chỉ giữ sàn 1 bài/2 ngày, không đầu tư thêm thời gian"],
+  WE: ["Writing essay không cải thiện nhanh trong thời gian ngắn — nếu gap quá xa chỉ giữ sàn"],
+  RA: ["Ưu tiên fluency hơn accuracy — xem mục Read Aloud phía trên","5–6 bài/ngày là đủ, không cần nhiều hơn"],
+  DI: ["Dùng template mô tả cố định: overview → detail → trend → conclusion"],
+  RL: ["Ghi chú 3-4 ý chính trong lúc nghe, không cố nhớ hết"],
+  RTS: ["Trả lời tự nhiên, đủ ý trong 15-20s, không cần hoàn hảo ngữ pháp"],
+  SWT: ["1 câu duy nhất, 5-75 từ, đủ chủ đề + ý chính, không thêm chi tiết phụ"],
+  SMW: ["Nghe kỹ đoạn cuối audio — đáp án thường liên quan trực tiếp mạch nghĩa trước đó"],
 };
 
+// ═══════════════════════════════════════════════════════════════════
+//  DATE / EXAM
+// ═══════════════════════════════════════════════════════════════════
+const EXAM_DATE = new Date("2026-07-28T14:00:00");
+function getToday(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+const TODAY = getToday();
+const TODAY_DOW = new Date().getDay();
+function fmtDate(s){ const [,m,d]=s.split("-"); return `${d}/${m}`; }
+function daysUntilExam(){ return Math.ceil((EXAM_DATE - new Date(TODAY+"T00:00:00")) / 86400000); }
+
+// ═══════════════════════════════════════════════════════════════════
+//  STORAGE
+// ═══════════════════════════════════════════════════════════════════
+function loadData(){ try{ return JSON.parse(localStorage.getItem("pte_sprint_final")||"{}"); }catch{ return {}; } }
+function saveData(){ localStorage.setItem("pte_sprint_final", JSON.stringify(DATA)); }
+const DATA = loadData();
+if(!DATA.__daily) DATA.__daily = {};
+if(!DATA.__history) DATA.__history = [];
+if(!DATA.__daily[TODAY]) DATA.__daily[TODAY] = {};
+
+// Seed mock test MOCK0004 — 23/7/2026 (Overall 41: Speaking 49 | Writing 43 | Reading 38 | Listening 34)
+if(!DATA.__mockSeeded){
+  const MOCK_DAY = "2026-07-23";
+  if(!DATA.__daily[MOCK_DAY]) DATA.__daily[MOCK_DAY] = {};
+  const seed = {
+    RA:  ["5.6/15","9.9/15","6/15","9.1/15","7/15","7.8/15"],
+    RS:  ["7.3/13","6/13","0/13","0/13","0/13","6.7/13","0/13","0/13","5.5/13","0/13"],
+    DI:  ["11.1/15","10.9/15","11/15","10.5/15"],
+    RL:  ["7.6/15","7.5/15"],
+    ASQ: ["0/1","0/1","0/1","0/1","0/1"],
+    SGD: ["7.2/15","7/15"],
+    RTS: ["7.5/15","7.5/15"],
+    FIL: ["0/1","0/1","4/4"],
+    HCS: ["0/1"],
+    SMW: ["1/1"],
+    HIW: ["0/1","3/3","2/2"],
+    WFD: ["18/41"],
+    SST: ["0/12"],
+    WE:  ["24.7/52"],
+    SWT: ["10/18"],
+    FIB: ["2/11"],
+    FDD: ["12/32"],
+    ROP: ["3/8"],
+  };
+  Object.entries(seed).forEach(([id,arr])=>{ DATA.__daily[MOCK_DAY][id] = arr; });
+  DATA.__mockSeeded = true;
+}
+saveData();
+
+// ═══════════════════════════════════════════════════════════════════
+//  CALC HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function parseScore(v){ const m=(v||"").trim().match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/); return m?{raw:+m[1],max:+m[2]}:null; }
+function calcEntries(arr){ let raw=0,max=0,cnt=0; (arr||[]).forEach(v=>{const p=parseScore(v); if(p&&p.max>0){raw+=p.raw;max+=p.max;cnt++;}}); return {raw,max,cnt,pct:max>0?(raw/max)*100:0}; }
+function calcTaskAccOverDays(id,dayList){ let raw=0,max=0,cnt=0; dayList.forEach(d=>{const c=calcEntries(DATA.__daily[d]?.[id]||[]); raw+=c.raw;max+=c.max;cnt+=c.cnt;}); return {raw,max,cnt,pct:max>0?(raw/max)*100:0}; }
+function calcDayAcc(day){ let raw=0,max=0; Object.values(DATA.__daily[day]||{}).forEach(arr=>{const c=calcEntries(arr); raw+=c.raw;max+=c.max;}); return {raw,max,pct:max>0?(raw/max)*100:0}; }
+function getAllDays(){ const keys=Object.keys(DATA.__daily).sort().reverse(); if(!keys.includes(TODAY)) keys.unshift(TODAY); return keys; }
+function getDaysInRange(range){
+  const all=getAllDays();
+  if(range==="today") return [TODAY];
+  if(range==="7days"){ const cutoff=new Date(TODAY); cutoff.setDate(cutoff.getDate()-6); const cutStr=cutoff.toISOString().slice(0,10); return all.filter(d=>d>=cutStr); }
+  return all;
+}
+function scoreClass(pct){ return pct<=0?"empty":pct>=70?"good":pct>=50?"warn":"bad"; }
+function esc(s){ return s.replace(/[^a-zA-Z0-9]/g,"_"); }
+
+function calcPrediction(dayList){
+  let weightedSum=0,totalWeight=0,hasData=false;
+  TASKS.forEach(([id,,,w])=>{ const c=calcTaskAccOverDays(id,dayList); if(c.max>0){weightedSum+=(c.pct/100)*w; hasData=true;} totalWeight+=w; });
+  if(!hasData) return null;
+  const weightedPct = totalWeight>0 ? (weightedSum/totalWeight)*100 : 0;
+  return Math.min(90, weightedPct*0.9);
 }
 
-// =========================
-// UPDATE ALL
-// =========================
+function getAdaptiveStatus(dayList){
+  const status={};
+  TASKS.forEach(([id,,,w])=>{
+    const c=calcTaskAccOverDays(id,dayList);
+    const target=KPI_TARGETS[id]||55;
+    const hasData=c.max>0;
+    const acc=hasData?c.pct:null;
+    const gap=hasData?acc-target:-target;
+    let st="UNKNOWN";
+    if(hasData){
+      if(acc>=target+5) st="REST";
+      else if(acc>=target) st="MAINTAIN";
+      else if(acc>=target-12) st="FOCUS";
+      else st="INTENSIVE";
+    }
+    const urgency = hasData ? Math.abs(Math.min(0,gap))*(w/10) + 0.001 : w*0.5;
+    status[id] = {status:st, gap:hasData?gap:null, acc, target, weight:w, hasData, urgency};
+  });
+  return status;
+}
 
-function updateAll(){
+// ═══════════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════════
+let currentRange = "all";
 
-let totalRaw = 0;
-let totalMax = 0;
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER: HEADER / COUNTDOWN
+// ═══════════════════════════════════════════════════════════════════
+function renderHeader(){
+  const dl = daysUntilExam();
+  document.getElementById("daysLeft").textContent = dl >= 0 ? dl : "0";
+  document.getElementById("subLine").textContent =
+    dl > 0 ? `Roadmap tự động · Thi: 20/07/2026 · Hôm nay ${fmtDate(TODAY)}`
+    : dl === 0 ? `HÔM NAY LÀ NGÀY THI — chúc may mắn! 🎯`
+    : `Đã qua ngày thi dự kiến`;
+}
 
-TASKS.forEach(task=>{
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER: ALERT
+// ═══════════════════════════════════════════════════════════════════
+function renderAlert(pred, dl){
+  const box = document.getElementById("alertBox");
+  if(pred===null){
+    box.className="alert";
+    box.innerHTML = `<div class="alert-icon">⚡</div><div><strong>Chưa có dữ liệu.</strong> Nhập điểm ở mục "Nhập điểm — hôm nay" phía dưới để tracker tự tính prediction và lên lịch sprint cho ${Math.max(dl,0)} ngày còn lại.</div>`;
+    return;
+  }
+  const gap = 55 - pred;
+  if(gap<=0){
+    box.className="alert good";
+    box.innerHTML = `<div class="alert-icon">✅</div><div><strong>Đang ở mức mục tiêu.</strong> Prediction hiện tại <strong>${pred.toFixed(1)}</strong> — đã đạt/vượt 55. Giữ nhịp luyện tập đều để không tụt điểm trong ${Math.max(dl,0)} ngày còn lại.</div>`;
+    return;
+  }
+  box.className="alert";
+  box.innerHTML = `<div class="alert-icon">⚡</div><div><strong>Tình hình:</strong> Prediction hiện tại <strong>${pred.toFixed(1)}</strong> — còn thiếu <strong>${gap.toFixed(1)} điểm</strong> để đạt 55.
+    Với ${Math.max(dl,0)} ngày còn lại, không có thời gian học kỹ năng mới — chỉ tập trung tăng accuracy trên task <strong>INTENSIVE/FOCUS</strong> ở mục Chiến lược bên dưới. Task có gap quá xa (dưới -12%) nên chuyển sang chế độ giữ sàn thay vì sprint.</div>`;
+}
 
-const en = task[0];
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER: SCORES GRID
+// ═══════════════════════════════════════════════════════════════════
+function renderScores(days, adaptStatus){
+  const rangeLbl = {today:"Hôm nay","7days":"7 ngày qua",all:"Tất cả"}[currentRange];
+  document.getElementById("scoreRangeTag").textContent = rangeLbl;
+  const el = document.getElementById("scoresGrid");
+  const sorted = [...TASKS].sort((a,b)=>{
+    const sa=adaptStatus[a[0]], sb=adaptStatus[b[0]];
+    const order={INTENSIVE:0,FOCUS:1,MAINTAIN:2,REST:3,UNKNOWN:4};
+    return (order[sa.status]-order[sb.status]) || (b[3]-a[3]);
+  });
+  el.innerHTML = sorted.map(([id,en])=>{
+    const s = adaptStatus[id];
+    if(!s.hasData){
+      return `<div class="score-card"><div class="label">${id}</div><div class="val c-muted">—</div><div class="gap-tag c-muted">Chưa có data</div></div>`;
+    }
+    let cardCls="", valCls="", tag="";
+    const gap=s.gap;
+    if(gap>=5){ cardCls="ok"; valCls="c-green"; tag=`Gap: +${gap.toFixed(1)}% → REST`; }
+    else if(gap>=0){ cardCls="ok"; valCls="c-blue"; tag=`Gap: +${gap.toFixed(1)}% → MAINTAIN`; }
+    else if(gap>=-8){ cardCls="warn"; valCls="c-yellow"; tag=`Gap: ${gap.toFixed(1)}% ← SPRINT`; }
+    else if(gap>=-12){ cardCls="warn"; valCls="c-orange"; tag=`Gap: ${gap.toFixed(1)}% ← SPRINT`; }
+    else { cardCls="urgent"; valCls="c-red"; tag=`Gap: ${gap.toFixed(1)}% ← TOO FAR`; }
+    return `<div class="score-card ${cardCls}"><div class="label">${id}</div><div class="val ${valCls}">${s.acc.toFixed(1)}%</div><div class="gap-tag ${valCls}">${tag}</div></div>`;
+  }).join("");
+}
 
-const textarea =
-document.getElementById(
-`input_${en}`
-);
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER: DASHBOARD
+// ═══════════════════════════════════════════════════════════════════
+function renderDashboard(days, pred){
+  const el = document.getElementById("dashGrid");
+  const rawAcc = calcTaskAccOverDaysAll(days);
+  const skills = ["speaking","writing","reading","listening"];
+  const skillVals = skills.map(sk=>{
+    const relevant = TASKS.filter(t=>t[4]===sk);
+    let raw=0,max=0;
+    relevant.forEach(([id])=>{ const c=calcTaskAccOverDays(id,days); raw+=c.raw; max+=c.max; });
+    return max>0 ? (raw/max)*100 : null;
+  });
+  el.innerHTML = `
+    <div class="dash-card"><div class="label">PTE Prediction</div><div class="value" style="color:${pred===null?'var(--muted)':pred>=55?'var(--green)':pred>=45?'var(--yellow)':'var(--red)'}">${pred===null?'—':pred.toFixed(1)}</div></div>
+    <div class="dash-card"><div class="label">Raw Accuracy</div><div class="value">${rawAcc.max>0?rawAcc.pct.toFixed(1)+'%':'—'}</div></div>
+    <div class="dash-card"><div class="label">Speaking</div><div class="value">${skillVals[0]!==null?skillVals[0].toFixed(1)+'%':'—'}</div></div>
+    <div class="dash-card"><div class="label">Writing</div><div class="value">${skillVals[1]!==null?skillVals[1].toFixed(1)+'%':'—'}</div></div>
+    <div class="dash-card"><div class="label">Reading</div><div class="value">${skillVals[2]!==null?skillVals[2].toFixed(1)+'%':'—'}</div></div>
+    <div class="dash-card"><div class="label">Listening</div><div class="value">${skillVals[3]!==null?skillVals[3].toFixed(1)+'%':'—'}</div></div>
+  `;
+}
+function calcTaskAccOverDaysAll(days){ let raw=0,max=0; days.forEach(d=>{Object.values(DATA.__daily[d]||{}).forEach(arr=>{const c=calcEntries(arr); raw+=c.raw;max+=c.max;});}); return {raw,max,pct:max>0?(raw/max)*100:0}; }
 
-const text =
-textarea.value;
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER: PTE SCORE TABLE (4 skills + Overall, thang 10-90)
+// ═══════════════════════════════════════════════════════════════════
+// Điểm PTE thật của mock test gốc (MOCK0004) — hiển thị trực tiếp vì đây là điểm
+// server PTE đã chấm, không phải suy ra từ % accuracy tự nhập.
+const LATEST_MOCK = { day:"2026-07-23", name:"MOCK0004", speaking:49, writing:43, reading:3, listening:34 };
 
-DATA[en] = text;
+function renderPteScoreTable(){
+  const el = document.getElementById("pteScoreTable");
+  const dateEl = document.getElementById("pteScoreDate");
+  const m = LATEST_MOCK;
+  const overall = Math.round((m.speaking + m.writing + m.reading + m.listening) / 4);
+  dateEl.textContent = fmtDate(m.day) + " · " + m.name;
 
-const result =
-calculateTask(
-text
-);
+  const skillTasks = {
+    speaking: ["RA","RS","DI","RL","ASQ","SGD","RTS"],
+    writing: ["SWT","WE"],
+    reading: ["FIB","FDD","ROP"],
+    listening: ["SST","FIL","SMW","HIW","HCS","WFD"],
+  };
+  function taskBreakdown(sk){
+    return skillTasks[sk].map(id=>{
+      const t = TASKS.find(x=>x[0]===id);
+      const c = calcEntries(DATA.__daily[m.day]?.[id]||[]);
+      return { id, name: t?t[2]:id, pct: c.max>0?(c.raw/c.max)*100:null, raw:c.raw, max:c.max };
+    });
+  }
+  const rows = [
+    { key:"speaking", label:"🗣️ Speaking", score:m.speaking, tasks:taskBreakdown("speaking") },
+    { key:"writing", label:"✍️ Writing", score:m.writing, tasks:taskBreakdown("writing") },
+    { key:"reading", label:"📖 Reading", score:m.reading, tasks:taskBreakdown("reading") },
+    { key:"listening", label:"🎧 Listening", score:m.listening, tasks:taskBreakdown("listening") },
+  ];
+  function scoreColor(v){ return v>=65?'var(--green)':v>=50?'var(--blue)':v>=35?'var(--yellow)':'var(--red)'; }
 
-totalRaw +=
-result.raw;
+  el.innerHTML = `
+    <div class="pte-overall-row">
+      <div class="pte-overall-label">Overall</div>
+      <div class="pte-overall-value" style="color:${scoreColor(overall)}">${overall}</div>
+      <div class="pte-overall-target">Mục tiêu: 50 · Còn thiếu: ${Math.max(0,50-overall)} điểm</div>
+    </div>
+    <div class="pte-skill-grid">
+      ${rows.map(r=>`
+        <div class="pte-skill-card">
+          <div class="pte-skill-head">
+            <span class="pte-skill-name">${r.label}</span>
+            <span class="pte-skill-score" style="color:${scoreColor(r.score)}">${r.score}</span>
+          </div>
+          <div class="pte-task-list">
+            ${r.tasks.map(t=>`
+              <div class="pte-task-row">
+                <span class="pte-task-id">${t.id}</span>
+                <span class="pte-task-name">${t.name}</span>
+                <span class="pte-task-pct ${t.pct===null?'c-muted':t.pct>=50?'c-green':t.pct>=25?'c-yellow':'c-red'}">${t.pct===null?'—':t.pct.toFixed(0)+'%'}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
 
-totalMax +=
-result.max;
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER: PROJECTION
+// ═══════════════════════════════════════════════════════════════════
+function renderProjection(pred){
+  const pess = document.getElementById("predPess");
+  const real = document.getElementById("predReal");
+  const opt = document.getElementById("predOpt");
+  if(pred===null){ pess.textContent=real.textContent=opt.textContent="—"; return; }
+  pess.textContent = Math.max(0,pred-3).toFixed(0)+"–"+Math.max(0,pred-1).toFixed(0);
+  real.textContent = pred.toFixed(0)+"–"+(pred+3).toFixed(0);
+  opt.textContent = (pred+4).toFixed(0)+"–"+(pred+7).toFixed(0);
+}
 
-document
-.getElementById(
-`stats_${en}`
-)
-.innerHTML =
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER: DAY PLAN (built from adaptive status, real dates → exam)
+// ═══════════════════════════════════════════════════════════════════
+function buildSprintDays(adaptStatus){
+  const dl = daysUntilExam();
+  const list = [];
+  if(dl<=0) return list;
+  for(let i=0;i<dl;i++){
+    const d = new Date(TODAY+"T00:00:00");
+    d.setDate(d.getDate()+i);
+    const dow = d.getDay();
+    const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    const isToday = i===0;
+    const isPreExam = i===dl-1 && dl>1;
+    let hours = DOW_HOURS[dow] || 6;
+    if(isPreExam) hours = Math.min(hours,4);
+    list.push({ dateStr, dow, hours, isToday, isPreExam, name:["CN","Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7"][dow] });
+  }
+  return list;
+}
 
-`
-<b>
-${result.raw}
-/
-${result.max}
-</b>
+function allocateDayTasks(day, adaptStatus){
+  const budgetMin = day.hours*60;
+  const dailyReps = day.hours>=8?20:day.hours>=5?15:10;
+  const tasks = [];
+  DAILY_TASKS.forEach(id=>tasks.push({id, reps:dailyReps, isDaily:true, isBoosted:false, isReduced:false, status:adaptStatus[id].status}));
+  let used = DAILY_TASKS.reduce((s,id)=>s+dailyReps*MIN_PER_REP[id],0);
 
-&nbsp;
+  if(day.isPreExam){
+    tasks.length=0;
+    DAILY_TASKS.forEach(id=>tasks.push({id, reps:10, isDaily:true, isBoosted:false, isReduced:false, status:adaptStatus[id].status}));
+    tasks.push({id:"RA", reps:3, isDaily:false, isBoosted:false, isReduced:false, status:"REST"});
+    return { tasks, budgetMin, usedMin: 10*MIN_PER_REP.RS+10*MIN_PER_REP.WFD+3*MIN_PER_REP.RA, note:"KHÔNG học nặng hôm nay. Chỉ warm-up nhẹ, ngủ sớm trước 22h." };
+  }
 
-(${result.accuracy.toFixed(1)}%)
-`;
+  const candidates = Object.entries(adaptStatus)
+    .filter(([id,s])=> !DAILY_TASKS.includes(id) && (s.status==="INTENSIVE"||s.status==="FOCUS"||s.status==="MAINTAIN"))
+    .sort((a,b)=>b[1].urgency-a[1].urgency);
 
+  const reps={};
+  candidates.forEach(([id])=>reps[id]=0);
+  candidates.forEach(([id,s])=>{
+    if(used>=budgetMin) return;
+    const minStart = s.status==="INTENSIVE"?2:1;
+    for(let k=0;k<minStart;k++){
+      if(used+MIN_PER_REP[id]>budgetMin) break;
+      reps[id]++; used+=MIN_PER_REP[id];
+    }
+  });
+  let guard=0;
+  while(used<budgetMin && guard<300){
+    guard++;
+    const avail = candidates.filter(([id])=>reps[id] < capFor(id));
+    if(!avail.length) break;
+    avail.sort((a,b)=>{
+      const ua=(a[1].urgency)/(reps[a[0]]+1);
+      const ub=(b[1].urgency)/(reps[b[0]]+1);
+      return ub-ua;
+    });
+    const [pickId] = avail[0];
+    if(used+MIN_PER_REP[pickId]>budgetMin) break;
+    reps[pickId]++; used+=MIN_PER_REP[pickId];
+  }
+  candidates.forEach(([id,s])=>{
+    if(reps[id]>0) tasks.push({id, reps:reps[id], isDaily:false, isBoosted:s.status==="INTENSIVE", isReduced:false, status:s.status});
+  });
+
+  // REST tasks: light maintenance every other day
+  const restTasks = Object.entries(adaptStatus).filter(([id,s])=>s.status==="REST" && !DAILY_TASKS.includes(id));
+  restTasks.forEach(([id],idx)=>{
+    if((idx + Math.abs(hashDay(day.dateStr)))%2===0){
+      tasks.push({id, reps:1, isDaily:false, isBoosted:false, isReduced:true, status:"REST"});
+    }
+  });
+
+  let note = "";
+  if(day.hours<=3) note = `Ngày ít giờ (${day.hours}h): chỉ làm Daily Core + 1 task ưu tiên nhất. Chất lượng hơn số lượng.`;
+  else if(day.isToday) note = `Ngày đầu tiên của lộ trình — lập thói quen đúng từ hôm nay.`;
+  else note = `Ngày ${day.hours}h: dồn lực vào task INTENSIVE/FOCUS ở trên.`;
+
+  return { tasks, budgetMin, usedMin:used, note };
+}
+function hashDay(s){ let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))|0; return h; }
+
+const pillMap = { INTENSIVE:"pill-red", FOCUS:"pill-orange", MAINTAIN:"pill-blue", REST:"pill-gray" };
+
+function renderDayPlan(adaptStatus){
+  const dl = daysUntilExam();
+  document.getElementById("planTag").textContent = dl>0? `${dl} ngày tính từ hôm nay ${fmtDate(TODAY)}` : "Đã đến/qua ngày thi";
+  const grid = document.getElementById("daysGrid");
+  const days = buildSprintDays(adaptStatus);
+  if(!days.length){
+    grid.innerHTML = `<div class="day-card"><div class="day-body">Không còn ngày nào trước kỳ thi trong dữ liệu — kiểm tra lại ngày thi hoặc chúc bạn thi tốt! 🎯</div></div>`;
+    return;
+  }
+  grid.innerHTML = days.map(day=>{
+    const plan = allocateDayTasks(day, adaptStatus);
+    const taskRows = plan.tasks.map(t=>{
+      const task = TASKS.find(x=>x[0]===t.id);
+      const pillCls = t.isDaily?"pill-green":pillMap[t.status]||"pill-gray";
+      const repsCls = t.isBoosted?"boost":t.isDaily?"daily":"";
+      const repsTxt = t.isReduced? "×1 (giữ sàn)" : `×${t.reps}`;
+      return `<div class="task-row"><span class="task-pill ${pillCls}">${t.id}</span><span class="task-name-text">${task[1]}</span><span class="task-reps ${repsCls}">${repsTxt}</span></div>`;
+    }).join("");
+    const focusTask = plan.tasks.filter(t=>!t.isDaily).sort((a,b)=>b.reps-a.reps)[0];
+    const focusTxt = day.isPreExam ? "Nghỉ ngơi, warm-up nhẹ" : focusTask ? `${TASKS.find(x=>x[0]===focusTask.id)[1]} + Daily Core` : "Daily Core";
+    const cls = day.isToday?"today":day.isPreExam?"exam":"";
+    let badges="";
+    if(day.isToday) badges+=`<span class="badge badge-today">📍 HÔM NAY</span>`;
+    if(day.hours<=3) badges+=`<span class="badge badge-light">⏱ Ít giờ</span>`;
+    if(day.isPreExam) badges+=`<span class="badge badge-exam">🎯 PRE-EXAM</span>`;
+    const budgetPct = Math.min(100,(plan.usedMin/plan.budgetMin)*100);
+    const noteCls = day.isPreExam?"critical":day.isToday?"strategy":"";
+    return `<div class="day-card ${cls}">
+      <div class="day-header">
+        <div><div class="day-num">${fmtDate(day.dateStr)}</div><div class="day-name">${day.name}</div></div>
+        <div class="day-badges">${badges || `<span class="badge badge-light">${day.hours}h</span>`}</div>
+      </div>
+      <div class="day-body">
+        <div class="focus-label">FOCUS HÔM ĐÓ</div>
+        <div class="focus-text">${focusTxt}</div>
+        <div class="task-list">${taskRows}</div>
+        <div class="hour-bar"><span>${day.hours}h</span><div class="hour-bar-bg"><div class="hour-bar-fill" style="width:${budgetPct}%"></div></div><span>budget</span></div>
+        <div class="day-note ${noteCls}">${plan.note}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER: STRATEGY
+// ═══════════════════════════════════════════════════════════════════
+function renderStrategy(adaptStatus){
+  const el = document.getElementById("strategyGrid");
+  const withData = Object.entries(adaptStatus).filter(([,s])=>s.hasData);
+  if(!withData.length){
+    el.innerHTML = `<div class="strategy-card"><h3>💡 Chưa có dữ liệu</h3><p style="font-size:12px;color:var(--muted)">Nhập điểm ở mục bên dưới để tracker tự chọn ra các task cần ưu tiên sprint.</p></div>`;
+    return;
+  }
+  const sorted = withData.sort((a,b)=>{
+    const order={INTENSIVE:0,FOCUS:1,MAINTAIN:2,REST:3};
+    return (order[a[1].status]-order[b[1].status]) || (b[1].urgency-a[1].urgency);
+  }).slice(0,6);
+  const icon = {INTENSIVE:"🔴",FOCUS:"🟡",MAINTAIN:"🔵",REST:"✅"};
+  const borderColor = {INTENSIVE:"var(--red)",FOCUS:"var(--orange)",MAINTAIN:"var(--blue)",REST:"var(--green)"};
+  el.innerHTML = sorted.map(([id,s])=>{
+    const task = TASKS.find(t=>t[0]===id);
+    const tips = TIPS[id] || ["Luyện đều đặn theo lịch, ưu tiên task có weight cao hơn khi thời gian eo hẹp."];
+    const gapTxt = s.gap>=0? `+${s.gap.toFixed(1)}%` : `${s.gap.toFixed(1)}%`;
+    return `<div class="strategy-card" style="border-color:${borderColor[s.status]}">
+      <h3><span>${icon[s.status]}</span> ${task[1]} — ${s.status} (${task[3]}%)</h3>
+      <ul>${tips.map(t=>`<li><span class="bullet">→</span>${t}</li>`).join("")}
+      <li><span class="bullet">→</span>Hiện tại: <strong>${s.acc.toFixed(1)}%</strong> · Target: ${s.target}% · Gap: ${gapTxt}</li></ul>
+    </div>`;
+  }).join("");
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  CHART
+// ═══════════════════════════════════════════════════════════════════
+let predChart=null;
+function renderChart(){
+  const hist = DATA.__history;
+  const ctx = document.getElementById("predChart").getContext("2d");
+  if(predChart) predChart.destroy();
+  if(!hist || !hist.length){
+    return;
+  }
+  const labels = hist.map(h=>fmtDate(h.date));
+  const data = hist.map(h=>h.pred!==null?+h.pred.toFixed(1):null);
+  predChart = new Chart(ctx,{
+    type:"line",
+    data:{ labels, datasets:[
+      { label:"PTE Prediction", data, tension:.3, borderColor:"#38bdf8", backgroundColor:"rgba(56,189,248,.08)", fill:true, pointRadius:3, spanGaps:true },
+      { label:"Target 55", data:Array(labels.length).fill(55), borderColor:"#ef4444", borderDash:[6,3], pointRadius:0 }
+    ]},
+    options:{ responsive:true, plugins:{legend:{labels:{color:"#94a3b8"}}}, scales:{ x:{ticks:{color:"#64748b"},grid:{color:"#1e3050"}}, y:{ticks:{color:"#64748b"},grid:{color:"#1e3050"}} } }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  ENTRY UI (score input, today only + collapsible recent)
+// ═══════════════════════════════════════════════════════════════════
+function buildTaskCards(){
+  const container = document.getElementById("taskContainer");
+  container.innerHTML = "";
+  TASKS.forEach(([id,en,vi,weight])=>{
+    const card = document.createElement("div");
+    card.className = "task-card";
+    card.dataset.id = id;
+    card.innerHTML = `
+      <div class="tc-header"><div class="tc-name">${en}</div><span class="tc-weight">${weight}%</span></div>
+      <div class="tc-vi">${vi}</div>
+      <div class="entries-list" id="list_${esc(id)}"></div>
+      <button class="add-entry-btn" id="add_${esc(id)}">+ Thêm bài (Enter)</button>
+      <div class="task-total"><span class="tot-label">Tổng (${ {today:"hôm nay","7days":"7 ngày",all:"tất cả"}[currentRange] })</span><span class="tot-val" id="tot_${esc(id)}">—</span></div>
+    `;
+    container.appendChild(card);
+    const list = document.getElementById(`list_${esc(id)}`);
+    if(!Array.isArray(DATA.__daily[TODAY][id])) DATA.__daily[TODAY][id]=[];
+    const entries = DATA.__daily[TODAY][id].length? DATA.__daily[TODAY][id] : [""];
+    entries.forEach((val,idx)=>list.appendChild(buildEntryRow(id,idx,val)));
+    document.getElementById(`add_${esc(id)}`).addEventListener("click", ()=>addNewEntry(id,list));
+    updateTaskTotal(id);
+  });
+}
+
+function addNewEntry(id, list){
+  if(!Array.isArray(DATA.__daily[TODAY][id])) DATA.__daily[TODAY][id]=[];
+  DATA.__daily[TODAY][id].push("");
+  const idx = DATA.__daily[TODAY][id].length-1;
+  const row = buildEntryRow(id, idx, "");
+  list.appendChild(row);
+  row.querySelector(".entry-input").focus();
+  saveData();
+}
+
+function buildEntryRow(id, idx, val){
+  const row = document.createElement("div");
+  row.className = "entry-row";
+  const score = parseScore(val);
+  const pct = score && score.max>0 ? (score.raw/score.max)*100 : 0;
+  const cls = score && score.max>0 ? scoreClass(pct) : "empty";
+  row.innerHTML = `
+    <input class="entry-input" type="text" value="${val}" placeholder="vd: 9.8/13" data-idx="${idx}">
+    <div class="entry-pct c-${cls==='empty'?'muted':cls==='good'?'green':cls==='warn'?'yellow':'red'}" id="epct_${esc(id)}_${idx}">${score && score.max>0 ? pct.toFixed(1)+"%" : "—"}</div>
+    <button class="remove-btn">✕</button>`;
+  const input = row.querySelector(".entry-input");
+  input.addEventListener("input", ()=>{
+    const v = input.value.trim();
+    while(DATA.__daily[TODAY][id].length<=idx) DATA.__daily[TODAY][id].push("");
+    DATA.__daily[TODAY][id][idx]=v;
+    const sc = parseScore(v);
+    const el = document.getElementById(`epct_${esc(id)}_${idx}`);
+    if(sc && sc.max>0){ const p=(sc.raw/sc.max)*100; el.textContent=p.toFixed(1)+"%"; el.className=`entry-pct c-${scoreClass(p)==='good'?'green':scoreClass(p)==='warn'?'yellow':'red'}`; }
+    else { el.textContent="—"; el.className="entry-pct c-muted"; }
+    saveData();
+    updateTaskTotal(id);
+    renderAll();
+  });
+  input.addEventListener("keydown", e=>{
+    if(e.key==="Enter"){ e.preventDefault(); const list=document.getElementById(`list_${esc(id)}`); addNewEntry(id,list); }
+  });
+  row.querySelector(".remove-btn").addEventListener("click", ()=>{
+    DATA.__daily[TODAY][id].splice(idx,1);
+    saveData();
+    refreshTaskCard(id);
+    renderAll();
+  });
+  return row;
+}
+
+function refreshTaskCard(id){
+  const list = document.getElementById(`list_${esc(id)}`);
+  list.innerHTML = "";
+  const entries = DATA.__daily[TODAY][id].length ? DATA.__daily[TODAY][id] : [""];
+  entries.forEach((val,idx)=>list.appendChild(buildEntryRow(id,idx,val)));
+  updateTaskTotal(id);
+}
+
+function updateTaskTotal(id){
+  const days = getDaysInRange(currentRange);
+  const c = calcTaskAccOverDays(id, days);
+  const el = document.getElementById(`tot_${esc(id)}`);
+  if(!el) return;
+  el.textContent = c.max>0 ? `${c.cnt} bài · TB ${c.pct.toFixed(1)}%` : "—";
+  el.style.color = c.max>0 ? (c.pct>=70?"var(--green)":c.pct>=50?"var(--yellow)":"var(--red)") : "var(--muted)";
+}
+function updateAllTaskTotals(){ TASKS.forEach(([id])=>updateTaskTotal(id)); }
+
+// ═══════════════════════════════════════════════════════════════════
+//  MAIN RENDER
+// ═══════════════════════════════════════════════════════════════════
+function renderAll(){
+  renderHeader();
+  const days = getDaysInRange(currentRange);
+  const allDays = getAllDays();
+  const pred = calcPrediction(days);
+  const dl = daysUntilExam();
+
+  renderAlert(pred, dl);
+  const adaptStatus = getAdaptiveStatus(allDays.length?allDays:[TODAY]);
+  renderScores(days, adaptStatus);
+  renderDashboard(days, pred);
+  renderPteScoreTable();
+  renderProjection(pred);
+  renderDayPlan(adaptStatus);
+  renderStrategy(adaptStatus);
+  updateAllTaskTotals();
+
+  // history snapshot for chart
+  const predAll = calcPrediction(allDays);
+  const snap = DATA.__history.find(h=>h.date===TODAY);
+  if(snap) snap.pred = predAll;
+  else DATA.__history.push({date:TODAY, pred:predAll});
+  DATA.__history.sort((a,b)=>a.date.localeCompare(b.date));
+  saveData();
+  renderChart();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  EVENTS
+// ═══════════════════════════════════════════════════════════════════
+document.querySelectorAll(".filter-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentRange = btn.dataset.range;
+    renderAll();
+  });
 });
 
-saveData(DATA);
-
-// =========================
-// OVERALL
-// =========================
-
-const overallAccuracy =
-
-totalMax > 0
-
-?
-
-(totalRaw/totalMax)*100
-
-:
-
-0;
-
-document
-.getElementById(
-"overallAccuracy"
-)
-.innerText =
-
-overallAccuracy
-.toFixed(1)
-
-+
-
-"%";
-
-// =========================
-// SIMPLE PREDICTION
-// =========================
-
-// baseline 30
-
-let prediction =
-
-30 +
-
-(
-overallAccuracy
-*
-0.35
-);
-
-prediction =
-Math.min(
-90,
-prediction
-);
-
-document
-.getElementById(
-"overallPrediction"
-)
-.innerText =
-
-prediction
-.toFixed(0);
-
-}
-
-// =========================
-// EVENTS
-// =========================
-
-TASKS.forEach(task=>{
-
-const en = task[0];
-
-const textarea =
-document.getElementById(
-`input_${en}`
-);
-
-textarea.addEventListener(
-"input",
-updateAll
-);
-
+document.getElementById("exportJSON").addEventListener("click", ()=>{
+  const blob = new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `pte_sprint_backup_${TODAY}.json`;
+  a.click();
+});
+document.getElementById("importJSON").addEventListener("click", ()=>document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change", e=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{ const imp=JSON.parse(r.result); Object.assign(DATA, imp); saveData(); location.reload(); }
+    catch{ alert("File không hợp lệ!"); }
+  };
+  r.readAsText(f);
+});
+document.getElementById("resetAll").addEventListener("click", ()=>{
+  if(!confirm("Xóa toàn bộ dữ liệu? Không thể hoàn tác!")) return;
+  localStorage.removeItem("pte_sprint_final");
+  location.reload();
 });
 
-// =========================
-// FIRST LOAD
-// =========================
-
-updateAll();
-// ======================================
-// DAILY HISTORY
-// ======================================
-
-function getToday(){
-
-const d = new Date();
-
-const yyyy = d.getFullYear();
-
-const mm =
-String(
-d.getMonth()+1
-).padStart(2,"0");
-
-const dd =
-String(
-d.getDate()
-).padStart(2,"0");
-
-return `${yyyy}-${mm}-${dd}`;
-
-}
-
-if(!DATA.__history){
-
-DATA.__history = [];
-
-}
-
-function saveDailySnapshot(){
-
-let totalRaw = 0;
-let totalMax = 0;
-
-TASKS.forEach(task=>{
-
-const result =
-calculateTask(
-DATA[task[0]] || ""
-);
-
-totalRaw += result.raw;
-totalMax += result.max;
-
-});
-
-const accuracy =
-
-totalMax > 0
-
-?
-
-(totalRaw/totalMax)*100
-
-:
-
-0;
-
-const today =
-getToday();
-
-const existing =
-DATA.__history.find(
-x=>x.date===today
-);
-
-if(existing){
-
-existing.accuracy =
-accuracy;
-
-existing.prediction =
-calculatePrediction();
-
-}
-else{
-
-DATA.__history.push({
-
-date:today,
-
-accuracy:
-accuracy,
-
-prediction:
-calculatePrediction()
-
-});
-
-}
-
-saveData(DATA);
-
-}
-
-// ======================================
-// GOAL TRACKER
-// ======================================
-
-function renderGoalTracker(){
-
-let html =
-
-`
-<div class="kpi-card">
-
-<div class="kpi-title">
-Mục tiêu Overall
-</div>
-
-`;
-
-const overall =
-
-parseFloat(
-document
-.getElementById(
-"overallPrediction"
-)
-.innerText
-);
-
-const remain =
-
-Math.max(
-0,
-55-overall
-);
-
-html +=
-
-`
-<div class="kpi-score">
-${overall}
- / 55
-</div>
-
-<div>
-Còn thiếu:
-${remain.toFixed(1)}
-điểm
-</div>
-
-</div>
-`;
-
-const container =
-document.getElementById(
-"todayKPI"
-);
-
-container.insertAdjacentHTML(
-"beforeend",
-html
-);
-
-}
-
-// ======================================
-// STUDY PLAN
-// ======================================
-
-function renderStudyPlan(){
-
-const box =
-document.getElementById(
-"studyPlan"
-);
-
-const day =
-new Date().getDay();
-
-// 0 CN
-// 1 T2
-// 2 T3
-// 3 T4
-// 4 T5
-// 5 T6
-// 6 T7
-
-let plan = [];
-
-let mode = "FULL";
-
-if(
-day===2 ||
-day===3 ||
-day===5
-){
-
-mode="LIGHT";
-
-}
-
-if(mode==="LIGHT"){
-
-plan=[
-
-"Repeat Sentence (20)",
-
-"Write From Dictation (20)",
-
-"Read Aloud (15)",
-
-"Reading & Writing FIB (10)",
-
-"Fill In The Blanks (10)"
-
-];
-
-}
-else{
-
-plan=[
-
-"Repeat Sentence (40)",
-
-"Write From Dictation (40)",
-
-"Read Aloud (30)",
-
-"Reading & Writing FIB (25)",
-
-"Fill In The Blanks (25)",
-
-"Describe Image (15)",
-
-"Retell Lecture (10)"
-
-];
-
-}
-
-box.innerHTML =
-
-`
-<div class="plan-day">
-
-<h3>
-Kế hoạch hôm nay
-</h3>
-
-<p>
-Chế độ:
-<b>${mode}</b>
-</p>
-
-<ul>
-
-${plan.map(
-x=>`<li>${x}</li>`
-).join("")}
-
-</ul>
-
-</div>
-`;
-
-}
-
-// ======================================
-// EXPORT JSON
-// ======================================
-
-document
-.getElementById(
-"exportJSON"
-)
-.addEventListener(
-"click",
-()=>{
-
-const blob =
-new Blob(
-
-[
-JSON.stringify(
-DATA,
-null,
-2
-)
-],
-
-{
-type:
-"application/json"
-}
-
-);
-
-const a =
-document.createElement(
-"a"
-);
-
-a.href =
-URL.createObjectURL(
-blob
-);
-
-a.download =
-"pte_tracker_backup.json";
-
-a.click();
-
-}
-);
-
-// ======================================
-// IMPORT JSON
-// ======================================
-
-document
-.getElementById(
-"importJSON"
-)
-.addEventListener(
-"click",
-()=>{
-
-document
-.getElementById(
-"importFile"
-)
-.click();
-
-}
-);
-
-document
-.getElementById(
-"importFile"
-)
-.addEventListener(
-"change",
-e=>{
-
-const file =
-e.target.files[0];
-
-if(!file) return;
-
-const reader =
-new FileReader();
-
-reader.onload =
-function(){
-
-const imported =
-
-JSON.parse(
-reader.result
-);
-
-Object.keys(imported)
-.forEach(k=>{
-
-DATA[k] =
-imported[k];
-
-});
-
-saveData(DATA);
-
-location.reload();
-
-};
-
-reader.readAsText(
-file
-);
-
-}
-);
-
-// ======================================
-// RESET
-// ======================================
-
-document
-.getElementById(
-"resetAll"
-)
-.addEventListener(
-"click",
-()=>{
-
-const ok =
-confirm(
-
-"Xóa toàn bộ dữ liệu?"
-
-);
-
-if(!ok) return;
-
-localStorage.removeItem(
-"pte_mvp_data"
-);
-
-location.reload();
-
-}
-);
-
-// ======================================
-// PATCH UPDATE
-// ======================================
-
-const oldUpdate =
-updateAll;
-
-updateAll =
-function(){
-
-oldUpdate();
-
-saveDailySnapshot();
-
-renderStudyPlan();
-
-renderGoalTracker();
-
-};
-
-// ======================================
-// INIT
-// ======================================
-
-renderStudyPlan();
-
-renderGoalTracker();
-
-saveDailySnapshot();
-
-updateAll();
-// ======================================
-// DAILY HISTORY
-// ======================================
-
-function getToday(){
-
-const d = new Date();
-
-const yyyy = d.getFullYear();
-
-const mm =
-String(
-d.getMonth()+1
-).padStart(2,"0");
-
-const dd =
-String(
-d.getDate()
-).padStart(2,"0");
-
-return `${yyyy}-${mm}-${dd}`;
-
-}
-
-if(!DATA.__history){
-
-DATA.__history = [];
-
-}
-
-function saveDailySnapshot(){
-
-let totalRaw = 0;
-let totalMax = 0;
-
-TASKS.forEach(task=>{
-
-const result =
-calculateTask(
-DATA[task[0]] || ""
-);
-
-totalRaw += result.raw;
-totalMax += result.max;
-
-});
-
-const accuracy =
-
-totalMax > 0
-
-?
-
-(totalRaw/totalMax)*100
-
-:
-
-0;
-
-const today =
-getToday();
-
-const existing =
-DATA.__history.find(
-x=>x.date===today
-);
-
-if(existing){
-
-existing.accuracy =
-accuracy;
-
-existing.prediction =
-calculatePrediction();
-
-}
-else{
-
-DATA.__history.push({
-
-date:today,
-
-accuracy:
-accuracy,
-
-prediction:
-calculatePrediction()
-
-});
-
-}
-
-saveData(DATA);
-
-}
-
-// ======================================
-// GOAL TRACKER
-// ======================================
-
-function renderGoalTracker(){
-
-let html =
-
-`
-<div class="kpi-card">
-
-<div class="kpi-title">
-Mục tiêu Overall
-</div>
-
-`;
-
-const overall =
-
-parseFloat(
-document
-.getElementById(
-"overallPrediction"
-)
-.innerText
-);
-
-const remain =
-
-Math.max(
-0,
-55-overall
-);
-
-html +=
-
-`
-<div class="kpi-score">
-${overall}
- / 55
-</div>
-
-<div>
-Còn thiếu:
-${remain.toFixed(1)}
-điểm
-</div>
-
-</div>
-`;
-
-const container =
-document.getElementById(
-"todayKPI"
-);
-
-container.insertAdjacentHTML(
-"beforeend",
-html
-);
-
-}
-
-// ======================================
-// STUDY PLAN
-// ======================================
-
-function renderStudyPlan(){
-
-const box =
-document.getElementById(
-"studyPlan"
-);
-
-const day =
-new Date().getDay();
-
-// 0 CN
-// 1 T2
-// 2 T3
-// 3 T4
-// 4 T5
-// 5 T6
-// 6 T7
-
-let plan = [];
-
-let mode = "FULL";
-
-if(
-day===2 ||
-day===3 ||
-day===5
-){
-
-mode="LIGHT";
-
-}
-
-if(mode==="LIGHT"){
-
-plan=[
-
-"Repeat Sentence (20)",
-
-"Write From Dictation (20)",
-
-"Read Aloud (15)",
-
-"Reading & Writing FIB (10)",
-
-"Fill In The Blanks (10)"
-
-];
-
-}
-else{
-
-plan=[
-
-"Repeat Sentence (40)",
-
-"Write From Dictation (40)",
-
-"Read Aloud (30)",
-
-"Reading & Writing FIB (25)",
-
-"Fill In The Blanks (25)",
-
-"Describe Image (15)",
-
-"Retell Lecture (10)"
-
-];
-
-}
-
-box.innerHTML =
-
-`
-<div class="plan-day">
-
-<h3>
-Kế hoạch hôm nay
-</h3>
-
-<p>
-Chế độ:
-<b>${mode}</b>
-</p>
-
-<ul>
-
-${plan.map(
-x=>`<li>${x}</li>`
-).join("")}
-
-</ul>
-
-</div>
-`;
-
-}
-
-// ======================================
-// EXPORT JSON
-// ======================================
-
-document
-.getElementById(
-"exportJSON"
-)
-.addEventListener(
-"click",
-()=>{
-
-const blob =
-new Blob(
-
-[
-JSON.stringify(
-DATA,
-null,
-2
-)
-],
-
-{
-type:
-"application/json"
-}
-
-);
-
-const a =
-document.createElement(
-"a"
-);
-
-a.href =
-URL.createObjectURL(
-blob
-);
-
-a.download =
-"pte_tracker_backup.json";
-
-a.click();
-
-}
-);
-
-// ======================================
-// IMPORT JSON
-// ======================================
-
-document
-.getElementById(
-"importJSON"
-)
-.addEventListener(
-"click",
-()=>{
-
-document
-.getElementById(
-"importFile"
-)
-.click();
-
-}
-);
-
-document
-.getElementById(
-"importFile"
-)
-.addEventListener(
-"change",
-e=>{
-
-const file =
-e.target.files[0];
-
-if(!file) return;
-
-const reader =
-new FileReader();
-
-reader.onload =
-function(){
-
-const imported =
-
-JSON.parse(
-reader.result
-);
-
-Object.keys(imported)
-.forEach(k=>{
-
-DATA[k] =
-imported[k];
-
-});
-
-saveData(DATA);
-
-location.reload();
-
-};
-
-reader.readAsText(
-file
-);
-
-}
-);
-
-// ======================================
-// RESET
-// ======================================
-
-document
-.getElementById(
-"resetAll"
-)
-.addEventListener(
-"click",
-()=>{
-
-const ok =
-confirm(
-
-"Xóa toàn bộ dữ liệu?"
-
-);
-
-if(!ok) return;
-
-localStorage.removeItem(
-"pte_mvp_data"
-);
-
-location.reload();
-
-}
-);
-
-// ======================================
-// PATCH UPDATE
-// ======================================
-
-const oldUpdate =
-updateAll;
-
-updateAll =
-function(){
-
-oldUpdate();
-
-saveDailySnapshot();
-
-renderStudyPlan();
-
-renderGoalTracker();
-
-};
-
-// ======================================
-// INIT
-// ======================================
-
-renderStudyPlan();
-
-renderGoalTracker();
-
-saveDailySnapshot();
-
-updateAll();
-// ======================================
-// CHART CONTAINERS
-// ======================================
-
-if(!document.getElementById("historyPanel")){
-
-const chartPanel =
-document.createElement("div");
-
-chartPanel.className = "section";
-
-chartPanel.id = "historyPanel";
-
-chartPanel.innerHTML = `
-
-<h2>
-Biểu đồ tiến bộ
-</h2>
-
-<canvas
-id="progressChart"
-height="120">
-</canvas>
-
-<br>
-
-<canvas
-id="predictionChart"
-height="120">
-</canvas>
-
-`;
-
-document
-.querySelector(".container")
-.appendChild(chartPanel);
-
-}
-
-// ======================================
-// CHARTS
-// ======================================
-
-let progressChart = null;
-let predictionChart = null;
-
-function renderCharts(){
-
-if(!DATA.__history){
-
-return;
-
-}
-
-const labels =
-DATA.__history.map(
-x=>x.date
-);
-
-const accuracyData =
-DATA.__history.map(
-x=>Number(
-x.accuracy.toFixed(1)
-)
-);
-
-const predictionData =
-DATA.__history.map(
-x=>Number(
-x.prediction.toFixed(1)
-)
-);
-
-// ==========================
-// ACCURACY CHART
-// ==========================
-
-const ctx1 =
-document
-.getElementById(
-"progressChart"
-)
-.getContext("2d");
-
-if(progressChart){
-
-progressChart.destroy();
-
-}
-
-progressChart =
-new Chart(ctx1,{
-
-type:"line",
-
-data:{
-
-labels,
-
-datasets:[{
-
-label:
-"Accuracy %",
-
-data:
-accuracyData,
-
-tension:0.3
-
-}]
-
-},
-
-options:{
-
-responsive:true,
-
-plugins:{
-
-legend:{
-display:true
-}
-
-}
-
-}
-
-});
-
-// ==========================
-// PREDICTION CHART
-// ==========================
-
-const ctx2 =
-document
-.getElementById(
-"predictionChart"
-)
-.getContext("2d");
-
-if(predictionChart){
-
-predictionChart.destroy();
-
-}
-
-predictionChart =
-new Chart(ctx2,{
-
-type:"line",
-
-data:{
-
-labels,
-
-datasets:[{
-
-label:
-"Overall Prediction",
-
-data:
-predictionData,
-
-tension:0.3
-
-}]
-
-},
-
-options:{
-
-responsive:true,
-
-plugins:{
-
-legend:{
-display:true
-}
-
-}
-
-}
-
-});
-
-}
-
-// ======================================
-// CSV EXPORT
-// ======================================
-
-document
-.getElementById(
-"exportCSV"
-)
-.addEventListener(
-"click",
-()=>{
-
-let csv =
-"Task,Raw,Max,Accuracy\n";
-
-TASKS.forEach(task=>{
-
-const name =
-task[0];
-
-const result =
-calculateTask(
-DATA[name] || ""
-);
-
-csv +=
-
-`"${name}",${result.raw},${result.max},${result.accuracy.toFixed(2)}\n`;
-
-});
-
-const blob =
-new Blob(
-[csv],
-{
-type:
-"text/csv"
-}
-);
-
-const a =
-document.createElement(
-"a"
-);
-
-a.href =
-URL.createObjectURL(
-blob
-);
-
-a.download =
-"pte_scores.csv";
-
-a.click();
-
-}
-);
-
-// ======================================
-// ADVANCED GOAL TRACKER
-// ======================================
-
-function renderAdvancedGoals(){
-
-const kpi =
-document.getElementById(
-"todayKPI"
-);
-
-const goals = [
-
-{
-name:"Repeat Sentence",
-target:70
-},
-
-{
-name:"Write From Dictation",
-target:70
-},
-
-{
-name:"Read Aloud",
-target:75
-},
-
-{
-name:"Reading & Writing FIB",
-target:70
-},
-
-{
-name:"Fill In The Blanks",
-target:70
-}
-
-];
-
-goals.forEach(g=>{
-
-const result =
-calculateTask(
-DATA[g.name] || ""
-);
-
-const remain =
-
-Math.max(
-0,
-g.target -
-result.accuracy
-);
-
-const div =
-document.createElement(
-"div"
-);
-
-div.className =
-"kpi-card";
-
-div.innerHTML =
-
-`
-<div class="kpi-title">
-${g.name}
-</div>
-
-<div class="kpi-score">
-${result.accuracy.toFixed(1)}%
-</div>
-
-<div>
-Target:
-${g.target}%
-</div>
-
-<div>
-Thiếu:
-${remain.toFixed(1)}%
-</div>
-`;
-
-kpi.appendChild(div);
-
-});
-
-}
-
-// ======================================
-// WEEKLY REPORT
-// ======================================
-
-function generateWeeklyReport(){
-
-if(
-!DATA.__history ||
-DATA.__history.length < 2
-){
-
-return;
-
-}
-
-const first =
-DATA.__history[0];
-
-const last =
-DATA.__history[
-DATA.__history.length-1
-];
-
-const improve =
-
-last.prediction -
-first.prediction;
-
-console.log(
-
-"Weekly Progress:",
-improve
-
-);
-
-}
-
-// ======================================
-// PATCH UPDATE
-// ======================================
-
-const updateAllBackup =
-updateAll;
-
-updateAll =
-function(){
-
-updateAllBackup();
-
-renderCharts();
-
-renderAdvancedGoals();
-
-generateWeeklyReport();
-
-};
-
-// ======================================
-// INIT
-// ======================================
-
-renderCharts();
-
-renderAdvancedGoals();
-
-generateWeeklyReport();
-
-updateAll();
+// ═══════════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════════
+buildTaskCards();
+renderAll();
+setInterval(saveData, 30000);
+window.addEventListener("beforeunload", saveData);
 </script>
+</body>
+</html>
