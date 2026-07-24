@@ -3,981 +3,970 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PTE 55+ Final Sprint Tracker</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<title>PTE 5-Day Sprint — Target 50</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700;800&display=swap');
-
 :root {
-  --bg: #060a14;
-  --surface: #0d1525;
-  --card: #111c30;
-  --border: #1e3050;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --dim: #334155;
-
-  --red: #ef4444;
-  --red-glow: #ef444433;
-  --orange: #f97316;
-  --yellow: #eab308;
-  --green: #22c55e;
-  --green-glow: #22c55e22;
-  --blue: #38bdf8;
-  --blue-glow: #38bdf822;
-  --purple: #a78bfa;
-
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'Inter', Arial, sans-serif;
+  --bg:#060d1a; --surface:#0d1b2e; --card:#111f35;
+  --border:#1a2f4a; --text:#e2e8f0; --muted:#64748b; --dim:#334155;
+  --red:#ef4444; --red-s:#ef444418; --red-b:#ef444440;
+  --orange:#f97316; --orange-s:#f9731618;
+  --yellow:#eab308; --yellow-s:#eab30818; --yellow-b:#eab30840;
+  --green:#22c55e; --green-s:#22c55e18; --green-b:#22c55e40;
+  --blue:#38bdf8; --blue-s:#38bdf818; --blue-b:#38bdf840;
+  --purple:#a78bfa;
 }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-serif;padding:16px;font-size:14px;}
+.wrap{max-width:1100px;margin:auto;}
 
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--sans); padding:20px; line-height:1.5; }
-.container { max-width:1160px; margin:auto; }
+/* BANNER */
+.banner{
+  background:linear-gradient(135deg,#1a0a0a 0%,#0d1b2e 100%);
+  border:1px solid var(--red); border-radius:14px;
+  padding:18px 22px; margin-bottom:20px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+}
+.banner-left h1{font-size:22px;font-weight:800;letter-spacing:-.3px;}
+.banner-left h1 span{color:var(--red);}
+.banner-left .sub{color:var(--muted);font-size:12px;margin-top:4px;}
+.banner-right{display:flex;gap:16px;flex-wrap:wrap;}
+.bstat{text-align:center;}
+.bstat .num{font-size:28px;font-weight:800;font-family:monospace;}
+.bstat .lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
 
-/* ── HEADER ── */
-.header { border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 28px; }
-.header-top { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:16px; }
-.title-block h1 { font-size:28px; font-weight:800; letter-spacing:-0.5px; line-height:1.1; }
-.title-block h1 span { color: var(--red); }
-.title-block .sub { color:var(--muted); font-size:13px; margin-top:6px; font-family:var(--mono); }
-.countdown-box { background:var(--card); border:1px solid var(--red); border-radius:12px; padding:14px 24px; text-align:center; box-shadow:0 0 20px var(--red-glow); min-width:140px; }
-.countdown-box .num { font-size:52px; font-weight:800; color:var(--red); line-height:1; font-family:var(--mono); }
-.countdown-box .lbl { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+/* TABS */
+.tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
+.tab{padding:7px 18px;border-radius:20px;font-size:12px;cursor:pointer;
+  background:var(--surface);color:var(--muted);border:1px solid var(--border);font-weight:600;}
+.tab.active{background:var(--blue);color:#000;border-color:var(--blue);}
 
-/* ── ALERT ── */
-.alert { background:linear-gradient(135deg,#1a0a0a,#0d1525); border:1px solid var(--red); border-radius:10px; padding:14px 18px; font-size:13px; color:#fca5a5; margin-bottom:24px; display:flex; gap:12px; align-items:flex-start; }
-.alert.good { border-color: var(--green); color:#bbf7d0; background:linear-gradient(135deg,#08170c,#0d1525); }
-.alert-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+/* SECTION */
+.section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;}
+.section h2{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.tag{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;}
+.tag-red{background:var(--red-s);color:var(--red);}
+.tag-blue{background:var(--blue-s);color:var(--blue);}
+.tag-green{background:var(--green-s);color:var(--green);}
+.tag-yellow{background:var(--yellow-s);color:var(--yellow);}
 
-/* ── FILTER ── */
-.filter-bar { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
-.filter-btn { padding:6px 18px; border-radius:30px; font-size:12px; cursor:pointer; background:var(--card); color:var(--muted); border:1px solid var(--border); font-weight:600; font-family:var(--mono); transition:.2s; }
-.filter-btn.active { background:var(--blue); color:#000; border-color:var(--blue); }
-.filter-btn:hover { opacity:.85; }
+/* ANALYSIS GRID */
+.analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;}
+.acard{background:var(--surface);border-radius:10px;padding:12px 14px;border:1px solid var(--border);}
+.acard.urgent{border-color:var(--red);background:linear-gradient(135deg,#1a060620,var(--surface));}
+.acard.warn{border-color:var(--yellow);}
+.acard.good{border-color:var(--green);}
+.acard .alabel{font-size:10px;color:var(--muted);margin-bottom:4px;display:flex;justify-content:space-between;}
+.acard .aval{font-size:24px;font-weight:800;font-family:monospace;}
+.acard .asub{font-size:10px;margin-top:3px;}
+.c-red{color:var(--red);} .c-orange{color:var(--orange);}
+.c-yellow{color:var(--yellow);} .c-green{color:var(--green);}
+.c-blue{color:var(--blue);} .c-muted{color:var(--muted);}
 
-/* ── SCORES GRID ── */
-.scores-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:16px; }
-.score-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
-.score-card .label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
-.score-card .val { font-size:22px; font-weight:700; font-family:var(--mono); }
-.score-card .gap-tag { font-size:10px; font-family:var(--mono); margin-top:2px; }
-.c-red{color:var(--red)} .c-orange{color:var(--orange)} .c-yellow{color:var(--yellow)} .c-green{color:var(--green)} .c-blue{color:var(--blue)} .c-muted{color:var(--muted)}
-.score-card.urgent { border-color:var(--red); background:linear-gradient(135deg,#1a0808,#111c30); }
-.score-card.warn { border-color:var(--yellow); }
-.score-card.ok { border-color:var(--green); }
+/* INSIGHT BOX */
+.insight{background:var(--surface);border-radius:10px;padding:14px 16px;
+  border-left:3px solid var(--blue);margin-bottom:10px;font-size:12px;line-height:1.7;}
+.insight.critical{border-left-color:var(--red);background:#1a060620;}
+.insight.win{border-left-color:var(--green);}
+.insight strong{color:var(--text);}
 
-/* ── DASH ── */
-.dashboard { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:28px; }
-.dash-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
-.dash-card .label { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; font-family:var(--mono); }
-.dash-card .value { font-size:20px; font-weight:800; font-family:var(--mono); }
+/* PROJECTION */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:550px){.proj-grid{grid-template-columns:1fr;}}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+.pcard.main{border-color:var(--yellow);}
+.pcard .pname{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.pcard .pscore{font-size:36px;font-weight:800;font-family:monospace;}
+.pcard .pcond{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5;}
 
-.pte-score-table { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
-.pte-overall-row { display:flex; align-items:baseline; gap:14px; padding-bottom:16px; margin-bottom:16px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
-.pte-overall-label { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); }
-.pte-overall-value { font-size:36px; font-weight:900; font-family:var(--mono); line-height:1; }
-.pte-overall-target { font-size:11px; color:var(--muted); font-family:var(--mono); }
-.pte-skill-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
-.pte-skill-card { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
-.pte-skill-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border); }
-.pte-skill-name { font-size:13px; font-weight:700; }
-.pte-skill-score { font-size:22px; font-weight:900; font-family:var(--mono); }
-.pte-task-list { display:flex; flex-direction:column; gap:5px; }
-.pte-task-row { display:grid; grid-template-columns:38px 1fr auto; gap:8px; align-items:center; font-size:11px; }
-.pte-task-id { font-family:var(--mono); font-weight:700; color:var(--muted); }
-.pte-task-name { color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.pte-task-pct { font-family:var(--mono); font-weight:700; text-align:right; }
+/* STRATEGY CARDS */
+.strat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.scard-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.scard-title{font-size:13px;font-weight:700;}
+.scard-badge{font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;}
+.scard ul{list-style:none;font-size:12px;color:var(--text);display:flex;flex-direction:column;gap:5px;}
+.scard ul li{display:flex;gap:6px;line-height:1.5;}
+.scard ul li .arr{color:var(--blue);flex-shrink:0;}
+.method-box{background:var(--card);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:11px;}
+.method-box .mtitle{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px;}
+.method-box code{background:var(--bg);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:11px;color:var(--blue);}
 
-/* ── SECTION ── */
-.section { margin-bottom:32px; }
-.section-title { display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
-.section-title h2 { font-size:16px; font-weight:700; }
-.section-title .tag { font-size:10px; padding:2px 10px; border-radius:20px; font-weight:700; font-family:var(--mono); }
-.tag-red{background:var(--red-glow);color:var(--red)} .tag-blue{background:var(--blue-glow);color:var(--blue)} .tag-green{background:var(--green-glow);color:var(--green)}
+/* 5-DAY SCHEDULE */
+.days-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;}
+.dcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.dcard.today{border-color:var(--blue);box-shadow:0 0 14px #38bdf820;}
+.dcard.light-day{opacity:.9;}
+.dcard.exam-eve{border-color:var(--yellow);}
+.dhead{padding:10px 14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;}
+.dhead-left .ddate{font-size:16px;font-weight:800;font-family:monospace;}
+.dhead-left .ddow{font-size:11px;color:var(--muted);}
+.dhead-right{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
+.dbadge{font-size:8px;padding:2px 7px;border-radius:8px;font-weight:700;}
+.dbadge-blue{background:var(--blue);color:#000;}
+.dbadge-gray{background:var(--border);color:var(--muted);}
+.dbadge-yellow{background:var(--yellow-s);color:var(--yellow);border:1px solid var(--yellow-b);}
+.dbody{padding:12px 14px;}
+.dfocus{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;}
+.dfocus-text{font-size:11px;font-weight:600;color:var(--blue);margin-bottom:10px;}
+.dtasks{display:flex;flex-direction:column;gap:5px;}
+.dtask-row{display:flex;align-items:center;gap:6px;font-size:11px;}
+.dpill{font-size:9px;font-weight:700;padding:2px 6px;border-radius:5px;font-family:monospace;min-width:34px;text-align:center;}
+.dpill-red{background:var(--red-s);color:var(--red);border:1px solid var(--red-b);}
+.dpill-green{background:var(--green-s);color:var(--green);border:1px solid var(--green-b);}
+.dpill-blue{background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-b);}
+.dpill-yellow{background:var(--yellow-s);color:var(--yellow);border:1px solid var(--yellow-b);}
+.dpill-gray{background:#33415520;color:var(--muted);border:1px solid #33415540;}
+.dtask-name{flex:1;color:var(--text);}
+.dtask-reps{font-family:monospace;font-size:10px;color:var(--dim);}
+.dtask-reps.hi{color:var(--red);font-weight:700;}
+.dtask-reps.ok{color:var(--green);}
+.dnote{margin-top:8px;padding:7px 9px;border-radius:6px;font-size:10px;line-height:1.5;
+  background:var(--card);border-left:2px solid var(--dim);color:var(--muted);}
+.dnote.crit{border-left-color:var(--red);color:#fca5a5;background:#1a060618;}
+.dnote.strat{border-left-color:var(--blue);color:#93c5fd;}
+.dhrs{margin-top:8px;display:flex;align-items:center;gap:6px;font-size:9px;color:var(--dim);}
+.dhrs-bar{flex:1;height:3px;background:var(--border);border-radius:2px;}
+.dhrs-fill{height:3px;border-radius:2px;background:var(--blue);}
 
-/* ── RA NOTE ── */
-.ra-note { background:linear-gradient(135deg,#0a1a2a,#111c30); border:1px solid var(--blue); border-radius:12px; padding:18px 20px; margin-bottom:14px; }
-.ra-note h3 { font-size:14px; color:var(--blue); margin-bottom:10px; }
-.ra-note-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-@media(max-width:600px){ .ra-note-grid{grid-template-columns:1fr;} }
-.ra-method { background:var(--bg); border-radius:8px; padding:12px 14px; border:1px solid var(--border); }
-.ra-method .method-label { font-size:10px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:6px; }
-.ra-method .method-name { font-size:14px; font-weight:700; color:var(--blue); margin-bottom:6px; }
-.ra-method ul { list-style:none; padding:0; font-size:12px; color:var(--text); }
-.ra-method ul li { padding:3px 0; display:flex; gap:6px; }
-.ra-method ul li::before { content:"→"; color:var(--blue); flex-shrink:0; }
+/* TRACKER */
+.tracker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+.tcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.tcard-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.tcard-name{font-weight:700;font-size:13px;}
+.tcard-weight{font-size:9px;color:var(--muted);font-family:monospace;}
+.tcard-baseline{font-size:10px;color:var(--muted);margin-bottom:8px;}
+.tcard-baseline span{font-family:monospace;}
+.bar-wrap{background:var(--border);border-radius:4px;height:6px;margin:6px 0;position:relative;overflow:hidden;}
+.bar-base{height:6px;border-radius:4px;opacity:.4;}
+.bar-now{height:6px;border-radius:4px;position:absolute;top:0;left:0;transition:width .5s;}
+.bar-target-line{position:absolute;top:-1px;height:8px;width:2px;border-radius:1px;background:#64748b;}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}
+.entry-input{background:var(--card);border:1px solid var(--border);color:var(--text);
+  border-radius:6px;padding:5px 8px;font-size:12px;width:100%;outline:none;font-family:monospace;}
+.entry-input:focus{border-color:var(--blue);}
+.entry-pct{font-size:11px;font-weight:700;text-align:right;padding-top:2px;font-family:monospace;}
+.tcard-total{margin-top:8px;padding-top:7px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;font-size:11px;}
+.tot-score{font-weight:700;font-family:monospace;}
+.goal-status{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;}
+.gs-need{background:var(--red-s);color:var(--red);}
+.gs-almost{background:var(--yellow-s);color:var(--yellow);}
+.gs-done{background:var(--green-s);color:var(--green);}
+.gs-na{background:var(--border);color:var(--muted);}
+.add-btn{background:none;border:1px dashed var(--border);color:var(--muted);
+  border-radius:5px;padding:3px 8px;font-size:10px;cursor:pointer;width:100%;margin-top:5px;}
+.add-btn:hover{border-color:var(--blue);color:var(--blue);}
+.remove-btn{background:none;border:none;color:var(--dim);cursor:pointer;font-size:11px;padding:0;}
+.remove-btn:hover{color:var(--red);}
 
-/* ── PROJECTION ── */
-.projection { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:28px; }
-.proj-title { font-size:13px; color:var(--muted); margin-bottom:14px; }
-.proj-scenarios { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-@media(max-width:600px){ .proj-scenarios{grid-template-columns:1fr;} }
-.proj-scenario { background:var(--surface); border-radius:8px; padding:14px; border:1px solid var(--border); text-align:center; }
-.proj-scenario .scenario-name { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
-.proj-scenario .score { font-size:32px; font-weight:800; font-family:var(--mono); }
-.proj-scenario .condition { font-size:10px; color:var(--muted); margin-top:6px; line-height:1.4; }
-.proj-scenario.pessimist .score { color:var(--red); }
-.proj-scenario.realistic .score { color:var(--yellow); }
-.proj-scenario.realistic { border-color:var(--yellow); }
-.proj-scenario.optimist .score { color:var(--green); }
+/* OVERALL PROGRESS */
+.overall-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;}
+.overall-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.overall-num{font-size:42px;font-weight:800;font-family:monospace;}
+.overall-target{font-size:13px;color:var(--muted);}
+.overall-target span{font-family:monospace;color:var(--yellow);font-weight:700;}
+.prog-bg{background:var(--border);border-radius:8px;height:12px;position:relative;overflow:hidden;}
+.prog-fill{height:12px;border-radius:8px;transition:width .6s;}
+.prog-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:3px;font-family:monospace;}
+.skill-row{display:grid;grid-template-columns:90px 1fr 50px;align-items:center;gap:8px;font-size:11px;margin-top:6px;}
+.skill-name{color:var(--muted);}
+.skill-bar-bg{background:var(--border);border-radius:3px;height:5px;overflow:hidden;}
+.skill-bar-f{height:5px;border-radius:3px;transition:width .5s;}
+.skill-val{font-family:monospace;font-size:11px;font-weight:700;text-align:right;}
 
-/* ── DAYS GRID ── */
-.days-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
-.day-card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:border-color .2s; }
-.day-card.today { border-color:var(--blue); box-shadow:0 0 16px var(--blue-glow); }
-.day-card.exam { border-color:var(--red); box-shadow:0 0 20px var(--red-glow); }
-.day-header { padding:12px 16px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
-.day-num { font-size:22px; font-weight:800; font-family:var(--mono); line-height:1; }
-.day-name { font-size:13px; color:var(--muted); }
-.day-badges { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
-.badge { font-size:9px; padding:2px 8px; border-radius:10px; font-weight:700; font-family:var(--mono); white-space:nowrap; }
-.badge-today { background:var(--blue); color:#000; }
-.badge-light { background:#1e293b; color:var(--muted); }
-.badge-exam { background:var(--red); color:#fff; }
-.day-body { padding:14px 16px; }
-.focus-label { font-size:9px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:4px; }
-.focus-text { font-size:12px; font-weight:600; color:var(--blue); margin-bottom:12px; }
-.task-list { display:flex; flex-direction:column; gap:6px; }
-.task-row { display:flex; align-items:center; gap:8px; font-size:12px; }
-.task-pill { font-family:var(--mono); font-size:10px; font-weight:700; padding:2px 7px; border-radius:6px; white-space:nowrap; min-width:38px; text-align:center; }
-.pill-red{background:#ef444420;color:var(--red);border:1px solid #ef444440}
-.pill-orange{background:#f9731620;color:var(--orange);border:1px solid #f9731640}
-.pill-yellow{background:#eab30820;color:var(--yellow);border:1px solid #eab30840}
-.pill-green{background:#22c55e20;color:var(--green);border:1px solid #22c55e40}
-.pill-blue{background:#38bdf820;color:var(--blue);border:1px solid #38bdf840}
-.pill-gray{background:#33415520;color:var(--muted);border:1px solid #33415540}
-.task-name-text { flex:1; color:var(--text); }
-.task-reps { font-family:var(--mono); font-size:10px; color:var(--dim); white-space:nowrap; }
-.task-reps.boost { color:var(--red); font-weight:700; }
-.task-reps.daily { color:var(--green); }
-.day-note { margin-top:10px; padding:8px 10px; background:var(--surface); border-radius:6px; font-size:11px; color:var(--muted); border-left:2px solid var(--dim); }
-.day-note.critical { border-left-color:var(--red); color:#fca5a5; background:#1a080820; }
-.day-note.strategy { border-left-color:var(--blue); color:#93c5fd; }
-.hour-bar { margin-top:10px; display:flex; align-items:center; gap:8px; font-size:10px; color:var(--muted); font-family:var(--mono); }
-.hour-bar-bg { flex:1; height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
-.hour-bar-fill { height:4px; border-radius:2px; background:var(--blue); }
+/* RULES */
+.rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
+.rule-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.rule-n{font-size:24px;font-weight:800;color:var(--dim);font-family:monospace;margin-bottom:4px;}
+.rule-t{font-size:12px;font-weight:700;margin-bottom:4px;}
+.rule-b{font-size:11px;color:var(--muted);line-height:1.5;}
 
-/* ── STRATEGY ── */
-.strategy-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
-.strategy-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; }
-.strategy-card h3 { font-size:13px; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
-.strategy-card ul { list-style:none; padding:0; font-size:12px; color:var(--text); display:flex; flex-direction:column; gap:5px; }
-.strategy-card ul li { display:flex; gap:6px; line-height:1.4; }
-.strategy-card ul li .bullet { flex-shrink:0; color:var(--blue); }
-
-/* ── RULES ── */
-.rules-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
-.rule-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
-.rule-num { font-size:28px; font-weight:800; color:var(--dim); font-family:var(--mono); margin-bottom:6px; }
-.rule-title { font-size:13px; font-weight:700; margin-bottom:4px; }
-.rule-text { font-size:11px; color:var(--muted); line-height:1.5; }
-
-/* ── ENTRY SECTION ── */
-.btn-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-.btn-row button { background:var(--blue); color:#000; border:none; border-radius:8px; padding:8px 16px; font-weight:700; cursor:pointer; font-size:12px; font-family:var(--mono); transition:.2s; }
-.btn-row button:hover { opacity:.8; }
-.btn-row button.danger { background:var(--red); color:#fff; }
-.task-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
-.task-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:13px; }
-.task-card.st-intensive { border-color:var(--red); box-shadow:0 0 0 1px var(--red-glow); }
-.task-card.st-focus { border-color:var(--orange); }
-.task-card.st-maintain { border-color:var(--border); }
-.task-card.st-rest { opacity:.55; }
-.tc-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:2px; }
-.tc-name { font-weight:700; font-size:13px; }
-.tc-weight { font-size:10px; padding:1px 8px; border-radius:10px; background:var(--surface); color:var(--muted); font-family:var(--mono); white-space:nowrap; }
-.tc-vi { color:var(--muted); font-size:11px; margin-bottom:8px; }
-.entries-list { display:flex; flex-direction:column; gap:3px; margin-bottom:6px; }
-.entry-row { display:grid; grid-template-columns:1fr 46px 18px; align-items:center; gap:4px; }
-.entry-input { background:transparent; border:none; border-bottom:1px solid var(--border); color:var(--text); font-size:12px; padding:3px 4px; outline:none; width:100%; font-family:var(--mono); }
-.entry-input:focus { border-bottom-color:var(--blue); }
-.entry-pct { font-size:10px; text-align:right; font-weight:700; font-family:var(--mono); }
-.remove-btn { background:none; color:var(--dim); border:none; cursor:pointer; font-size:12px; padding:0; line-height:1; }
-.remove-btn:hover { color:var(--red); }
-.add-entry-btn { background:none; border:1px dashed var(--border); color:var(--muted); border-radius:6px; padding:4px 8px; font-size:10px; cursor:pointer; width:100%; transition:.2s; font-family:var(--mono); }
-.add-entry-btn:hover { border-color:var(--blue); color:var(--blue); }
-.task-total { margin-top:8px; padding-top:6px; border-top:1px solid var(--border); font-size:11px; display:flex; justify-content:space-between; font-family:var(--mono); }
-.tot-label { color:var(--muted); }
-
-canvas { max-height:180px; }
-
-.footer { border-top:1px solid var(--border); padding-top:16px; margin-top:32px; font-size:11px; color:var(--dim); font-family:var(--mono); text-align:center; }
+/* RESPONSIVE */
+@media(max-width:600px){.banner{flex-direction:column;}.banner-right{justify-content:space-between;width:100%;}}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 
-<div class="header">
-  <div class="header-top">
-    <div class="title-block">
-      <h1>PTE <span>55+</span> — FINAL SPRINT</h1>
-      <div class="sub" id="subLine">Roadmap tự động · Thi: 20/07/2026</div>
-    </div>
-    <div class="countdown-box">
-      <div class="num" id="daysLeft">—</div>
-      <div class="lbl">ngày còn lại</div>
-    </div>
+<!-- BANNER -->
+<div class="banner">
+  <div class="banner-left">
+    <h1>PTE <span>50+</span> — 5 NGÀY CUỐI</h1>
+    <div class="sub">Mock test 23/07 · Speaking 49 · Writing 43 · Reading 38 · Listening 34 · Overall ~41</div>
+  </div>
+  <div class="banner-right">
+    <div class="bstat"><div class="num c-red" id="daysLeft">—</div><div class="lbl">ngày còn lại</div></div>
+    <div class="bstat"><div class="num c-yellow">41</div><div class="lbl">điểm hôm nay</div></div>
+    <div class="bstat"><div class="num c-green">50</div><div class="lbl">mục tiêu</div></div>
+    <div class="bstat"><div class="num c-orange">+9</div><div class="lbl">cần tăng</div></div>
   </div>
 </div>
 
-<div class="alert" id="alertBox"></div>
-
-<div class="filter-bar">
-  <button class="filter-btn" data-range="today">📅 Hôm nay</button>
-  <button class="filter-btn" data-range="7days">📆 7 ngày</button>
-  <button class="filter-btn active" data-range="all">🗂 Tất cả</button>
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" data-t="analysis">📊 Phân tích</div>
+  <div class="tab" data-t="strategy">🧠 Chiến lược</div>
+  <div class="tab" data-t="schedule">📅 Lịch 5 ngày</div>
+  <div class="tab" data-t="tracker">✏️ Nhập điểm</div>
+  <div class="tab" data-t="rules">⚡ Quy tắc</div>
 </div>
 
-<div class="section">
-  <div class="section-title"><h2>📊 Điểm hiện tại theo task</h2><span class="tag tag-blue" id="scoreRangeTag">Tất cả</span></div>
-  <div class="scores-grid" id="scoresGrid"></div>
-</div>
+<!-- ═══════ TAB: ANALYSIS ═══════ -->
+<div id="tab-analysis">
 
-<div class="dashboard" id="dashGrid"></div>
-
-<div class="section">
-  <div class="section-title"><h2>🏆 Bảng điểm PTE — Mock test gần nhất</h2><span class="tag tag-blue" id="pteScoreDate"></span></div>
-  <div class="pte-score-table" id="pteScoreTable"></div>
-</div>
-
-<div class="section">
-  <div class="section-title"><h2>🎙️ Read Aloud — Chiến thuật sàn bảo vệ</h2><span class="tag tag-blue">fluency &gt; accuracy</span></div>
-  <div class="ra-note">
-    <h3>Vì sao ưu tiên fluency thay vì accuracy?</h3>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">
-      RA tính theo Content + Pronunciation + Fluency — không đơn giản là số câu đúng/tổng. Nếu điểm RA không ổn định
-      trong vài ngày cuối, chuyển sang chiến lược phòng thủ sẽ an toàn hơn cố push accuracy.
-    </p>
-    <div class="ra-note-grid">
-      <div class="ra-method">
-        <div class="method-label">❌ Tránh trong giai đoạn nước rút</div>
-        <div class="method-name">Push accuracy % bằng mọi giá</div>
-        <ul>
-          <li>Cố đọc đúng từng từ → run lỗi khi nervous</li>
-          <li>Luyện quá nhiều bài mới → không kịp nhớ pattern</li>
-          <li>Target quá cao → không thực tế với số ngày còn lại</li>
-        </ul>
+  <div class="section">
+    <h2>📊 Kết quả mock test 23/07 <span class="tag tag-blue">PTE Magic</span></h2>
+    <div class="analysis-grid">
+      <div class="acard good">
+        <div class="alabel"><span>Speaking</span><span class="c-green">49</span></div>
+        <div class="aval c-green">49</div>
+        <div class="asub c-green">Tốt nhất — giữ nguyên</div>
       </div>
-      <div class="ra-method">
-        <div class="method-label">✅ Áp dụng ngay</div>
-        <div class="method-name">Giữ sàn ổn định + fluency</div>
-        <ul>
-          <li><strong>Fluency ưu tiên hơn accuracy</strong> — đọc trơn tru dù có lỗi nhỏ</li>
-          <li>Mỗi ngày chỉ luyện 5–6 bài RA, không cần nhiều hơn</li>
-          <li>Hít thở, dừng 1 giây, đọc với pace đều — không dừng giữa chừng</li>
-          <li>Đếm số lần đọc không dừng, không đếm % đúng</li>
-        </ul>
+      <div class="acard warn">
+        <div class="alabel"><span>Writing</span><span class="c-yellow">43</span></div>
+        <div class="aval c-yellow">43</div>
+        <div class="asub c-yellow">WFD kéo xuống nhiều</div>
+      </div>
+      <div class="acard urgent">
+        <div class="alabel"><span>Reading</span><span class="c-red">38</span></div>
+        <div class="aval c-red">38</div>
+        <div class="asub c-red">FIB yếu, MCQ = 0</div>
+      </div>
+      <div class="acard urgent">
+        <div class="alabel"><span>Listening</span><span class="c-red">34</span></div>
+        <div class="aval c-red">34</div>
+        <div class="asub c-red">SST = 0, WFD 44%</div>
       </div>
     </div>
   </div>
+
+  <div class="section">
+    <h2>🔍 Chi tiết từng task <span class="tag tag-red">điểm yếu chết người</span></h2>
+    <div class="analysis-grid">
+      <!-- Speaking -->
+      <div class="acard urgent">
+        <div class="alabel"><span>Repeat Sentence</span><span class="tag tag-red">🔴</span></div>
+        <div class="aval c-red">20%</div>
+        <div class="asub c-red">25.41/130 — thấp nhất Speaking<br>Potential: +3–4 điểm Overall</div>
+      </div>
+      <div class="acard warn">
+        <div class="alabel"><span>Read Aloud</span><span class="tag tag-yellow">⚠</span></div>
+        <div class="aval c-yellow">50%</div>
+        <div class="asub c-yellow">45.35/90 — Fluency chỉ 18.7<br>Cần tăng fluency, không phải accuracy</div>
+      </div>
+      <div class="acard good">
+        <div class="alabel"><span>Describe Image</span><span class="tag tag-green">✅</span></div>
+        <div class="aval c-green">68%</div>
+        <div class="asub c-green">43.66/64 — Tốt, giữ nguyên</div>
+      </div>
+      <div class="acard warn">
+        <div class="alabel"><span>Retell Lecture</span><span class="tag tag-yellow">⚠</span></div>
+        <div class="aval c-yellow">47%</div>
+        <div class="asub c-yellow">15.06/32 — Fluency yếu (2.7)<br>Template approach cần thiết</div>
+      </div>
+      <!-- Writing -->
+      <div class="acard urgent">
+        <div class="alabel"><span>WFD (Dictation)</span><span class="tag tag-red">🔴</span></div>
+        <div class="aval c-red">44%</div>
+        <div class="asub c-red">18/41 — ảnh hưởng cả Writing + Listening<br>Potential: +2–3 điểm Overall</div>
+      </div>
+      <div class="acard warn">
+        <div class="alabel"><span>Essay</span><span class="tag tag-yellow">⚠</span></div>
+        <div class="aval c-yellow">47%</div>
+        <div class="asub c-yellow">24.7/52 — chỉ dùng template<br>5 ngày không cải thiện nhiều</div>
+      </div>
+      <!-- Reading -->
+      <div class="acard urgent">
+        <div class="alabel"><span>FIB-r (dropdown)</span><span class="tag tag-red">🔴</span></div>
+        <div class="aval c-red">18%</div>
+        <div class="asub c-red">2/11 — collocation yếu<br>Khó cải thiện nhanh</div>
+      </div>
+      <div class="acard warn">
+        <div class="alabel"><span>FIB-rw (drag&drop)</span><span class="tag tag-yellow">⚠</span></div>
+        <div class="aval c-yellow">37%</div>
+        <div class="asub c-yellow">12/32 — context reading được<br>Có thể lên 55% trong 5 ngày</div>
+      </div>
+      <!-- Listening -->
+      <div class="acard urgent">
+        <div class="alabel"><span>SST (Summarize Spoken)</span><span class="tag tag-red">🔴🔴</span></div>
+        <div class="aval c-red">0%</div>
+        <div class="asub c-red">0/12 — bỏ trắng hoàn toàn<br>Chỉ cần template = +2–3 điểm</div>
+      </div>
+      <div class="acard urgent">
+        <div class="alabel"><span>FIB-l (Listening)</span><span class="tag tag-red">🔴</span></div>
+        <div class="aval c-red">25%</div>
+        <div class="asub c-red">4/16 — nghe + điền yếu<br>Cải thiện được bằng luyện tập</div>
+      </div>
+      <div class="acard good">
+        <div class="alabel"><span>HIW (Incorrect Words)</span><span class="tag tag-green">OK</span></div>
+        <div class="aval c-green">42%</div>
+        <div class="asub c-muted">5/12 — không cần ưu tiên</div>
+      </div>
+      <div class="acard good">
+        <div class="alabel"><span>Select Missing Word</span><span class="tag tag-green">✅</span></div>
+        <div class="aval c-green">100%</div>
+        <div class="asub c-green">2/2 — hoàn hảo, giữ nguyên</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>💡 Insight quan trọng nhất</h2>
+    <div class="insight critical">
+      <strong>🔴 RS chỉ 20% (25.41/130) — đây là nguyên nhân chính Speaking không cao hơn.</strong>
+      RS chiếm tỉ lệ lớn trong Speaking score. Fluency score RS của bạn chỉ 8.9 — rất thấp.
+      Bạn đang nghe xong rồi cố gắng nhớ từng từ → sai hoàn toàn. RS cần nhớ theo <em>chunk âm thanh</em>, không phải từng từ.
+      Nếu RS lên 50–60% → Speaking có thể nhảy lên 55+.
+    </div>
+    <div class="insight critical">
+      <strong>🔴 SST = 0% — đang bỏ phí hoàn toàn.</strong>
+      1 câu SST trong mock = 12 điểm max → bạn ghi 0. Chỉ cần viết được 1 đoạn summary dù đơn giản
+      là đã có điểm. Template SST học trong 30 phút, dùng được ngay ngày hôm sau.
+    </div>
+    <div class="insight win">
+      <strong>✅ DI 68%, Grammar 77%, Vocabulary 90%, Written Discourse 90% — enabling skills tốt.</strong>
+      Điều này có nghĩa bạn <em>có nền tảng</em> — vấn đề là kỹ năng PTE-specific, không phải tiếng Anh tổng quát.
+      RS và WFD là kỹ năng luyện được nhanh nếu làm đúng phương pháp.
+    </div>
+    <div class="insight">
+      <strong>📌 Reading 38 — không phải ưu tiên số 1.</strong>
+      FIB-r 18% cần vocabulary depth → 5 ngày không đủ. FIB-rw 37% có thể cải thiện.
+      MCQ và Re-order skip hoàn toàn — thời gian đầu tư không xứng với điểm thu về.
+      Chỉ làm FIB-rw 10 bài/ngày, còn lại tập trung RS + WFD + SST.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🎯 Dự báo 5 ngày</h2>
+    <div class="proj-grid">
+      <div class="pcard">
+        <div class="pname">Thực hiện 50%</div>
+        <div class="pscore c-red">44–46</div>
+        <div class="pcond">Bỏ vài ngày, RS không cải thiện được nhiều</div>
+      </div>
+      <div class="pcard main">
+        <div class="pname">🎯 Thực tế nhất</div>
+        <div class="pscore c-yellow">50–52</div>
+        <div class="pcond">RS lên 45–50%, WFD lên 60%, SST có template, FIB-rw lên 50%</div>
+      </div>
+      <div class="pcard">
+        <div class="pname">Bứt phá</div>
+        <div class="pscore c-green">53–55</div>
+        <div class="pcond">RS lên 55%+, WFD lên 65%+, SST 50%+, FIB-rw 60%+</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<div class="section">
-  <div class="section-title"><h2>📈 Dự báo điểm khi hết lộ trình</h2><span class="tag tag-blue" id="projTag">dựa trên data thực tế</span></div>
-  <div class="projection">
-    <div class="proj-title">Nếu bạn thực hiện đúng lộ trình bên dưới:</div>
-    <div class="proj-scenarios">
-      <div class="proj-scenario pessimist"><div class="scenario-name">Thực hiện 60%</div><div class="score" id="predPess">—</div><div class="condition">Bỏ vài ngày, không tập trung task yếu đủ</div></div>
-      <div class="proj-scenario realistic"><div class="scenario-name">🎯 Thực tế nhất</div><div class="score" id="predReal">—</div><div class="condition">Sprint đúng task yếu đều đặn, daily task không bỏ</div></div>
-      <div class="proj-scenario optimist"><div class="scenario-name">Nếu bứt phá</div><div class="score" id="predOpt">—</div><div class="condition">Các task SPRINT đều lên trên target</div></div>
+<!-- ═══════ TAB: STRATEGY ═══════ -->
+<div id="tab-strategy" style="display:none">
+
+  <div class="section">
+    <h2>🏆 Thứ tự ưu tiên tuyệt đối</h2>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="insight critical"><strong>① RS — Repeat Sentence (ưu tiên số 1)</strong><br>
+        Từ 20% → 50% có thể làm trong 5 ngày nếu đổi phương pháp. Đây là task có ROI cao nhất.</div>
+      <div class="insight critical"><strong>② WFD — Write From Dictation (ưu tiên số 2)</strong><br>
+        Từ 44% → 60% — ảnh hưởng cả Writing lẫn Listening. Luyện daily 20 câu/ngày.</div>
+      <div class="insight critical"><strong>③ SST — Summarize Spoken Text (ưu tiên số 3)</strong><br>
+        Từ 0% → 40%+ chỉ bằng template. Không cần giỏi — chỉ cần không bỏ trắng.</div>
+      <div class="insight"><strong>④ FIB-rw — Reading FIB Drag & Drop</strong><br>
+        Từ 37% → 55%. Context reading, không cần vocabulary mới. 10 bài/ngày đủ.</div>
+      <div class="insight win"><strong>⑤ RA — Read Aloud (chiến lược phòng thủ)</strong><br>
+        Không push accuracy — tập fluency. Đọc liền mạch không dừng > đọc đúng mà ngắt quãng.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🧠 Phương pháp chi tiết từng task</h2>
+    <div class="strat-grid">
+
+      <div class="scard" style="border-color:var(--red)">
+        <div class="scard-head">
+          <div class="scard-title">🔴 RS — Repeat Sentence</div>
+          <span class="scard-badge" style="background:var(--red-s);color:var(--red)">20% → 55%</span>
+        </div>
+        <ul>
+          <li><span class="arr">→</span> <span><strong>Nghe 1 lần duy nhất</strong> — không replay, không dừng</span></li>
+          <li><span class="arr">→</span> <span>Nhớ theo <strong>chunk âm thanh</strong> (nhóm từ), không nhớ từng từ</span></li>
+          <li><span class="arr">→</span> <span>Nếu quên giữa câu — <strong>tiếp tục đọc</strong>, đừng dừng lại cố nhớ</span></li>
+          <li><span class="arr">→</span> <span>Pace bắt chước ngay tốc độ audio, không chậm hơn</span></li>
+          <li><span class="arr">→</span> <span>Luyện <strong>30–40 câu/ngày</strong>, chia 2 session sáng/tối</span></li>
+          <li><span class="arr">→</span> <span>Ngày 1–2: focus câu ngắn (7–10 từ). Ngày 3–5: câu dài (11–15 từ)</span></li>
+        </ul>
+        <div class="method-box">
+          <div class="mtitle">Workflow mỗi câu RS</div>
+          Nghe → nhẩm lại ngay trong đầu → nói trong 3 giây → <code>không replay</code> → sang câu tiếp
+        </div>
+      </div>
+
+      <div class="scard" style="border-color:var(--orange)">
+        <div class="scard-head">
+          <div class="scard-title">🟠 WFD — Write From Dictation</div>
+          <span class="scard-badge" style="background:var(--orange-s);color:var(--orange)">44% → 65%</span>
+        </div>
+        <ul>
+          <li><span class="arr">→</span> <span>Nghe xong <strong>nhẩm lại nguyên câu</strong> trước khi gõ</span></li>
+          <li><span class="arr">→</span> <span>Chú ý 3 điểm hay sai: <strong>articles (a/the)</strong>, <strong>-s/-es</strong>, <strong>preposition</strong></span></li>
+          <li><span class="arr">→</span> <span>Gõ nhanh — không được sửa quá nhiều vì hết giờ</span></li>
+          <li><span class="arr">→</span> <span>Sau mỗi câu sai: ghi lại lỗi, luyện lại câu đó</span></li>
+          <li><span class="arr">→</span> <span><strong>20 câu/ngày</strong> — chia buổi sáng 12, tối 8</span></li>
+          <li><span class="arr">→</span> <span>Dùng app PTE Magic hoặc E2 PTE để có câu gần thi thật</span></li>
+        </ul>
+        <div class="method-box">
+          <div class="mtitle">Checklist sau mỗi câu WFD</div>
+          <code>a/an/the</code> → <code>plural -s</code> → <code>past tense -ed</code> → <code>prepositions</code>
+        </div>
+      </div>
+
+      <div class="scard" style="border-color:var(--purple)">
+        <div class="scard-head">
+          <div class="scard-title">🟣 SST — Summarize Spoken Text</div>
+          <span class="scard-badge" style="background:#a78bfa20;color:var(--purple)">0% → 45%</span>
+        </div>
+        <ul>
+          <li><span class="arr">→</span> <span><strong>Không bỏ trắng</strong> — bất kỳ gì cũng hơn 0 điểm</span></li>
+          <li><span class="arr">→</span> <span>Trong khi nghe: ghi note <strong>5–6 keyword</strong> (noun, verb chính)</span></li>
+          <li><span class="arr">→</span> <span>Dùng template cứng — học thuộc 1 lần dùng mãi</span></li>
+          <li><span class="arr">→</span> <span>Viết <strong>50–70 từ</strong> — không cần nhiều hơn</span></li>
+          <li><span class="arr">→</span> <span>Luyện <strong>1–2 bài SST/ngày</strong> — mỗi bài 10 phút</span></li>
+        </ul>
+        <div class="method-box">
+          <div class="mtitle">Template SST — học thuộc ngay</div>
+          <em style="color:var(--blue);font-size:11px;">
+            "The lecture discussed [TOPIC]. The speaker explained that [POINT 1].
+            Furthermore, [POINT 2] was highlighted as an important factor.
+            In conclusion, [MAIN IDEA] appears to be significant."
+          </em>
+        </div>
+      </div>
+
+      <div class="scard" style="border-color:var(--yellow)">
+        <div class="scard-head">
+          <div class="scard-title">🟡 FIB-rw — Reading Drag & Drop</div>
+          <span class="scard-badge" style="background:var(--yellow-s);color:var(--yellow)">37% → 55%</span>
+        </div>
+        <ul>
+          <li><span class="arr">→</span> <span><strong>Đọc cả đoạn văn trước</strong> — không nhìn từ cần điền ngay</span></li>
+          <li><span class="arr">→</span> <span>Nhận dạng pattern: danh từ sau adjective, động từ sau to/modal</span></li>
+          <li><span class="arr">→</span> <span>Loại trừ: đặt 1 từ vào → đọc thử → nếu nghe tự nhiên → chọn</span></li>
+          <li><span class="arr">→</span> <span><strong>10 bài/ngày</strong> — focus vào review lỗi sai</span></li>
+          <li><span class="arr">→</span> <span>Bỏ hoàn toàn FIB-r (dropdown) — vocabulary too hard cho 5 ngày</span></li>
+        </ul>
+      </div>
+
+      <div class="scard" style="border-color:var(--blue)">
+        <div class="scard-head">
+          <div class="scard-title">🔵 RA — Read Aloud (phòng thủ)</div>
+          <span class="scard-badge" style="background:var(--blue-s);color:var(--blue)">Giữ sàn Fluency</span>
+        </div>
+        <ul>
+          <li><span class="arr">→</span> <span><strong>Pronunciation bạn ổn (14.45/18.7 trong mock)</strong> — vấn đề là Fluency chỉ 18.7</span></li>
+          <li><span class="arr">→</span> <span>Đọc <strong>không dừng giữa chừng</strong> — dù sai từ vẫn đọc tiếp</span></li>
+          <li><span class="arr">→</span> <span>Pace đều — không đọc nhanh đột ngột hay chậm hẳn</span></li>
+          <li><span class="arr">→</span> <span>Luyện <strong>5–6 bài/ngày</strong> — không cần nhiều hơn</span></li>
+          <li><span class="arr">→</span> <span>Metric mới: đếm số bài đọc không dừng ≥ 85% passage</span></li>
+        </ul>
+      </div>
+
+      <div class="scard" style="border-color:var(--dim)">
+        <div class="scard-head">
+          <div class="scard-title">💤 Tasks — SKIP hoàn toàn</div>
+          <span class="scard-badge" style="background:var(--border);color:var(--muted)">5 ngày không đủ</span>
+        </div>
+        <ul>
+          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>FIB-r dropdown 18%</strong> — cần vocabulary sâu, không học được nhanh</span></li>
+          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>MCQ Reading/Listening</strong> — điểm thấp, ROI kém</span></li>
+          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>Re-order Paragraph</strong> — cần luyện logic dài hạn</span></li>
+          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>Essay WE</strong> — chỉ dùng template có sẵn, không luyện thêm</span></li>
+          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>ASQ</strong> — unpredictable, skip</span></li>
+        </ul>
+      </div>
+
     </div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title"><h2>📅 Lịch những ngày còn lại</h2><span class="tag tag-red" id="planTag"></span></div>
-  <div class="days-grid" id="daysGrid"></div>
-</div>
-
-<div class="section">
-  <div class="section-title"><h2>🧠 Chiến lược task ưu tiên</h2><span class="tag tag-blue">tự động chọn theo data</span></div>
-  <div class="strategy-grid" id="strategyGrid"></div>
-</div>
-
-<div class="section">
-  <div class="section-title"><h2>🏆 5 Quy tắc vàng nước rút</h2><span class="tag tag-red">không được bỏ</span></div>
-  <div class="rules-grid">
-    <div class="rule-card"><div class="rule-num">01</div><div class="rule-title">Task nặng nhất (theo weight) trong nhóm yếu — làm mỗi ngày</div><div class="rule-text">Streak quan trọng hơn số lượng. Xem thẻ INTENSIVE ở trên để biết task nào cần ưu tiên hôm nay.</div></div>
-    <div class="rule-card"><div class="rule-num">02</div><div class="rule-title">RS + WFD là core — làm ngay buổi sáng</div><div class="rule-text">Làm ngay sau khi thức dậy, trước khi làm bất kỳ task nào khác.</div></div>
-    <div class="rule-card"><div class="rule-num">03</div><div class="rule-title">Không học kỹ năng mới ở giai đoạn nước rút</div><div class="rule-text">Chỉ tập trung vào task đã có data và đang gần target.</div></div>
-    <div class="rule-card"><div class="rule-num">04</div><div class="rule-title">Ngủ đủ 7h — không thức khuya</div><div class="rule-text">Thiếu ngủ làm RS, WFD, SST rớt điểm ngay ngày hôm sau.</div></div>
-    <div class="rule-card"><div class="rule-num">05</div><div class="rule-title">Ngày thi: làm đúng thứ tự bài thi</div><div class="rule-text">Không bỏ câu, không nhảy qua. Panic = điểm rớt.</div></div>
+<!-- ═══════ TAB: SCHEDULE ═══════ -->
+<div id="tab-schedule" style="display:none">
+  <div class="section">
+    <h2>📅 Lịch 5 ngày chi tiết <span class="tag tag-blue">tối ưu theo giờ học thực tế</span></h2>
+    <div class="days-wrap" id="daysWrap"></div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title"><h2>📈 Xu hướng Prediction</h2><span class="tag tag-blue">theo lịch sử nhập điểm</span></div>
-  <canvas id="predChart" height="80"></canvas>
-</div>
+<!-- ═══════ TAB: TRACKER ═══════ -->
+<div id="tab-tracker" style="display:none">
 
-<div class="section">
-  <div class="section-title"><h2>📝 Nhập điểm — hôm nay</h2><span class="tag tag-green">nhập dạng số/số, vd: 9.8/13</span></div>
-  <div class="btn-row">
-    <button id="exportJSON">⬇ Export JSON</button>
-    <button id="importJSON">⬆ Import JSON</button>
-    <button id="resetAll" class="danger">🗑 Reset All</button>
-    <input type="file" id="importFile" accept=".json" style="display:none">
+  <div class="overall-box">
+    <div class="overall-top">
+      <div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:2px">PREDICTED SCORE (từ data nhập)</div>
+        <div class="overall-num c-yellow" id="predScore">—</div>
+      </div>
+      <div class="overall-target">Mục tiêu: <span>50</span><br>
+        <span style="font-size:11px;color:var(--muted)">Gap: <span id="predGap" style="font-family:monospace">—</span></span>
+      </div>
+    </div>
+    <div class="prog-bg">
+      <div class="prog-fill" id="progFill" style="width:0%;background:var(--red)"></div>
+    </div>
+    <div class="prog-labels"><span>0</span><span>Target 50</span><span>90</span></div>
+    <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px;">
+      <div class="skill-row"><span class="skill-name">Speaking</span>
+        <div class="skill-bar-bg"><div class="skill-bar-f" id="sb-speaking" style="width:0%;background:#38bdf8"></div></div>
+        <span class="skill-val" id="sv-speaking">—</span></div>
+      <div class="skill-row"><span class="skill-name">Writing</span>
+        <div class="skill-bar-bg"><div class="skill-bar-f" id="sb-writing" style="width:0%;background:#a78bfa"></div></div>
+        <span class="skill-val" id="sv-writing">—</span></div>
+      <div class="skill-row"><span class="skill-name">Reading</span>
+        <div class="skill-bar-bg"><div class="skill-bar-f" id="sb-reading" style="width:0%;background:#22c55e"></div></div>
+        <span class="skill-val" id="sv-reading">—</span></div>
+      <div class="skill-row"><span class="skill-name">Listening</span>
+        <div class="skill-bar-bg"><div class="skill-bar-f" id="sb-listening" style="width:0%;background:#fb923c"></div></div>
+        <span class="skill-val" id="sv-listening">—</span></div>
+    </div>
   </div>
-  <div class="task-grid" id="taskContainer"></div>
+
+  <div class="section">
+    <h2>✏️ Nhập điểm luyện tập <span class="tag tag-blue">format: số/số ví dụ 18/24</span></h2>
+    <div class="tracker-grid" id="trackerGrid"></div>
+  </div>
+
 </div>
 
-<div class="footer">PTE 55+ Final Sprint Tracker · Dữ liệu lưu tại trình duyệt này · Good luck! 🔥</div>
+<!-- ═══════ TAB: RULES ═══════ -->
+<div id="tab-rules" style="display:none">
+  <div class="section">
+    <h2>⚡ 6 quy tắc vàng — không phá vỡ</h2>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-n">01</div>
+        <div class="rule-t">RS mỗi ngày — sáng trước tiên</div>
+        <div class="rule-b">Làm RS ngay sau khi thức dậy khi não còn tươi. Không để chiều tối mới làm RS vì não mệt = nhớ kém = điểm thấp.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-n">02</div>
+        <div class="rule-t">WFD — checklist sau mỗi câu</div>
+        <div class="rule-b">Mỗi câu WFD sai, ghi lỗi ra giấy: articles / plural-s / preposition. Luyện lại câu đó 3 lần. Không học câu mới liên tục mà không review.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-n">03</div>
+        <div class="rule-t">SST — không được bỏ trắng</div>
+        <div class="rule-b">Dù không nghe được gì — vẫn viết template. 1 câu summary dở còn hơn không có gì. 0 điểm là thất bại hoàn toàn, 30% là chấp nhận được.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-n">04</div>
+        <div class="rule-t">Không học kỹ năng mới</div>
+        <div class="rule-b">5 ngày không đủ để học FIB-r, vocabulary mới, hay strategy mới cho MCQ. Tập trung 100% vào RS + WFD + SST. Ba task này đủ đẩy +9 điểm.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-n">05</div>
+        <div class="rule-t">Ngủ đủ 7h mỗi đêm</div>
+        <div class="rule-b">RS và WFD cần short-term memory hoạt động tốt. Thiếu ngủ 1 đêm = RS rớt 5–10% ngày hôm sau. Không thức sau 23h.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-n">06</div>
+        <div class="rule-t">Ngày thi: làm đúng thứ tự</div>
+        <div class="rule-b">Không skip câu, không dừng lâu ở 1 task. Đặc biệt SST: dù không hiểu vẫn viết template. WFD: gõ nhanh và review grammar nhỏ.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════
-//  CONSTANTS
-// ═══════════════════════════════════════════════════════════════════
-const TASKS = [
-  ["RA","Read Aloud","Đọc thành tiếng",4,"speaking"],
-  ["RS","Repeat Sentence","Nhắc lại câu",7,"speaking"],
-  ["DI","Describe Image","Mô tả hình ảnh",15,"speaking"],
-  ["RL","Retell Lecture","Kể lại bài giảng",6,"speaking"],
-  ["ASQ","Answer Short Question","Trả lời câu hỏi ngắn",2,"speaking"],
-  ["SGD","Summarise Group Discussion","Tóm tắt thảo luận nhóm",9,"speaking"],
-  ["RTS","Respond to a Situation","Phản hồi tình huống",6,"speaking"],
-  ["SWT","Summarize Written Text","Tóm tắt văn bản viết",7,"writing"],
-  ["WE","Write Essay","Viết luận",7,"writing"],
-  ["FIB","FIB – Dropdown","Điền từ (dropdown)",7,"reading"],
-  ["FDD","FIB – Drag & Drop","Kéo thả điền từ",6,"reading"],
-  ["ROP","Re-order Paragraph","Sắp xếp đoạn văn",5,"reading"],
-  ["SST","Summarize Spoken Text","Tóm tắt bài nghe",4,"listening"],
-  ["FIL","Fill In The Blanks","Điền từ bài nghe",3,"listening"],
-  ["SMW","Select Missing Word","Chọn từ còn thiếu",1,"listening"],
-  ["HIW","Highlight Incorrect Words","Đánh dấu từ sai",3,"listening"],
-  ["HCS","Highlight Correct Summary","Chọn tóm tắt đúng",2,"listening"],
-  ["WFD","Write from Dictation","Nghe và viết lại",5,"listening"],
-];
-const KPI_TARGETS = { RA:60, RS:55, DI:55, RL:45, ASQ:50, SGD:50, RTS:50, SWT:60, WE:60, FIB:55, FDD:55, ROP:50, SST:55, FIL:55, SMW:50, HIW:50, HCS:50, WFD:55 };
-const DAILY_TASKS = ["RS","WFD"];
-const DOW_HOURS = { 1:10, 2:5, 3:2, 4:10, 5:2, 6:10, 0:10 };
-const MIN_PER_REP = { RA:1.5, RS:1.5, DI:2, RL:2.5, ASQ:1, SGD:3, RTS:2, SWT:10, WE:20, FIB:2, FDD:2.5, ROP:2, SST:10, FIL:2, SMW:1.5, HIW:1.5, HCS:1.5, WFD:3 };
-const MAX_REPS_OVERRIDE = { WE:2, SWT:3, SST:2, RL:8, ASQ:12, SGD:8, DI:12, RTS:12, FDD:10, ROP:12, SMW:12, HIW:12, HCS:12, RA:8, RS:20, FIB:15, FIL:15, WFD:20 };
-function capFor(id){ return MAX_REPS_OVERRIDE[id] || 12; }
+// ═══════ DATA ═══════
+const TODAY_STR = new Date().toISOString().slice(0,10);
+const EXAM_DATE = new Date("2026-07-28"); // 5 days from 23/07
 
-const TIPS = {
-  SGD: ["Luyện ít nhất 2–3 bài mỗi lần ngồi vào, không ít hơn","Template cứng: “The discussion focused on… The first speaker argued… Another perspective was… In conclusion…”","Không cần dùng hết 90 giây — 60–70s đủ nếu trơn tru","Nghe kỹ 10s đầu và 10s cuối audio — cấu trúc bài hay nằm ở đó"],
-  SST: ["Ghi note theo keywords, không ghi câu đầy đủ","Summary cần: Topic sentence + 2 key points + concluding idea","Tránh dùng từ nguyên văn từ bài nghe — paraphrase ngay","Task 10 phút/bài nên không cần luyện quá nhiều bài/ngày"],
-  WFD: ["Daily task — không bỏ ngày nào","Nghe xong nhẩm lại nguyên câu trước khi gõ, luyện theo chunk","Chú ý articles (a/the), prepositions, -s/-es cuối từ","Chia đều 2 lần sáng/tối để không dồn cuối ngày"],
-  FIB: ["Đọc cả câu trước khi chọn — collocation quyết định đáp án","Luyện chung với FIL trong 1 session để tiết kiệm thời gian"],
-  FIL: ["Nghe tổng thể trước, điền sau — đừng điền realtime","Luyện chung với FIB trong 1 session"],
-  RS: ["Đang gần/đạt target — maintain, đừng đổi cách làm","Nếu đuối vào cuối ngày, để RS làm sau cùng"],
-  FDD: ["Nếu gap quá xa (>12%), chỉ giữ sàn 1 bài/2 ngày, không đầu tư thêm thời gian"],
-  WE: ["Writing essay không cải thiện nhanh trong thời gian ngắn — nếu gap quá xa chỉ giữ sàn"],
-  RA: ["Ưu tiên fluency hơn accuracy — xem mục Read Aloud phía trên","5–6 bài/ngày là đủ, không cần nhiều hơn"],
-  DI: ["Dùng template mô tả cố định: overview → detail → trend → conclusion"],
-  RL: ["Ghi chú 3-4 ý chính trong lúc nghe, không cố nhớ hết"],
-  RTS: ["Trả lời tự nhiên, đủ ý trong 15-20s, không cần hoàn hảo ngữ pháp"],
-  SWT: ["1 câu duy nhất, 5-75 từ, đủ chủ đề + ý chính, không thêm chi tiết phụ"],
-  SMW: ["Nghe kỹ đoạn cuối audio — đáp án thường liên quan trực tiếp mạch nghĩa trước đó"],
+function daysLeft(){
+  return Math.max(0,Math.ceil((EXAM_DATE-new Date())/86400000));
+}
+document.getElementById("daysLeft").textContent = daysLeft();
+
+// ═══════ TASKS for tracker ═══════
+const TRACKER_TASKS = [
+  { id:"RS",  name:"Repeat Sentence",      vi:"Nhắc lại câu",       skill:"speaking",  w:7,  baseline:20,  target:55,  color:"#38bdf8" },
+  { id:"WFD", name:"Write From Dictation", vi:"Nghe và viết lại",   skill:"both",      w:5,  baseline:44,  target:65,  color:"#a78bfa" },
+  { id:"SST", name:"Summarize Spoken Text",vi:"Tóm tắt nghe",       skill:"listening", w:4,  baseline:0,   target:45,  color:"#fb923c" },
+  { id:"FIBrw",name:"FIB Drag & Drop",     vi:"Điền từ Reading",    skill:"reading",   w:6,  baseline:37,  target:55,  color:"#22c55e" },
+  { id:"RA",  name:"Read Aloud",           vi:"Đọc thành tiếng",    skill:"speaking",  w:4,  baseline:50,  target:55,  color:"#38bdf8" },
+  { id:"DI",  name:"Describe Image",       vi:"Mô tả hình",         skill:"speaking",  w:15, baseline:68,  target:68,  color:"#38bdf8" },
+  { id:"RL",  name:"Retell Lecture",       vi:"Kể lại bài giảng",   skill:"speaking",  w:6,  baseline:47,  target:50,  color:"#38bdf8" },
+  { id:"SWT", name:"Summarize Written Text",vi:"Tóm tắt viết",      skill:"writing",   w:7,  baseline:56,  target:60,  color:"#a78bfa" },
+  { id:"FIBl",name:"FIB Listening",        vi:"Điền từ Listening",  skill:"listening", w:3,  baseline:25,  target:50,  color:"#fb923c" },
+];
+
+// skill contrib weights (simplified)
+const SKILL_CONTRIB = {
+  RS:   {speaking:16,listening:17},
+  WFD:  {writing:23,listening:13},
+  SST:  {writing:18,listening:10},
+  FIBrw:{reading:20},
+  RA:   {speaking:9},
+  DI:   {speaking:31},
+  RL:   {speaking:13,listening:13},
+  SWT:  {writing:28,reading:23},
+  FIBl: {listening:8},
+};
+const SKILL_MAX = {speaking:100,writing:100,reading:100,listening:100};
+
+// storage
+function load(){try{return JSON.parse(localStorage.getItem("pte5d")||"{}");}catch{return{};}}
+function save(){localStorage.setItem("pte5d",JSON.stringify(DATA));}
+const DATA = load();
+if(!DATA.entries) DATA.entries={};
+
+function parseScore(v){
+  const m=(v||"").trim().match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/);
+  return m?{raw:+m[1],max:+m[2]}:null;
+}
+function calcPct(arr){
+  let r=0,mx=0,cnt=0;
+  (arr||[]).forEach(v=>{const p=parseScore(v);if(p&&p.max>0){r+=p.raw;mx+=p.max;cnt++;}});
+  return{raw:r,max:mx,cnt,pct:mx>0?(r/mx)*100:null};
+}
+function scoreClass(p){return p==null?"gs-na":p>=70?"gs-done":p>=45?"gs-almost":"gs-need";}
+function getStatusLabel(p,target){
+  if(p==null)return"No data";
+  if(p>=target+10)return"✅ Mastered";
+  if(p>=target)return"✅ Achieved";
+  if(p>=target-10)return"🔄 Almost";
+  return"⚠️ Need Work";
+}
+
+function calcPrediction(){
+  const skillAcc={speaking:[],writing:[],reading:[],listening:[]};
+  let wSum=0,totalW=0;
+  TRACKER_TASKS.forEach(t=>{
+    const arr=DATA.entries[t.id]||[];
+    const c=calcPct(arr);
+    const pct=c.pct!=null?c.pct:t.baseline;
+    const contrib=SKILL_CONTRIB[t.id]||{};
+    Object.entries(contrib).forEach(([sk,cw])=>{
+      if(skillAcc[sk]) skillAcc[sk].push({pct,cw});
+    });
+    totalW+=t.w; wSum+=(pct/100)*t.w;
+  });
+  const weighted=(wSum/totalW)*100;
+  const pred=Math.min(90,weighted*0.9);
+  // skill scores
+  const skills={};
+  Object.entries(skillAcc).forEach(([sk,arr])=>{
+    if(!arr.length){skills[sk]=null;return;}
+    let ws=0,tw=0;
+    arr.forEach(({pct,cw})=>{ws+=(pct/100)*cw;tw+=cw;});
+    skills[sk]=tw>0?(ws/tw)*90:null;
+  });
+  return{pred,skills};
+}
+
+// ═══════ BUILD TRACKER ═══════
+function buildTracker(){
+  const grid=document.getElementById("trackerGrid");
+  grid.innerHTML="";
+  TRACKER_TASKS.forEach(t=>{
+    const arr=DATA.entries[t.id]||[];
+    if(!arr.length) arr.push("");
+    DATA.entries[t.id]=arr;
+
+    const card=document.createElement("div");
+    card.className="tcard";
+    card.dataset.id=t.id;
+
+    const c=calcPct(arr);
+    const pct=c.pct;
+    const barW=pct!=null?Math.min(100,pct):0;
+    const baseW=Math.min(100,t.baseline);
+    const targetW=Math.min(100,t.target);
+    const statusLabel=getStatusLabel(pct,t.target);
+    const statusCls=scoreClass(pct);
+
+    card.innerHTML=`
+      <div class="tcard-head">
+        <div class="tcard-name">${t.name}</div>
+        <div class="tcard-weight">${t.w}% overall</div>
+      </div>
+      <div class="tcard-baseline">
+        Mock: <span style="color:var(--muted)">${t.baseline}%</span>
+        → Target: <span style="color:var(--yellow)">${t.target}%</span>
+        → Now: <span style="color:var(--blue);font-weight:700">${pct!=null?pct.toFixed(1)+"%":"—"}</span>
+      </div>
+      <div class="bar-wrap" style="height:8px">
+        <div class="bar-base" style="width:${baseW}%;background:${t.color}"></div>
+        <div class="bar-now" style="width:${barW}%;background:${t.color}"></div>
+        <div class="bar-target-line" style="left:${targetW}%"></div>
+      </div>
+      <div style="font-size:9px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:6px">
+        <span>0%</span><span style="color:var(--yellow)">▲${t.target}%</span><span>100%</span>
+      </div>
+      <div class="entries-list" id="list_${t.id}"></div>
+      <button class="add-btn" data-id="${t.id}">+ Thêm bài (Enter)</button>
+      <div class="tcard-total">
+        <span style="color:var(--muted);font-size:11px">${c.cnt} bài · ${c.raw.toFixed(1)}/${c.max.toFixed(1)}</span>
+        <span class="goal-status ${statusCls}">${statusLabel}</span>
+      </div>`;
+
+    grid.appendChild(card);
+    renderEntries(t.id);
+
+    card.querySelector(".add-btn").addEventListener("click",()=>addEntry(t.id));
+  });
+}
+
+function renderEntries(id){
+  const list=document.getElementById("list_"+id);
+  if(!list) return;
+  const arr=DATA.entries[id]||[];
+  const t=TRACKER_TASKS.find(x=>x.id===id);
+  list.innerHTML="";
+  arr.forEach((val,idx)=>{
+    const row=document.createElement("div");
+    row.className="input-grid";
+    const sc=parseScore(val);
+    const pct=sc&&sc.max>0?(sc.raw/sc.max)*100:null;
+    const pctColor=pct==null?"var(--muted)":pct>=t.target?"var(--green)":pct>=t.target-10?"var(--yellow)":"var(--red)";
+    row.innerHTML=`
+      <input class="entry-input" type="text" value="${val}" placeholder="vd: 9.8/13" data-id="${id}" data-idx="${idx}">
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px">
+        <span class="entry-pct" style="color:${pctColor}">${pct!=null?pct.toFixed(1)+"%":"—"}</span>
+        <button class="remove-btn" data-id="${id}" data-idx="${idx}">✕</button>
+      </div>`;
+    list.appendChild(row);
+
+    row.querySelector(".entry-input").addEventListener("input",function(){
+      DATA.entries[id][idx]=this.value.trim();
+      save(); refreshCard(id); updateOverall();
+    });
+    row.querySelector(".entry-input").addEventListener("keydown",function(e){
+      if(e.key==="Enter"){e.preventDefault();addEntry(id);}
+    });
+    row.querySelector(".remove-btn").addEventListener("click",function(){
+      DATA.entries[id].splice(idx,1);
+      if(!DATA.entries[id].length) DATA.entries[id]=[""];
+      save(); refreshCard(id); updateOverall();
+    });
+  });
+}
+
+function addEntry(id){
+  if(!DATA.entries[id]) DATA.entries[id]=[];
+  DATA.entries[id].push("");
+  save(); refreshCard(id);
+  setTimeout(()=>{
+    const list=document.getElementById("list_"+id);
+    if(list){const inp=list.querySelectorAll(".entry-input");if(inp.length)inp[inp.length-1].focus();}
+  },50);
+}
+
+function refreshCard(id){
+  const t=TRACKER_TASKS.find(x=>x.id===id);
+  const arr=DATA.entries[id]||[];
+  const c=calcPct(arr);
+  const pct=c.pct;
+  const barW=pct!=null?Math.min(100,pct):0;
+  const targetW=Math.min(100,t.target);
+  const baseW=Math.min(100,t.baseline);
+  const card=document.querySelector(`.tcard[data-id="${id}"]`);
+  if(!card) return;
+
+  // update bar
+  const barNow=card.querySelector(".bar-now");
+  if(barNow) barNow.style.width=barW+"%";
+  // update baseline text
+  const baseline=card.querySelector(".tcard-baseline");
+  if(baseline) baseline.innerHTML=`
+    Mock: <span style="color:var(--muted)">${t.baseline}%</span>
+    → Target: <span style="color:var(--yellow)">${t.target}%</span>
+    → Now: <span style="color:var(--blue);font-weight:700">${pct!=null?pct.toFixed(1)+"%":"—"}</span>`;
+  // update total
+  const tot=card.querySelector(".tcard-total");
+  const statusLabel=getStatusLabel(pct,t.target);
+  const statusCls=scoreClass(pct);
+  if(tot) tot.innerHTML=`
+    <span style="color:var(--muted);font-size:11px">${c.cnt} bài · ${c.raw.toFixed(1)}/${c.max.toFixed(1)}</span>
+    <span class="goal-status ${statusCls}">${statusLabel}</span>`;
+  renderEntries(id);
+}
+
+function updateOverall(){
+  const {pred,skills}=calcPrediction();
+  const predEl=document.getElementById("predScore");
+  const gapEl=document.getElementById("predGap");
+  const fillEl=document.getElementById("progFill");
+  if(predEl) predEl.textContent=pred.toFixed(1);
+  if(gapEl){ const g=pred-50; gapEl.textContent=(g>=0?"+":"")+g.toFixed(1); gapEl.style.color=g>=0?"var(--green)":"var(--red)"; }
+  if(fillEl){
+    const pct=Math.min(100,(pred/90)*100);
+    fillEl.style.width=pct+"%";
+    fillEl.style.background=pred>=50?"var(--green)":pred>=40?"var(--yellow)":"var(--red)";
+  }
+  const predMainEl=document.querySelector(".banner-right .bstat:first-child .num");
+
+  const skillDefs=[
+    {key:"speaking",id:"speaking",color:"#38bdf8"},
+    {key:"writing",id:"writing",color:"#a78bfa"},
+    {key:"reading",id:"reading",color:"#22c55e"},
+    {key:"listening",id:"listening",color:"#fb923c"},
+  ];
+  skillDefs.forEach(s=>{
+    const sc=skills[s.key];
+    const barEl=document.getElementById("sb-"+s.id);
+    const valEl=document.getElementById("sv-"+s.id);
+    if(barEl) barEl.style.width=(sc!=null?Math.min(100,(sc/90)*100):0)+"%";
+    if(valEl){
+      valEl.textContent=sc!=null?sc.toFixed(1):"—";
+      valEl.style.color=sc!=null?(sc>=50?"var(--green)":sc>=40?"var(--yellow)":"var(--red)"):"var(--muted)";
+    }
+  });
+}
+
+// ═══════ 5-DAY SCHEDULE ═══════
+const SCHEDULE=[
+  {
+    date:"24/07",dow:"Thứ 5",hrs:10,
+    focus:"RS Intensive + WFD Core + SST Template",
+    isToday:true,
+    tasks:[
+      {id:"RS", name:"Repeat Sentence",  pill:"red",   reps:"×35 câu",  boost:true},
+      {id:"WFD",name:"Write From Dict.", pill:"red",   reps:"×20 câu",  boost:true},
+      {id:"SST",name:"Summ. Spoken",    pill:"purple", reps:"×2 bài"},
+      {id:"FIBrw",name:"FIB Drag&Drop", pill:"yellow", reps:"×10 bài"},
+      {id:"RA", name:"Read Aloud",       pill:"blue",  reps:"×6 fluency"},
+    ],
+    note:{t:"critical",s:"NGÀY 1 — Lập thói quen đúng ngay từ hôm nay. RS làm sáng trước khi ăn sáng. SST học template 30 phút đầu."}
+  },
+  {
+    date:"25/07",dow:"Thứ 6",hrs:8,
+    focus:"RS tiếp tục + WFD + FIB-rw",
+    tasks:[
+      {id:"RS", name:"Repeat Sentence",  pill:"red",   reps:"×35 câu",  boost:true},
+      {id:"WFD",name:"Write From Dict.", pill:"red",   reps:"×20 câu",  boost:true},
+      {id:"SST",name:"Summ. Spoken",    pill:"purple", reps:"×2 bài"},
+      {id:"FIBrw",name:"FIB Drag&Drop", pill:"yellow", reps:"×12 bài"},
+      {id:"RA", name:"Read Aloud",       pill:"blue",  reps:"×5 fluency"},
+    ],
+    note:{t:"strat",s:"RS ngày 2: focus câu 11–14 từ. WFD: ghi lỗi ra giấy, luyện lại câu sai."}
+  },
+  {
+    date:"26/07",dow:"Thứ 7",hrs:10,
+    focus:"Full sprint — RS + WFD + SST + FIB",
+    tasks:[
+      {id:"RS", name:"Repeat Sentence",  pill:"red",   reps:"×40 câu",  boost:true},
+      {id:"WFD",name:"Write From Dict.", pill:"red",   reps:"×22 câu",  boost:true},
+      {id:"SST",name:"Summ. Spoken",    pill:"purple", reps:"×2 bài"},
+      {id:"FIBrw",name:"FIB Drag&Drop", pill:"yellow", reps:"×15 bài"},
+      {id:"RA", name:"Read Aloud",       pill:"blue",  reps:"×6 fluency"},
+      {id:"RL", name:"Retell Lecture",   pill:"gray",  reps:"×3 template"},
+    ],
+    note:{t:"strat",s:"Ngày T7 10h — cơ hội tốt nhất. Push RS lên 40 câu. Review toàn bộ lỗi WFD tuần."}
+  },
+  {
+    date:"27/07",dow:"CN",hrs:8,
+    focus:"Mini mock + review + consolidate",
+    tasks:[
+      {id:"RS", name:"Repeat Sentence",  pill:"red",   reps:"×30 câu"},
+      {id:"WFD",name:"Write From Dict.", pill:"red",   reps:"×18 câu"},
+      {id:"SST",name:"Summ. Spoken",    pill:"purple", reps:"×2 bài"},
+      {id:"FIBrw",name:"FIB Drag&Drop", pill:"yellow", reps:"×10 bài"},
+    ],
+    note:{t:"strat",s:"Làm 1 mini mock 30 phút buổi sáng để đo tiến độ thật. Review lỗi buổi chiều."}
+  },
+  {
+    date:"28/07",dow:"Thứ 2",hrs:4,
+    focus:"Light warm-up — không học nặng",
+    isExamEve:true,
+    tasks:[
+      {id:"RS", name:"Repeat Sentence",  pill:"green", reps:"×15 nhẹ"},
+      {id:"WFD",name:"Write From Dict.", pill:"green", reps:"×10 nhẹ"},
+      {id:"RA", name:"Read Aloud",       pill:"blue",  reps:"×5 fluency"},
+    ],
+    note:{t:"critical",s:"NGÀY THI — warm-up nhẹ sáng sớm. Không học mới. Ngủ đủ đêm hôm trước. Ăn uống đầy đủ."}
+  },
+];
+
+const pillMap={red:"dpill-red",purple:"dpill-blue",yellow:"dpill-yellow",blue:"dpill-blue",green:"dpill-green",gray:"dpill-gray"};
+const pillStyle={
+  red:"background:var(--red-s);color:var(--red);border:1px solid var(--red-b)",
+  purple:"background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa40",
+  yellow:"background:var(--yellow-s);color:var(--yellow);border:1px solid var(--yellow-b)",
+  blue:"background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-b)",
+  green:"background:var(--green-s);color:var(--green);border:1px solid var(--green-b)",
+  gray:"background:#33415520;color:var(--muted);border:1px solid #33415540",
 };
 
-// ═══════════════════════════════════════════════════════════════════
-//  DATE / EXAM
-// ═══════════════════════════════════════════════════════════════════
-const EXAM_DATE = new Date("2026-07-28T14:00:00");
-function getToday(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
-const TODAY = getToday();
-const TODAY_DOW = new Date().getDay();
-function fmtDate(s){ const [,m,d]=s.split("-"); return `${d}/${m}`; }
-function daysUntilExam(){ return Math.ceil((EXAM_DATE - new Date(TODAY+"T00:00:00")) / 86400000); }
+function buildSchedule(){
+  const wrap=document.getElementById("daysWrap");
+  wrap.innerHTML="";
+  SCHEDULE.forEach((d,i)=>{
+    const cls=d.isToday?"today":d.isExamEve?"exam-eve":"";
+    const badge=d.isToday?'<span class="dbadge dbadge-blue">📍 HÔM NAY</span>':
+                 d.isExamEve?'<span class="dbadge dbadge-yellow">🎯 NGÀY THI</span>':
+                 `<span class="dbadge dbadge-gray">Ngày ${i+1}</span>`;
+    const hrsLight=d.hrs<=5?'<span class="dbadge dbadge-yellow" style="margin-top:3px">⏱ '+d.hrs+'h</span>':'';
 
-// ═══════════════════════════════════════════════════════════════════
-//  STORAGE
-// ═══════════════════════════════════════════════════════════════════
-function loadData(){ try{ return JSON.parse(localStorage.getItem("pte_sprint_final")||"{}"); }catch{ return {}; } }
-function saveData(){ localStorage.setItem("pte_sprint_final", JSON.stringify(DATA)); }
-const DATA = loadData();
-if(!DATA.__daily) DATA.__daily = {};
-if(!DATA.__history) DATA.__history = [];
-if(!DATA.__daily[TODAY]) DATA.__daily[TODAY] = {};
+    const taskRows=d.tasks.map(t=>`
+      <div class="dtask-row">
+        <span class="dpill" style="${pillStyle[t.pill]}">${t.id}</span>
+        <span class="dtask-name">${t.name}</span>
+        <span class="dtask-reps ${t.boost?"hi":""}">${t.reps}</span>
+      </div>`).join("");
 
-// Seed mock test MOCK0004 — 23/7/2026 (Overall 41: Speaking 49 | Writing 43 | Reading 38 | Listening 34)
-if(!DATA.__mockSeeded){
-  const MOCK_DAY = "2026-07-23";
-  if(!DATA.__daily[MOCK_DAY]) DATA.__daily[MOCK_DAY] = {};
-  const seed = {
-    RA:  ["5.6/15","9.9/15","6/15","9.1/15","7/15","7.8/15"],
-    RS:  ["7.3/13","6/13","0/13","0/13","0/13","6.7/13","0/13","0/13","5.5/13","0/13"],
-    DI:  ["11.1/15","10.9/15","11/15","10.5/15"],
-    RL:  ["7.6/15","7.5/15"],
-    ASQ: ["0/1","0/1","0/1","0/1","0/1"],
-    SGD: ["7.2/15","7/15"],
-    RTS: ["7.5/15","7.5/15"],
-    FIL: ["0/1","0/1","4/4"],
-    HCS: ["0/1"],
-    SMW: ["1/1"],
-    HIW: ["0/1","3/3","2/2"],
-    WFD: ["18/41"],
-    SST: ["0/12"],
-    WE:  ["24.7/52"],
-    SWT: ["10/18"],
-    FIB: ["2/11"],
-    FDD: ["12/32"],
-    ROP: ["3/8"],
-  };
-  Object.entries(seed).forEach(([id,arr])=>{ DATA.__daily[MOCK_DAY][id] = arr; });
-  DATA.__mockSeeded = true;
-}
-saveData();
+    const noteHtml=d.note?`<div class="dnote ${d.note.t==="critical"?"crit":"strat"}">${d.note.s}</div>`:"";
+    const fillPct=Math.min(100,(d.hrs/10)*100);
 
-// ═══════════════════════════════════════════════════════════════════
-//  CALC HELPERS
-// ═══════════════════════════════════════════════════════════════════
-function parseScore(v){ const m=(v||"").trim().match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/); return m?{raw:+m[1],max:+m[2]}:null; }
-function calcEntries(arr){ let raw=0,max=0,cnt=0; (arr||[]).forEach(v=>{const p=parseScore(v); if(p&&p.max>0){raw+=p.raw;max+=p.max;cnt++;}}); return {raw,max,cnt,pct:max>0?(raw/max)*100:0}; }
-function calcTaskAccOverDays(id,dayList){ let raw=0,max=0,cnt=0; dayList.forEach(d=>{const c=calcEntries(DATA.__daily[d]?.[id]||[]); raw+=c.raw;max+=c.max;cnt+=c.cnt;}); return {raw,max,cnt,pct:max>0?(raw/max)*100:0}; }
-function calcDayAcc(day){ let raw=0,max=0; Object.values(DATA.__daily[day]||{}).forEach(arr=>{const c=calcEntries(arr); raw+=c.raw;max+=c.max;}); return {raw,max,pct:max>0?(raw/max)*100:0}; }
-function getAllDays(){ const keys=Object.keys(DATA.__daily).sort().reverse(); if(!keys.includes(TODAY)) keys.unshift(TODAY); return keys; }
-function getDaysInRange(range){
-  const all=getAllDays();
-  if(range==="today") return [TODAY];
-  if(range==="7days"){ const cutoff=new Date(TODAY); cutoff.setDate(cutoff.getDate()-6); const cutStr=cutoff.toISOString().slice(0,10); return all.filter(d=>d>=cutStr); }
-  return all;
-}
-function scoreClass(pct){ return pct<=0?"empty":pct>=70?"good":pct>=50?"warn":"bad"; }
-function esc(s){ return s.replace(/[^a-zA-Z0-9]/g,"_"); }
-
-function calcPrediction(dayList){
-  let weightedSum=0,totalWeight=0,hasData=false;
-  TASKS.forEach(([id,,,w])=>{ const c=calcTaskAccOverDays(id,dayList); if(c.max>0){weightedSum+=(c.pct/100)*w; hasData=true;} totalWeight+=w; });
-  if(!hasData) return null;
-  const weightedPct = totalWeight>0 ? (weightedSum/totalWeight)*100 : 0;
-  return Math.min(90, weightedPct*0.9);
-}
-
-function getAdaptiveStatus(dayList){
-  const status={};
-  TASKS.forEach(([id,,,w])=>{
-    const c=calcTaskAccOverDays(id,dayList);
-    const target=KPI_TARGETS[id]||55;
-    const hasData=c.max>0;
-    const acc=hasData?c.pct:null;
-    const gap=hasData?acc-target:-target;
-    let st="UNKNOWN";
-    if(hasData){
-      if(acc>=target+5) st="REST";
-      else if(acc>=target) st="MAINTAIN";
-      else if(acc>=target-12) st="FOCUS";
-      else st="INTENSIVE";
-    }
-    const urgency = hasData ? Math.abs(Math.min(0,gap))*(w/10) + 0.001 : w*0.5;
-    status[id] = {status:st, gap:hasData?gap:null, acc, target, weight:w, hasData, urgency};
-  });
-  return status;
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════════════════════
-let currentRange = "all";
-
-// ═══════════════════════════════════════════════════════════════════
-//  RENDER: HEADER / COUNTDOWN
-// ═══════════════════════════════════════════════════════════════════
-function renderHeader(){
-  const dl = daysUntilExam();
-  document.getElementById("daysLeft").textContent = dl >= 0 ? dl : "0";
-  document.getElementById("subLine").textContent =
-    dl > 0 ? `Roadmap tự động · Thi: 20/07/2026 · Hôm nay ${fmtDate(TODAY)}`
-    : dl === 0 ? `HÔM NAY LÀ NGÀY THI — chúc may mắn! 🎯`
-    : `Đã qua ngày thi dự kiến`;
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  RENDER: ALERT
-// ═══════════════════════════════════════════════════════════════════
-function renderAlert(pred, dl){
-  const box = document.getElementById("alertBox");
-  if(pred===null){
-    box.className="alert";
-    box.innerHTML = `<div class="alert-icon">⚡</div><div><strong>Chưa có dữ liệu.</strong> Nhập điểm ở mục "Nhập điểm — hôm nay" phía dưới để tracker tự tính prediction và lên lịch sprint cho ${Math.max(dl,0)} ngày còn lại.</div>`;
-    return;
-  }
-  const gap = 55 - pred;
-  if(gap<=0){
-    box.className="alert good";
-    box.innerHTML = `<div class="alert-icon">✅</div><div><strong>Đang ở mức mục tiêu.</strong> Prediction hiện tại <strong>${pred.toFixed(1)}</strong> — đã đạt/vượt 55. Giữ nhịp luyện tập đều để không tụt điểm trong ${Math.max(dl,0)} ngày còn lại.</div>`;
-    return;
-  }
-  box.className="alert";
-  box.innerHTML = `<div class="alert-icon">⚡</div><div><strong>Tình hình:</strong> Prediction hiện tại <strong>${pred.toFixed(1)}</strong> — còn thiếu <strong>${gap.toFixed(1)} điểm</strong> để đạt 55.
-    Với ${Math.max(dl,0)} ngày còn lại, không có thời gian học kỹ năng mới — chỉ tập trung tăng accuracy trên task <strong>INTENSIVE/FOCUS</strong> ở mục Chiến lược bên dưới. Task có gap quá xa (dưới -12%) nên chuyển sang chế độ giữ sàn thay vì sprint.</div>`;
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  RENDER: SCORES GRID
-// ═══════════════════════════════════════════════════════════════════
-function renderScores(days, adaptStatus){
-  const rangeLbl = {today:"Hôm nay","7days":"7 ngày qua",all:"Tất cả"}[currentRange];
-  document.getElementById("scoreRangeTag").textContent = rangeLbl;
-  const el = document.getElementById("scoresGrid");
-  const sorted = [...TASKS].sort((a,b)=>{
-    const sa=adaptStatus[a[0]], sb=adaptStatus[b[0]];
-    const order={INTENSIVE:0,FOCUS:1,MAINTAIN:2,REST:3,UNKNOWN:4};
-    return (order[sa.status]-order[sb.status]) || (b[3]-a[3]);
-  });
-  el.innerHTML = sorted.map(([id,en])=>{
-    const s = adaptStatus[id];
-    if(!s.hasData){
-      return `<div class="score-card"><div class="label">${id}</div><div class="val c-muted">—</div><div class="gap-tag c-muted">Chưa có data</div></div>`;
-    }
-    let cardCls="", valCls="", tag="";
-    const gap=s.gap;
-    if(gap>=5){ cardCls="ok"; valCls="c-green"; tag=`Gap: +${gap.toFixed(1)}% → REST`; }
-    else if(gap>=0){ cardCls="ok"; valCls="c-blue"; tag=`Gap: +${gap.toFixed(1)}% → MAINTAIN`; }
-    else if(gap>=-8){ cardCls="warn"; valCls="c-yellow"; tag=`Gap: ${gap.toFixed(1)}% ← SPRINT`; }
-    else if(gap>=-12){ cardCls="warn"; valCls="c-orange"; tag=`Gap: ${gap.toFixed(1)}% ← SPRINT`; }
-    else { cardCls="urgent"; valCls="c-red"; tag=`Gap: ${gap.toFixed(1)}% ← TOO FAR`; }
-    return `<div class="score-card ${cardCls}"><div class="label">${id}</div><div class="val ${valCls}">${s.acc.toFixed(1)}%</div><div class="gap-tag ${valCls}">${tag}</div></div>`;
-  }).join("");
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  RENDER: DASHBOARD
-// ═══════════════════════════════════════════════════════════════════
-function renderDashboard(days, pred){
-  const el = document.getElementById("dashGrid");
-  const rawAcc = calcTaskAccOverDaysAll(days);
-  const skills = ["speaking","writing","reading","listening"];
-  const skillVals = skills.map(sk=>{
-    const relevant = TASKS.filter(t=>t[4]===sk);
-    let raw=0,max=0;
-    relevant.forEach(([id])=>{ const c=calcTaskAccOverDays(id,days); raw+=c.raw; max+=c.max; });
-    return max>0 ? (raw/max)*100 : null;
-  });
-  el.innerHTML = `
-    <div class="dash-card"><div class="label">PTE Prediction</div><div class="value" style="color:${pred===null?'var(--muted)':pred>=55?'var(--green)':pred>=45?'var(--yellow)':'var(--red)'}">${pred===null?'—':pred.toFixed(1)}</div></div>
-    <div class="dash-card"><div class="label">Raw Accuracy</div><div class="value">${rawAcc.max>0?rawAcc.pct.toFixed(1)+'%':'—'}</div></div>
-    <div class="dash-card"><div class="label">Speaking</div><div class="value">${skillVals[0]!==null?skillVals[0].toFixed(1)+'%':'—'}</div></div>
-    <div class="dash-card"><div class="label">Writing</div><div class="value">${skillVals[1]!==null?skillVals[1].toFixed(1)+'%':'—'}</div></div>
-    <div class="dash-card"><div class="label">Reading</div><div class="value">${skillVals[2]!==null?skillVals[2].toFixed(1)+'%':'—'}</div></div>
-    <div class="dash-card"><div class="label">Listening</div><div class="value">${skillVals[3]!==null?skillVals[3].toFixed(1)+'%':'—'}</div></div>
-  `;
-}
-function calcTaskAccOverDaysAll(days){ let raw=0,max=0; days.forEach(d=>{Object.values(DATA.__daily[d]||{}).forEach(arr=>{const c=calcEntries(arr); raw+=c.raw;max+=c.max;});}); return {raw,max,pct:max>0?(raw/max)*100:0}; }
-
-// ═══════════════════════════════════════════════════════════════════
-//  RENDER: PTE SCORE TABLE (4 skills + Overall, thang 10-90)
-// ═══════════════════════════════════════════════════════════════════
-// Điểm PTE thật của mock test gốc (MOCK0004) — hiển thị trực tiếp vì đây là điểm
-// server PTE đã chấm, không phải suy ra từ % accuracy tự nhập.
-const LATEST_MOCK = { day:"2026-07-23", name:"MOCK0004", speaking:49, writing:43, reading:3, listening:34 };
-
-function renderPteScoreTable(){
-  const el = document.getElementById("pteScoreTable");
-  const dateEl = document.getElementById("pteScoreDate");
-  const m = LATEST_MOCK;
-  const overall = Math.round((m.speaking + m.writing + m.reading + m.listening) / 4);
-  dateEl.textContent = fmtDate(m.day) + " · " + m.name;
-
-  const skillTasks = {
-    speaking: ["RA","RS","DI","RL","ASQ","SGD","RTS"],
-    writing: ["SWT","WE"],
-    reading: ["FIB","FDD","ROP"],
-    listening: ["SST","FIL","SMW","HIW","HCS","WFD"],
-  };
-  function taskBreakdown(sk){
-    return skillTasks[sk].map(id=>{
-      const t = TASKS.find(x=>x[0]===id);
-      const c = calcEntries(DATA.__daily[m.day]?.[id]||[]);
-      return { id, name: t?t[2]:id, pct: c.max>0?(c.raw/c.max)*100:null, raw:c.raw, max:c.max };
-    });
-  }
-  const rows = [
-    { key:"speaking", label:"🗣️ Speaking", score:m.speaking, tasks:taskBreakdown("speaking") },
-    { key:"writing", label:"✍️ Writing", score:m.writing, tasks:taskBreakdown("writing") },
-    { key:"reading", label:"📖 Reading", score:m.reading, tasks:taskBreakdown("reading") },
-    { key:"listening", label:"🎧 Listening", score:m.listening, tasks:taskBreakdown("listening") },
-  ];
-  function scoreColor(v){ return v>=65?'var(--green)':v>=50?'var(--blue)':v>=35?'var(--yellow)':'var(--red)'; }
-
-  el.innerHTML = `
-    <div class="pte-overall-row">
-      <div class="pte-overall-label">Overall</div>
-      <div class="pte-overall-value" style="color:${scoreColor(overall)}">${overall}</div>
-      <div class="pte-overall-target">Mục tiêu: 50 · Còn thiếu: ${Math.max(0,50-overall)} điểm</div>
-    </div>
-    <div class="pte-skill-grid">
-      ${rows.map(r=>`
-        <div class="pte-skill-card">
-          <div class="pte-skill-head">
-            <span class="pte-skill-name">${r.label}</span>
-            <span class="pte-skill-score" style="color:${scoreColor(r.score)}">${r.score}</span>
+    wrap.innerHTML+=`
+      <div class="dcard ${cls}">
+        <div class="dhead">
+          <div class="dhead-left">
+            <div class="ddate">${d.date}</div>
+            <div class="ddow">${d.dow} · ${d.hrs}h</div>
           </div>
-          <div class="pte-task-list">
-            ${r.tasks.map(t=>`
-              <div class="pte-task-row">
-                <span class="pte-task-id">${t.id}</span>
-                <span class="pte-task-name">${t.name}</span>
-                <span class="pte-task-pct ${t.pct===null?'c-muted':t.pct>=50?'c-green':t.pct>=25?'c-yellow':'c-red'}">${t.pct===null?'—':t.pct.toFixed(0)+'%'}</span>
-              </div>
-            `).join("")}
-          </div>
+          <div class="dhead-right">${badge}${hrsLight}</div>
         </div>
-      `).join("")}
-    </div>
-  `;
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  RENDER: PROJECTION
-// ═══════════════════════════════════════════════════════════════════
-function renderProjection(pred){
-  const pess = document.getElementById("predPess");
-  const real = document.getElementById("predReal");
-  const opt = document.getElementById("predOpt");
-  if(pred===null){ pess.textContent=real.textContent=opt.textContent="—"; return; }
-  pess.textContent = Math.max(0,pred-3).toFixed(0)+"–"+Math.max(0,pred-1).toFixed(0);
-  real.textContent = pred.toFixed(0)+"–"+(pred+3).toFixed(0);
-  opt.textContent = (pred+4).toFixed(0)+"–"+(pred+7).toFixed(0);
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  RENDER: DAY PLAN (built from adaptive status, real dates → exam)
-// ═══════════════════════════════════════════════════════════════════
-function buildSprintDays(adaptStatus){
-  const dl = daysUntilExam();
-  const list = [];
-  if(dl<=0) return list;
-  for(let i=0;i<dl;i++){
-    const d = new Date(TODAY+"T00:00:00");
-    d.setDate(d.getDate()+i);
-    const dow = d.getDay();
-    const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-    const isToday = i===0;
-    const isPreExam = i===dl-1 && dl>1;
-    let hours = DOW_HOURS[dow] || 6;
-    if(isPreExam) hours = Math.min(hours,4);
-    list.push({ dateStr, dow, hours, isToday, isPreExam, name:["CN","Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7"][dow] });
-  }
-  return list;
-}
-
-function allocateDayTasks(day, adaptStatus){
-  const budgetMin = day.hours*60;
-  const dailyReps = day.hours>=8?20:day.hours>=5?15:10;
-  const tasks = [];
-  DAILY_TASKS.forEach(id=>tasks.push({id, reps:dailyReps, isDaily:true, isBoosted:false, isReduced:false, status:adaptStatus[id].status}));
-  let used = DAILY_TASKS.reduce((s,id)=>s+dailyReps*MIN_PER_REP[id],0);
-
-  if(day.isPreExam){
-    tasks.length=0;
-    DAILY_TASKS.forEach(id=>tasks.push({id, reps:10, isDaily:true, isBoosted:false, isReduced:false, status:adaptStatus[id].status}));
-    tasks.push({id:"RA", reps:3, isDaily:false, isBoosted:false, isReduced:false, status:"REST"});
-    return { tasks, budgetMin, usedMin: 10*MIN_PER_REP.RS+10*MIN_PER_REP.WFD+3*MIN_PER_REP.RA, note:"KHÔNG học nặng hôm nay. Chỉ warm-up nhẹ, ngủ sớm trước 22h." };
-  }
-
-  const candidates = Object.entries(adaptStatus)
-    .filter(([id,s])=> !DAILY_TASKS.includes(id) && (s.status==="INTENSIVE"||s.status==="FOCUS"||s.status==="MAINTAIN"))
-    .sort((a,b)=>b[1].urgency-a[1].urgency);
-
-  const reps={};
-  candidates.forEach(([id])=>reps[id]=0);
-  candidates.forEach(([id,s])=>{
-    if(used>=budgetMin) return;
-    const minStart = s.status==="INTENSIVE"?2:1;
-    for(let k=0;k<minStart;k++){
-      if(used+MIN_PER_REP[id]>budgetMin) break;
-      reps[id]++; used+=MIN_PER_REP[id];
-    }
+        <div class="dbody">
+          <div class="dfocus">FOCUS HÔM NAY</div>
+          <div class="dfocus-text">${d.focus}</div>
+          <div class="dtasks">${taskRows}</div>
+          <div class="dhrs">
+            <span>${d.hrs}h</span>
+            <div class="dhrs-bar"><div class="dhrs-fill" style="width:${fillPct}%"></div></div>
+            <span>budget</span>
+          </div>
+          ${noteHtml}
+        </div>
+      </div>`;
   });
-  let guard=0;
-  while(used<budgetMin && guard<300){
-    guard++;
-    const avail = candidates.filter(([id])=>reps[id] < capFor(id));
-    if(!avail.length) break;
-    avail.sort((a,b)=>{
-      const ua=(a[1].urgency)/(reps[a[0]]+1);
-      const ub=(b[1].urgency)/(reps[b[0]]+1);
-      return ub-ua;
+}
+
+// ═══════ TABS ═══════
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    ["analysis","strategy","schedule","tracker","rules"].forEach(id=>{
+      const el=document.getElementById("tab-"+id);
+      if(el) el.style.display="none";
     });
-    const [pickId] = avail[0];
-    if(used+MIN_PER_REP[pickId]>budgetMin) break;
-    reps[pickId]++; used+=MIN_PER_REP[pickId];
-  }
-  candidates.forEach(([id,s])=>{
-    if(reps[id]>0) tasks.push({id, reps:reps[id], isDaily:false, isBoosted:s.status==="INTENSIVE", isReduced:false, status:s.status});
-  });
-
-  // REST tasks: light maintenance every other day
-  const restTasks = Object.entries(adaptStatus).filter(([id,s])=>s.status==="REST" && !DAILY_TASKS.includes(id));
-  restTasks.forEach(([id],idx)=>{
-    if((idx + Math.abs(hashDay(day.dateStr)))%2===0){
-      tasks.push({id, reps:1, isDaily:false, isBoosted:false, isReduced:true, status:"REST"});
-    }
-  });
-
-  let note = "";
-  if(day.hours<=3) note = `Ngày ít giờ (${day.hours}h): chỉ làm Daily Core + 1 task ưu tiên nhất. Chất lượng hơn số lượng.`;
-  else if(day.isToday) note = `Ngày đầu tiên của lộ trình — lập thói quen đúng từ hôm nay.`;
-  else note = `Ngày ${day.hours}h: dồn lực vào task INTENSIVE/FOCUS ở trên.`;
-
-  return { tasks, budgetMin, usedMin:used, note };
-}
-function hashDay(s){ let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))|0; return h; }
-
-const pillMap = { INTENSIVE:"pill-red", FOCUS:"pill-orange", MAINTAIN:"pill-blue", REST:"pill-gray" };
-
-function renderDayPlan(adaptStatus){
-  const dl = daysUntilExam();
-  document.getElementById("planTag").textContent = dl>0? `${dl} ngày tính từ hôm nay ${fmtDate(TODAY)}` : "Đã đến/qua ngày thi";
-  const grid = document.getElementById("daysGrid");
-  const days = buildSprintDays(adaptStatus);
-  if(!days.length){
-    grid.innerHTML = `<div class="day-card"><div class="day-body">Không còn ngày nào trước kỳ thi trong dữ liệu — kiểm tra lại ngày thi hoặc chúc bạn thi tốt! 🎯</div></div>`;
-    return;
-  }
-  grid.innerHTML = days.map(day=>{
-    const plan = allocateDayTasks(day, adaptStatus);
-    const taskRows = plan.tasks.map(t=>{
-      const task = TASKS.find(x=>x[0]===t.id);
-      const pillCls = t.isDaily?"pill-green":pillMap[t.status]||"pill-gray";
-      const repsCls = t.isBoosted?"boost":t.isDaily?"daily":"";
-      const repsTxt = t.isReduced? "×1 (giữ sàn)" : `×${t.reps}`;
-      return `<div class="task-row"><span class="task-pill ${pillCls}">${t.id}</span><span class="task-name-text">${task[1]}</span><span class="task-reps ${repsCls}">${repsTxt}</span></div>`;
-    }).join("");
-    const focusTask = plan.tasks.filter(t=>!t.isDaily).sort((a,b)=>b.reps-a.reps)[0];
-    const focusTxt = day.isPreExam ? "Nghỉ ngơi, warm-up nhẹ" : focusTask ? `${TASKS.find(x=>x[0]===focusTask.id)[1]} + Daily Core` : "Daily Core";
-    const cls = day.isToday?"today":day.isPreExam?"exam":"";
-    let badges="";
-    if(day.isToday) badges+=`<span class="badge badge-today">📍 HÔM NAY</span>`;
-    if(day.hours<=3) badges+=`<span class="badge badge-light">⏱ Ít giờ</span>`;
-    if(day.isPreExam) badges+=`<span class="badge badge-exam">🎯 PRE-EXAM</span>`;
-    const budgetPct = Math.min(100,(plan.usedMin/plan.budgetMin)*100);
-    const noteCls = day.isPreExam?"critical":day.isToday?"strategy":"";
-    return `<div class="day-card ${cls}">
-      <div class="day-header">
-        <div><div class="day-num">${fmtDate(day.dateStr)}</div><div class="day-name">${day.name}</div></div>
-        <div class="day-badges">${badges || `<span class="badge badge-light">${day.hours}h</span>`}</div>
-      </div>
-      <div class="day-body">
-        <div class="focus-label">FOCUS HÔM ĐÓ</div>
-        <div class="focus-text">${focusTxt}</div>
-        <div class="task-list">${taskRows}</div>
-        <div class="hour-bar"><span>${day.hours}h</span><div class="hour-bar-bg"><div class="hour-bar-fill" style="width:${budgetPct}%"></div></div><span>budget</span></div>
-        <div class="day-note ${noteCls}">${plan.note}</div>
-      </div>
-    </div>`;
-  }).join("");
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  RENDER: STRATEGY
-// ═══════════════════════════════════════════════════════════════════
-function renderStrategy(adaptStatus){
-  const el = document.getElementById("strategyGrid");
-  const withData = Object.entries(adaptStatus).filter(([,s])=>s.hasData);
-  if(!withData.length){
-    el.innerHTML = `<div class="strategy-card"><h3>💡 Chưa có dữ liệu</h3><p style="font-size:12px;color:var(--muted)">Nhập điểm ở mục bên dưới để tracker tự chọn ra các task cần ưu tiên sprint.</p></div>`;
-    return;
-  }
-  const sorted = withData.sort((a,b)=>{
-    const order={INTENSIVE:0,FOCUS:1,MAINTAIN:2,REST:3};
-    return (order[a[1].status]-order[b[1].status]) || (b[1].urgency-a[1].urgency);
-  }).slice(0,6);
-  const icon = {INTENSIVE:"🔴",FOCUS:"🟡",MAINTAIN:"🔵",REST:"✅"};
-  const borderColor = {INTENSIVE:"var(--red)",FOCUS:"var(--orange)",MAINTAIN:"var(--blue)",REST:"var(--green)"};
-  el.innerHTML = sorted.map(([id,s])=>{
-    const task = TASKS.find(t=>t[0]===id);
-    const tips = TIPS[id] || ["Luyện đều đặn theo lịch, ưu tiên task có weight cao hơn khi thời gian eo hẹp."];
-    const gapTxt = s.gap>=0? `+${s.gap.toFixed(1)}%` : `${s.gap.toFixed(1)}%`;
-    return `<div class="strategy-card" style="border-color:${borderColor[s.status]}">
-      <h3><span>${icon[s.status]}</span> ${task[1]} — ${s.status} (${task[3]}%)</h3>
-      <ul>${tips.map(t=>`<li><span class="bullet">→</span>${t}</li>`).join("")}
-      <li><span class="bullet">→</span>Hiện tại: <strong>${s.acc.toFixed(1)}%</strong> · Target: ${s.target}% · Gap: ${gapTxt}</li></ul>
-    </div>`;
-  }).join("");
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  CHART
-// ═══════════════════════════════════════════════════════════════════
-let predChart=null;
-function renderChart(){
-  const hist = DATA.__history;
-  const ctx = document.getElementById("predChart").getContext("2d");
-  if(predChart) predChart.destroy();
-  if(!hist || !hist.length){
-    return;
-  }
-  const labels = hist.map(h=>fmtDate(h.date));
-  const data = hist.map(h=>h.pred!==null?+h.pred.toFixed(1):null);
-  predChart = new Chart(ctx,{
-    type:"line",
-    data:{ labels, datasets:[
-      { label:"PTE Prediction", data, tension:.3, borderColor:"#38bdf8", backgroundColor:"rgba(56,189,248,.08)", fill:true, pointRadius:3, spanGaps:true },
-      { label:"Target 55", data:Array(labels.length).fill(55), borderColor:"#ef4444", borderDash:[6,3], pointRadius:0 }
-    ]},
-    options:{ responsive:true, plugins:{legend:{labels:{color:"#94a3b8"}}}, scales:{ x:{ticks:{color:"#64748b"},grid:{color:"#1e3050"}}, y:{ticks:{color:"#64748b"},grid:{color:"#1e3050"}} } }
-  });
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  ENTRY UI (score input, today only + collapsible recent)
-// ═══════════════════════════════════════════════════════════════════
-function buildTaskCards(){
-  const container = document.getElementById("taskContainer");
-  container.innerHTML = "";
-  TASKS.forEach(([id,en,vi,weight])=>{
-    const card = document.createElement("div");
-    card.className = "task-card";
-    card.dataset.id = id;
-    card.innerHTML = `
-      <div class="tc-header"><div class="tc-name">${en}</div><span class="tc-weight">${weight}%</span></div>
-      <div class="tc-vi">${vi}</div>
-      <div class="entries-list" id="list_${esc(id)}"></div>
-      <button class="add-entry-btn" id="add_${esc(id)}">+ Thêm bài (Enter)</button>
-      <div class="task-total"><span class="tot-label">Tổng (${ {today:"hôm nay","7days":"7 ngày",all:"tất cả"}[currentRange] })</span><span class="tot-val" id="tot_${esc(id)}">—</span></div>
-    `;
-    container.appendChild(card);
-    const list = document.getElementById(`list_${esc(id)}`);
-    if(!Array.isArray(DATA.__daily[TODAY][id])) DATA.__daily[TODAY][id]=[];
-    const entries = DATA.__daily[TODAY][id].length? DATA.__daily[TODAY][id] : [""];
-    entries.forEach((val,idx)=>list.appendChild(buildEntryRow(id,idx,val)));
-    document.getElementById(`add_${esc(id)}`).addEventListener("click", ()=>addNewEntry(id,list));
-    updateTaskTotal(id);
-  });
-}
-
-function addNewEntry(id, list){
-  if(!Array.isArray(DATA.__daily[TODAY][id])) DATA.__daily[TODAY][id]=[];
-  DATA.__daily[TODAY][id].push("");
-  const idx = DATA.__daily[TODAY][id].length-1;
-  const row = buildEntryRow(id, idx, "");
-  list.appendChild(row);
-  row.querySelector(".entry-input").focus();
-  saveData();
-}
-
-function buildEntryRow(id, idx, val){
-  const row = document.createElement("div");
-  row.className = "entry-row";
-  const score = parseScore(val);
-  const pct = score && score.max>0 ? (score.raw/score.max)*100 : 0;
-  const cls = score && score.max>0 ? scoreClass(pct) : "empty";
-  row.innerHTML = `
-    <input class="entry-input" type="text" value="${val}" placeholder="vd: 9.8/13" data-idx="${idx}">
-    <div class="entry-pct c-${cls==='empty'?'muted':cls==='good'?'green':cls==='warn'?'yellow':'red'}" id="epct_${esc(id)}_${idx}">${score && score.max>0 ? pct.toFixed(1)+"%" : "—"}</div>
-    <button class="remove-btn">✕</button>`;
-  const input = row.querySelector(".entry-input");
-  input.addEventListener("input", ()=>{
-    const v = input.value.trim();
-    while(DATA.__daily[TODAY][id].length<=idx) DATA.__daily[TODAY][id].push("");
-    DATA.__daily[TODAY][id][idx]=v;
-    const sc = parseScore(v);
-    const el = document.getElementById(`epct_${esc(id)}_${idx}`);
-    if(sc && sc.max>0){ const p=(sc.raw/sc.max)*100; el.textContent=p.toFixed(1)+"%"; el.className=`entry-pct c-${scoreClass(p)==='good'?'green':scoreClass(p)==='warn'?'yellow':'red'}`; }
-    else { el.textContent="—"; el.className="entry-pct c-muted"; }
-    saveData();
-    updateTaskTotal(id);
-    renderAll();
-  });
-  input.addEventListener("keydown", e=>{
-    if(e.key==="Enter"){ e.preventDefault(); const list=document.getElementById(`list_${esc(id)}`); addNewEntry(id,list); }
-  });
-  row.querySelector(".remove-btn").addEventListener("click", ()=>{
-    DATA.__daily[TODAY][id].splice(idx,1);
-    saveData();
-    refreshTaskCard(id);
-    renderAll();
-  });
-  return row;
-}
-
-function refreshTaskCard(id){
-  const list = document.getElementById(`list_${esc(id)}`);
-  list.innerHTML = "";
-  const entries = DATA.__daily[TODAY][id].length ? DATA.__daily[TODAY][id] : [""];
-  entries.forEach((val,idx)=>list.appendChild(buildEntryRow(id,idx,val)));
-  updateTaskTotal(id);
-}
-
-function updateTaskTotal(id){
-  const days = getDaysInRange(currentRange);
-  const c = calcTaskAccOverDays(id, days);
-  const el = document.getElementById(`tot_${esc(id)}`);
-  if(!el) return;
-  el.textContent = c.max>0 ? `${c.cnt} bài · TB ${c.pct.toFixed(1)}%` : "—";
-  el.style.color = c.max>0 ? (c.pct>=70?"var(--green)":c.pct>=50?"var(--yellow)":"var(--red)") : "var(--muted)";
-}
-function updateAllTaskTotals(){ TASKS.forEach(([id])=>updateTaskTotal(id)); }
-
-// ═══════════════════════════════════════════════════════════════════
-//  MAIN RENDER
-// ═══════════════════════════════════════════════════════════════════
-function renderAll(){
-  renderHeader();
-  const days = getDaysInRange(currentRange);
-  const allDays = getAllDays();
-  const pred = calcPrediction(days);
-  const dl = daysUntilExam();
-
-  renderAlert(pred, dl);
-  const adaptStatus = getAdaptiveStatus(allDays.length?allDays:[TODAY]);
-  renderScores(days, adaptStatus);
-  renderDashboard(days, pred);
-  renderPteScoreTable();
-  renderProjection(pred);
-  renderDayPlan(adaptStatus);
-  renderStrategy(adaptStatus);
-  updateAllTaskTotals();
-
-  // history snapshot for chart
-  const predAll = calcPrediction(allDays);
-  const snap = DATA.__history.find(h=>h.date===TODAY);
-  if(snap) snap.pred = predAll;
-  else DATA.__history.push({date:TODAY, pred:predAll});
-  DATA.__history.sort((a,b)=>a.date.localeCompare(b.date));
-  saveData();
-  renderChart();
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  EVENTS
-// ═══════════════════════════════════════════════════════════════════
-document.querySelectorAll(".filter-btn").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    currentRange = btn.dataset.range;
-    renderAll();
+    const t=tab.dataset.t;
+    const el=document.getElementById("tab-"+t);
+    if(el) el.style.display="block";
+    if(t==="tracker"){ buildTracker(); updateOverall(); }
+    if(t==="schedule") buildSchedule();
   });
 });
 
-document.getElementById("exportJSON").addEventListener("click", ()=>{
-  const blob = new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `pte_sprint_backup_${TODAY}.json`;
-  a.click();
-});
-document.getElementById("importJSON").addEventListener("click", ()=>document.getElementById("importFile").click());
-document.getElementById("importFile").addEventListener("change", e=>{
-  const f = e.target.files[0];
-  if(!f) return;
-  const r = new FileReader();
-  r.onload = ()=>{
-    try{ const imp=JSON.parse(r.result); Object.assign(DATA, imp); saveData(); location.reload(); }
-    catch{ alert("File không hợp lệ!"); }
-  };
-  r.readAsText(f);
-});
-document.getElementById("resetAll").addEventListener("click", ()=>{
-  if(!confirm("Xóa toàn bộ dữ liệu? Không thể hoàn tác!")) return;
-  localStorage.removeItem("pte_sprint_final");
-  location.reload();
-});
-
-// ═══════════════════════════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════════════════════════
-buildTaskCards();
-renderAll();
-setInterval(saveData, 30000);
-window.addEventListener("beforeunload", saveData);
+// ═══════ INIT ═══════
+buildSchedule();
+setInterval(save,30000);
+window.addEventListener("beforeunload",save);
 </script>
 </body>
 </html>
