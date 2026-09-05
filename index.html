@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PTE 5-Day Sprint — Target 50</title>
+<title>PTE 50+ — 5 Ngày Cuối</title>
 <style>
 :root {
   --bg:#060d1a; --surface:#0d1b2e; --card:#111f35;
@@ -19,13 +19,7 @@
 body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-serif;padding:16px;font-size:14px;}
 .wrap{max-width:1100px;margin:auto;}
 
-/* BANNER */
-.banner{
-  background:linear-gradient(135deg,#1a0a0a 0%,#0d1b2e 100%);
-  border:1px solid var(--red); border-radius:14px;
-  padding:18px 22px; margin-bottom:20px;
-  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
-}
+.banner{background:linear-gradient(135deg,#1a0a0a 0%,#0d1b2e 100%);border:1px solid var(--red);border-radius:14px;padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
 .banner-left h1{font-size:22px;font-weight:800;letter-spacing:-.3px;}
 .banner-left h1 span{color:var(--red);}
 .banner-left .sub{color:var(--muted);font-size:12px;margin-top:4px;}
@@ -34,13 +28,10 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-se
 .bstat .num{font-size:28px;font-weight:800;font-family:monospace;}
 .bstat .lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
 
-/* TABS */
 .tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
-.tab{padding:7px 18px;border-radius:20px;font-size:12px;cursor:pointer;
-  background:var(--surface);color:var(--muted);border:1px solid var(--border);font-weight:600;}
+.tab{padding:7px 18px;border-radius:20px;font-size:12px;cursor:pointer;background:var(--surface);color:var(--muted);border:1px solid var(--border);font-weight:600;}
 .tab.active{background:var(--blue);color:#000;border-color:var(--blue);}
 
-/* SECTION */
 .section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;}
 .section h2{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .tag{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;}
@@ -49,7 +40,6 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-se
 .tag-green{background:var(--green-s);color:var(--green);}
 .tag-yellow{background:var(--yellow-s);color:var(--yellow);}
 
-/* ANALYSIS GRID */
 .analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;}
 .acard{background:var(--surface);border-radius:10px;padding:12px 14px;border:1px solid var(--border);}
 .acard.urgent{border-color:var(--red);background:linear-gradient(135deg,#1a060620,var(--surface));}
@@ -58,18 +48,13 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-se
 .acard .alabel{font-size:10px;color:var(--muted);margin-bottom:4px;display:flex;justify-content:space-between;}
 .acard .aval{font-size:24px;font-weight:800;font-family:monospace;}
 .acard .asub{font-size:10px;margin-top:3px;}
-.c-red{color:var(--red);} .c-orange{color:var(--orange);}
-.c-yellow{color:var(--yellow);} .c-green{color:var(--green);}
-.c-blue{color:var(--blue);} .c-muted{color:var(--muted);}
+.c-red{color:var(--red);}.c-orange{color:var(--orange);}.c-yellow{color:var(--yellow);}.c-green{color:var(--green);}.c-blue{color:var(--blue);}.c-muted{color:var(--muted);}
 
-/* INSIGHT BOX */
-.insight{background:var(--surface);border-radius:10px;padding:14px 16px;
-  border-left:3px solid var(--blue);margin-bottom:10px;font-size:12px;line-height:1.7;}
+.insight{background:var(--surface);border-radius:10px;padding:14px 16px;border-left:3px solid var(--blue);margin-bottom:10px;font-size:12px;line-height:1.7;}
 .insight.critical{border-left-color:var(--red);background:#1a060620;}
 .insight.win{border-left-color:var(--green);}
 .insight strong{color:var(--text);}
 
-/* PROJECTION */
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
 @media(max-width:550px){.proj-grid{grid-template-columns:1fr;}}
 .pcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
@@ -78,7 +63,6 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-se
 .pcard .pscore{font-size:36px;font-weight:800;font-family:monospace;}
 .pcard .pcond{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5;}
 
-/* STRATEGY CARDS */
 .strat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
 .scard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;}
 .scard-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
@@ -91,43 +75,20 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-se
 .method-box .mtitle{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px;}
 .method-box code{background:var(--bg);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:11px;color:var(--blue);}
 
-/* 5-DAY SCHEDULE */
-.days-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;}
-.dcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-.dcard.today{border-color:var(--blue);box-shadow:0 0 14px #38bdf820;}
-.dcard.light-day{opacity:.9;}
-.dcard.exam-eve{border-color:var(--yellow);}
-.dhead{padding:10px 14px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;}
-.dhead-left .ddate{font-size:16px;font-weight:800;font-family:monospace;}
-.dhead-left .ddow{font-size:11px;color:var(--muted);}
-.dhead-right{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
-.dbadge{font-size:8px;padding:2px 7px;border-radius:8px;font-weight:700;}
-.dbadge-blue{background:var(--blue);color:#000;}
-.dbadge-gray{background:var(--border);color:var(--muted);}
-.dbadge-yellow{background:var(--yellow-s);color:var(--yellow);border:1px solid var(--yellow-b);}
-.dbody{padding:12px 14px;}
-.dfocus{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;}
-.dfocus-text{font-size:11px;font-weight:600;color:var(--blue);margin-bottom:10px;}
-.dtasks{display:flex;flex-direction:column;gap:5px;}
-.dtask-row{display:flex;align-items:center;gap:6px;font-size:11px;}
-.dpill{font-size:9px;font-weight:700;padding:2px 6px;border-radius:5px;font-family:monospace;min-width:34px;text-align:center;}
-.dpill-red{background:var(--red-s);color:var(--red);border:1px solid var(--red-b);}
-.dpill-green{background:var(--green-s);color:var(--green);border:1px solid var(--green-b);}
-.dpill-blue{background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-b);}
-.dpill-yellow{background:var(--yellow-s);color:var(--yellow);border:1px solid var(--yellow-b);}
-.dpill-gray{background:#33415520;color:var(--muted);border:1px solid #33415540;}
-.dtask-name{flex:1;color:var(--text);}
-.dtask-reps{font-family:monospace;font-size:10px;color:var(--dim);}
-.dtask-reps.hi{color:var(--red);font-weight:700;}
-.dtask-reps.ok{color:var(--green);}
-.dnote{margin-top:8px;padding:7px 9px;border-radius:6px;font-size:10px;line-height:1.5;
-  background:var(--card);border-left:2px solid var(--dim);color:var(--muted);}
-.dnote.crit{border-left-color:var(--red);color:#fca5a5;background:#1a060618;}
-.dnote.strat{border-left-color:var(--blue);color:#93c5fd;}
-.dhrs{margin-top:8px;display:flex;align-items:center;gap:6px;font-size:9px;color:var(--dim);}
-.dhrs-bar{flex:1;height:3px;background:var(--border);border-radius:2px;}
-.dhrs-fill{height:3px;border-radius:2px;background:var(--blue);}
+/* ── WEEKLY SCHEDULE TABLE ── */
+.week-wrap{overflow-x:auto;}
+.week-table{width:100%;border-collapse:collapse;font-size:12px;min-width:620px;}
+.week-table th{background:var(--surface);color:var(--muted);font-weight:700;padding:8px 10px;text-align:center;border:1px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+.week-table th.task-h{text-align:left;min-width:130px;}
+.week-table td{border:1px solid var(--border);padding:7px 8px;text-align:center;vertical-align:middle;}
+.week-table td.task-label{text-align:left;font-weight:600;color:var(--text);background:var(--surface);font-size:11px;padding:7px 12px;white-space:nowrap;}
+.week-table td.task-label span{color:var(--muted);font-weight:400;font-size:10px;display:block;margin-top:1px;}
+.week-table td.empty{background:var(--bg);}
+.week-table td.num{font-weight:700;font-size:13px;color:#000;background:#eab308;border-color:#ca8a0480;}
+.week-table td.num-rare{font-weight:600;font-size:11px;color:#1e40af;background:#dbeafe;border-color:#93c5fd80;}
+.week-table td.mock-cell{background:#7c3aed22;color:#a78bfa;font-weight:700;font-size:12px;border:1px solid #7c3aed40;}
+.week-table td.note-cell{background:var(--surface);color:var(--muted);font-size:10px;font-style:italic;}
+.sect-row td{background:#1a2f4a;color:#64748b;font-size:10px;font-weight:700;text-align:left;padding:5px 12px;letter-spacing:.8px;text-transform:uppercase;}
 
 /* TRACKER */
 .tracker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
@@ -142,25 +103,21 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-se
 .bar-now{height:6px;border-radius:4px;position:absolute;top:0;left:0;transition:width .5s;}
 .bar-target-line{position:absolute;top:-1px;height:8px;width:2px;border-radius:1px;background:#64748b;}
 .input-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}
-.entry-input{background:var(--card);border:1px solid var(--border);color:var(--text);
-  border-radius:6px;padding:5px 8px;font-size:12px;width:100%;outline:none;font-family:monospace;}
+.entry-input{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:5px 8px;font-size:12px;width:100%;outline:none;font-family:monospace;}
 .entry-input:focus{border-color:var(--blue);}
 .entry-pct{font-size:11px;font-weight:700;text-align:right;padding-top:2px;font-family:monospace;}
-.tcard-total{margin-top:8px;padding-top:7px;border-top:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;font-size:11px;}
+.tcard-total{margin-top:8px;padding-top:7px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:11px;}
 .tot-score{font-weight:700;font-family:monospace;}
 .goal-status{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;}
 .gs-need{background:var(--red-s);color:var(--red);}
 .gs-almost{background:var(--yellow-s);color:var(--yellow);}
 .gs-done{background:var(--green-s);color:var(--green);}
 .gs-na{background:var(--border);color:var(--muted);}
-.add-btn{background:none;border:1px dashed var(--border);color:var(--muted);
-  border-radius:5px;padding:3px 8px;font-size:10px;cursor:pointer;width:100%;margin-top:5px;}
+.add-btn{background:none;border:1px dashed var(--border);color:var(--muted);border-radius:5px;padding:3px 8px;font-size:10px;cursor:pointer;width:100%;margin-top:5px;}
 .add-btn:hover{border-color:var(--blue);color:var(--blue);}
 .remove-btn{background:none;border:none;color:var(--dim);cursor:pointer;font-size:11px;padding:0;}
 .remove-btn:hover{color:var(--red);}
 
-/* OVERALL PROGRESS */
 .overall-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;}
 .overall-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
 .overall-num{font-size:42px;font-weight:800;font-family:monospace;}
@@ -175,28 +132,22 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-se
 .skill-bar-f{height:5px;border-radius:3px;transition:width .5s;}
 .skill-val{font-family:monospace;font-size:11px;font-weight:700;text-align:right;}
 
-/* RULES */
 .rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
 .rule-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;}
 .rule-n{font-size:24px;font-weight:800;color:var(--dim);font-family:monospace;margin-bottom:4px;}
 .rule-t{font-size:12px;font-weight:700;margin-bottom:4px;}
 .rule-b{font-size:11px;color:var(--muted);line-height:1.5;}
 
-/* RESPONSIVE */
 @media(max-width:600px){.banner{flex-direction:column;}.banner-right{justify-content:space-between;width:100%;}}
-::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<!-- BANNER -->
 <div class="banner">
   <div class="banner-left">
-    <h1>PTE <span>50+</span> — 5 NGÀY CUỐI</h1>
-    <div class="sub">Mock test 23/07 · Speaking 49 · Writing 43 · Reading 38 · Listening 34 · Overall ~41</div>
+    <h1>PTE <span>50+</span> — 5 Ngày Cuối</h1>
+    <div class="sub">Mock test 23/07 · Listening 45 · Reading 45 · Speaking 35 · Writing 53 · Overall ~41</div>
   </div>
   <div class="banner-right">
     <div class="bstat"><div class="num c-red" id="daysLeft">—</div><div class="lbl">ngày còn lại</div></div>
@@ -206,441 +157,324 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-se
   </div>
 </div>
 
-<!-- TABS -->
 <div class="tabs">
   <div class="tab active" data-t="analysis">📊 Phân tích</div>
   <div class="tab" data-t="strategy">🧠 Chiến lược</div>
-  <div class="tab" data-t="schedule">📅 Lịch 5 ngày</div>
+  <div class="tab" data-t="schedule">📅 Lịch tuần</div>
   <div class="tab" data-t="tracker">✏️ Nhập điểm</div>
   <div class="tab" data-t="rules">⚡ Quy tắc</div>
 </div>
 
-<!-- ═══════ TAB: ANALYSIS ═══════ -->
+<!-- TAB: ANALYSIS -->
 <div id="tab-analysis">
-
   <div class="section">
     <h2>📊 Kết quả mock test 23/07 <span class="tag tag-blue">PTE Magic</span></h2>
     <div class="analysis-grid">
-      <div class="acard good">
-        <div class="alabel"><span>Speaking</span><span class="c-green">49</span></div>
-        <div class="aval c-green">49</div>
-        <div class="asub c-green">Tốt nhất — giữ nguyên</div>
-      </div>
-      <div class="acard warn">
-        <div class="alabel"><span>Writing</span><span class="c-yellow">43</span></div>
-        <div class="aval c-yellow">43</div>
-        <div class="asub c-yellow">WFD kéo xuống nhiều</div>
-      </div>
-      <div class="acard urgent">
-        <div class="alabel"><span>Reading</span><span class="c-red">38</span></div>
-        <div class="aval c-red">38</div>
-        <div class="asub c-red">FIB yếu, MCQ = 0</div>
-      </div>
-      <div class="acard urgent">
-        <div class="alabel"><span>Listening</span><span class="c-red">34</span></div>
-        <div class="aval c-red">34</div>
-        <div class="asub c-red">SST = 0, WFD 44%</div>
-      </div>
+      <div class="acard urgent"><div class="alabel"><span>Speaking</span><span class="c-red">35</span></div><div class="aval c-red">35</div><div class="asub c-red">Yếu nhất — RS & RA cần đẩy mạnh</div></div>
+      <div class="acard good"><div class="alabel"><span>Writing</span><span class="c-green">53</span></div><div class="aval c-green">53</div><div class="asub c-green">Cao nhất — duy trì WFD daily</div></div>
+      <div class="acard good"><div class="alabel"><span>Reading</span><span class="c-green">45</span></div><div class="aval c-green">45</div><div class="asub c-green">Cải thiện — tiếp tục FIB-rw</div></div>
+      <div class="acard good"><div class="alabel"><span>Listening</span><span class="c-green">45</span></div><div class="aval c-green">45</div><div class="asub c-green">Ổn — SST=0 vẫn còn dư địa tăng</div></div>
     </div>
   </div>
-
   <div class="section">
     <h2>🔍 Chi tiết từng task <span class="tag tag-red">điểm yếu chết người</span></h2>
     <div class="analysis-grid">
-      <!-- Speaking -->
-      <div class="acard urgent">
-        <div class="alabel"><span>Repeat Sentence</span><span class="tag tag-red">🔴</span></div>
-        <div class="aval c-red">20%</div>
-        <div class="asub c-red">25.41/130 — thấp nhất Speaking<br>Potential: +3–4 điểm Overall</div>
-      </div>
-      <div class="acard warn">
-        <div class="alabel"><span>Read Aloud</span><span class="tag tag-yellow">⚠</span></div>
-        <div class="aval c-yellow">50%</div>
-        <div class="asub c-yellow">45.35/90 — Fluency chỉ 18.7<br>Cần tăng fluency, không phải accuracy</div>
-      </div>
-      <div class="acard good">
-        <div class="alabel"><span>Describe Image</span><span class="tag tag-green">✅</span></div>
-        <div class="aval c-green">68%</div>
-        <div class="asub c-green">43.66/64 — Tốt, giữ nguyên</div>
-      </div>
-      <div class="acard warn">
-        <div class="alabel"><span>Retell Lecture</span><span class="tag tag-yellow">⚠</span></div>
-        <div class="aval c-yellow">47%</div>
-        <div class="asub c-yellow">15.06/32 — Fluency yếu (2.7)<br>Template approach cần thiết</div>
-      </div>
-      <!-- Writing -->
-      <div class="acard urgent">
-        <div class="alabel"><span>WFD (Dictation)</span><span class="tag tag-red">🔴</span></div>
-        <div class="aval c-red">44%</div>
-        <div class="asub c-red">18/41 — ảnh hưởng cả Writing + Listening<br>Potential: +2–3 điểm Overall</div>
-      </div>
-      <div class="acard warn">
-        <div class="alabel"><span>Essay</span><span class="tag tag-yellow">⚠</span></div>
-        <div class="aval c-yellow">47%</div>
-        <div class="asub c-yellow">24.7/52 — chỉ dùng template<br>5 ngày không cải thiện nhiều</div>
-      </div>
-      <!-- Reading -->
-      <div class="acard urgent">
-        <div class="alabel"><span>FIB-r (dropdown)</span><span class="tag tag-red">🔴</span></div>
-        <div class="aval c-red">18%</div>
-        <div class="asub c-red">2/11 — collocation yếu<br>Khó cải thiện nhanh</div>
-      </div>
-      <div class="acard warn">
-        <div class="alabel"><span>FIB-rw (drag&drop)</span><span class="tag tag-yellow">⚠</span></div>
-        <div class="aval c-yellow">37%</div>
-        <div class="asub c-yellow">12/32 — context reading được<br>Có thể lên 55% trong 5 ngày</div>
-      </div>
-      <!-- Listening -->
-      <div class="acard urgent">
-        <div class="alabel"><span>SST (Summarize Spoken)</span><span class="tag tag-red">🔴🔴</span></div>
-        <div class="aval c-red">0%</div>
-        <div class="asub c-red">0/12 — bỏ trắng hoàn toàn<br>Chỉ cần template = +2–3 điểm</div>
-      </div>
-      <div class="acard urgent">
-        <div class="alabel"><span>FIB-l (Listening)</span><span class="tag tag-red">🔴</span></div>
-        <div class="aval c-red">25%</div>
-        <div class="asub c-red">4/16 — nghe + điền yếu<br>Cải thiện được bằng luyện tập</div>
-      </div>
-      <div class="acard good">
-        <div class="alabel"><span>HIW (Incorrect Words)</span><span class="tag tag-green">OK</span></div>
-        <div class="aval c-green">42%</div>
-        <div class="asub c-muted">5/12 — không cần ưu tiên</div>
-      </div>
-      <div class="acard good">
-        <div class="alabel"><span>Select Missing Word</span><span class="tag tag-green">✅</span></div>
-        <div class="aval c-green">100%</div>
-        <div class="asub c-green">2/2 — hoàn hảo, giữ nguyên</div>
-      </div>
+      <div class="acard urgent"><div class="alabel"><span>Repeat Sentence</span><span class="tag tag-red">🔴</span></div><div class="aval c-red">20%</div><div class="asub c-red">Speaking 35 xác nhận RS vẫn yếu nhất<br>Potential: +6–8 điểm nếu RS lên 55%</div></div>
+      <div class="acard warn"><div class="alabel"><span>Read Aloud</span><span class="tag tag-yellow">⚠</span></div><div class="aval c-yellow">50%</div><div class="asub c-yellow">Fluency yếu kéo Speaking xuống<br>Đọc liền mạch, không ngắt quãng</div></div>
+      <div class="acard good"><div class="alabel"><span>Describe Image</span><span class="tag tag-green">✅</span></div><div class="aval c-green">68%</div><div class="asub c-green">Điểm sáng của Speaking — giữ nguyên</div></div>
+      <div class="acard warn"><div class="alabel"><span>Retell Lecture</span><span class="tag tag-yellow">⚠</span></div><div class="aval c-yellow">47%</div><div class="asub c-yellow">15.06/32 — Fluency yếu (2.7)<br>Template approach cần thiết</div></div>
+      <div class="acard warn"><div class="alabel"><span>WFD (Dictation)</span><span class="tag tag-yellow">⚠</span></div><div class="aval c-yellow">44%</div><div class="asub c-yellow">Đang đóng góp vào Writing 53<br>Duy trì 30 câu/ngày Mon–Fri</div></div>
+      <div class="acard warn"><div class="alabel"><span>Essay</span><span class="tag tag-yellow">⚠</span></div><div class="aval c-yellow">47%</div><div class="asub c-yellow">24.7/52 — chỉ dùng template</div></div>
+      <div class="acard urgent"><div class="alabel"><span>FIB-r (dropdown)</span><span class="tag tag-red">🔴</span></div><div class="aval c-red">18%</div><div class="asub c-red">Reading 45 không nhờ FIB-r<br>Tiếp tục skip — không đủ thời gian</div></div>
+      <div class="acard warn"><div class="alabel"><span>FIB-rw (drag&drop)</span><span class="tag tag-yellow">⚠</span></div><div class="aval c-green">55%</div><div class="asub c-green">Đang cải thiện tốt — Reading 45<br>Tiếp tục 10 bài/ngày Mon-Wed-Fri</div></div>
+      <div class="acard urgent"><div class="alabel"><span>SST (Summarize Spoken)</span><span class="tag tag-red">🔴🔴</span></div><div class="aval c-red">0%</div><div class="asub c-red">Vẫn 0 dù Listening đã 45<br>SST template → Listening có thể lên 50+</div></div>
+      <div class="acard urgent"><div class="alabel"><span>FIB-l (Listening)</span><span class="tag tag-red">🔴</span></div><div class="aval c-yellow">35%</div><div class="asub c-yellow">Cải thiện — Listening 45<br>Tue/Thu 5 bài, tiếp tục</div></div>
+      <div class="acard good"><div class="alabel"><span>HIW</span><span class="tag tag-green">OK</span></div><div class="aval c-green">42%</div><div class="asub c-muted">5/12 — không cần ưu tiên</div></div>
+      <div class="acard good"><div class="alabel"><span>Select Missing Word</span><span class="tag tag-green">✅</span></div><div class="aval c-green">100%</div><div class="asub c-green">2/2 — hoàn hảo, giữ nguyên</div></div>
     </div>
   </div>
-
   <div class="section">
     <h2>💡 Insight quan trọng nhất</h2>
-    <div class="insight critical">
-      <strong>🔴 RS chỉ 20% (25.41/130) — đây là nguyên nhân chính Speaking không cao hơn.</strong>
-      RS chiếm tỉ lệ lớn trong Speaking score. Fluency score RS của bạn chỉ 8.9 — rất thấp.
-      Bạn đang nghe xong rồi cố gắng nhớ từng từ → sai hoàn toàn. RS cần nhớ theo <em>chunk âm thanh</em>, không phải từng từ.
-      Nếu RS lên 50–60% → Speaking có thể nhảy lên 55+.
-    </div>
-    <div class="insight critical">
-      <strong>🔴 SST = 0% — đang bỏ phí hoàn toàn.</strong>
-      1 câu SST trong mock = 12 điểm max → bạn ghi 0. Chỉ cần viết được 1 đoạn summary dù đơn giản
-      là đã có điểm. Template SST học trong 30 phút, dùng được ngay ngày hôm sau.
-    </div>
-    <div class="insight win">
-      <strong>✅ DI 68%, Grammar 77%, Vocabulary 90%, Written Discourse 90% — enabling skills tốt.</strong>
-      Điều này có nghĩa bạn <em>có nền tảng</em> — vấn đề là kỹ năng PTE-specific, không phải tiếng Anh tổng quát.
-      RS và WFD là kỹ năng luyện được nhanh nếu làm đúng phương pháp.
-    </div>
-    <div class="insight">
-      <strong>📌 Reading 38 — không phải ưu tiên số 1.</strong>
-      FIB-r 18% cần vocabulary depth → 5 ngày không đủ. FIB-rw 37% có thể cải thiện.
-      MCQ và Re-order skip hoàn toàn — thời gian đầu tư không xứng với điểm thu về.
-      Chỉ làm FIB-rw 10 bài/ngày, còn lại tập trung RS + WFD + SST.
-    </div>
+    <div class="insight critical"><strong>🔴 Speaking 35 — điểm yếu số 1, cần ưu tiên tuyệt đối.</strong> RS 20% và RA fluency yếu là 2 nguyên nhân chính. RS lên 55% → Speaking có thể nhảy lên 48–52, kéo Overall lên 50+.</div>
+    <div class="insight critical"><strong>🔴 SST = 0% — vẫn bỏ phí dù Listening đã 45.</strong> Nếu SST có điểm, Listening có thể lên 50–52. Template 30 phút, không có lý do để bỏ trắng tiếp.</div>
+    <div class="insight win"><strong>✅ Writing 53 & Reading 45 & Listening 45 — 3 kỹ năng đang ổn.</strong> Không cần thay đổi chiến lược cho 3 kỹ năng này. Duy trì WFD và FIB-rw như hiện tại.</div>
+    <div class="insight"><strong>📌 Chiến lược mới: All-in vào Speaking.</strong> RS mỗi sáng 30–40 câu. RA fluency mỗi ngày Mon-Wed-Fri. DI giữ nguyên template. Speaking từ 35 lên 48+ là con đường ngắn nhất đến Overall 50.</div>
   </div>
-
   <div class="section">
-    <h2>🎯 Dự báo 5 ngày</h2>
+    <h2>🎯 Dự báo</h2>
     <div class="proj-grid">
-      <div class="pcard">
-        <div class="pname">Thực hiện 50%</div>
-        <div class="pscore c-red">44–46</div>
-        <div class="pcond">Bỏ vài ngày, RS không cải thiện được nhiều</div>
-      </div>
-      <div class="pcard main">
-        <div class="pname">🎯 Thực tế nhất</div>
-        <div class="pscore c-yellow">50–52</div>
-        <div class="pcond">RS lên 45–50%, WFD lên 60%, SST có template, FIB-rw lên 50%</div>
-      </div>
-      <div class="pcard">
-        <div class="pname">Bứt phá</div>
-        <div class="pscore c-green">53–55</div>
-        <div class="pcond">RS lên 55%+, WFD lên 65%+, SST 50%+, FIB-rw 60%+</div>
-      </div>
+      <div class="pcard"><div class="pname">Thực hiện 50%</div><div class="pscore c-red">42–44</div><div class="pcond">RS không cải thiện, Speaking vẫn 35</div></div>
+      <div class="pcard main"><div class="pname">🎯 Thực tế nhất</div><div class="pscore c-yellow">50–53</div><div class="pcond">RS lên 45%+, SST có template, W/R/L giữ nguyên</div></div>
+      <div class="pcard"><div class="pname">Bứt phá</div><div class="pscore c-green">55–58</div><div class="pcond">RS 55%+, SST 40%+, Speaking lên 48+</div></div>
     </div>
   </div>
-
 </div>
 
-<!-- ═══════ TAB: STRATEGY ═══════ -->
+<!-- TAB: STRATEGY -->
 <div id="tab-strategy" style="display:none">
-
   <div class="section">
     <h2>🏆 Thứ tự ưu tiên tuyệt đối</h2>
     <div style="display:flex;flex-direction:column;gap:8px;">
-      <div class="insight critical"><strong>① RS — Repeat Sentence (ưu tiên số 1)</strong><br>
-        Từ 20% → 50% có thể làm trong 5 ngày nếu đổi phương pháp. Đây là task có ROI cao nhất.</div>
-      <div class="insight critical"><strong>② WFD — Write From Dictation (ưu tiên số 2)</strong><br>
-        Từ 44% → 60% — ảnh hưởng cả Writing lẫn Listening. Luyện daily 20 câu/ngày.</div>
-      <div class="insight critical"><strong>③ SST — Summarize Spoken Text (ưu tiên số 3)</strong><br>
-        Từ 0% → 40%+ chỉ bằng template. Không cần giỏi — chỉ cần không bỏ trắng.</div>
-      <div class="insight"><strong>④ FIB-rw — Reading FIB Drag & Drop</strong><br>
-        Từ 37% → 55%. Context reading, không cần vocabulary mới. 10 bài/ngày đủ.</div>
-      <div class="insight win"><strong>⑤ RA — Read Aloud (chiến lược phòng thủ)</strong><br>
-        Không push accuracy — tập fluency. Đọc liền mạch không dừng > đọc đúng mà ngắt quãng.</div>
+      <div class="insight critical"><strong>① RS — Repeat Sentence (ưu tiên số 1)</strong><br>Từ 20% → 50% có thể làm trong 5 ngày nếu đổi phương pháp. ROI cao nhất.</div>
+      <div class="insight critical"><strong>② WFD — Write From Dictation (ưu tiên số 2)</strong><br>Từ 44% → 60% — ảnh hưởng cả Writing lẫn Listening. Luyện daily.</div>
+      <div class="insight critical"><strong>③ SST — Summarize Spoken Text (ưu tiên số 3)</strong><br>Từ 0% → 40%+ chỉ bằng template. Không cần giỏi — chỉ cần không bỏ trắng.</div>
+      <div class="insight"><strong>④ FIB-rw — Reading Drag & Drop</strong><br>Từ 37% → 55%. Context reading, 10 bài/ngày đủ.</div>
+      <div class="insight win"><strong>⑤ RA — Read Aloud (phòng thủ)</strong><br>Tập fluency, không push accuracy. Đọc liền mạch > đọc đúng mà ngắt quãng.</div>
     </div>
   </div>
-
   <div class="section">
     <h2>🧠 Phương pháp chi tiết từng task</h2>
     <div class="strat-grid">
-
       <div class="scard" style="border-color:var(--red)">
-        <div class="scard-head">
-          <div class="scard-title">🔴 RS — Repeat Sentence</div>
-          <span class="scard-badge" style="background:var(--red-s);color:var(--red)">20% → 55%</span>
-        </div>
+        <div class="scard-head"><div class="scard-title">🔴 RS — Repeat Sentence</div><span class="scard-badge" style="background:var(--red-s);color:var(--red)">20% → 55%</span></div>
         <ul>
-          <li><span class="arr">→</span> <span><strong>Nghe 1 lần duy nhất</strong> — không replay, không dừng</span></li>
-          <li><span class="arr">→</span> <span>Nhớ theo <strong>chunk âm thanh</strong> (nhóm từ), không nhớ từng từ</span></li>
-          <li><span class="arr">→</span> <span>Nếu quên giữa câu — <strong>tiếp tục đọc</strong>, đừng dừng lại cố nhớ</span></li>
-          <li><span class="arr">→</span> <span>Pace bắt chước ngay tốc độ audio, không chậm hơn</span></li>
-          <li><span class="arr">→</span> <span>Luyện <strong>30–40 câu/ngày</strong>, chia 2 session sáng/tối</span></li>
-          <li><span class="arr">→</span> <span>Ngày 1–2: focus câu ngắn (7–10 từ). Ngày 3–5: câu dài (11–15 từ)</span></li>
+          <li><span class="arr">→</span><span><strong>Nghe 1 lần duy nhất</strong> — không replay</span></li>
+          <li><span class="arr">→</span><span>Nhớ theo <strong>chunk âm thanh</strong>, không nhớ từng từ</span></li>
+          <li><span class="arr">→</span><span>Quên giữa câu — <strong>tiếp tục đọc</strong>, đừng dừng lại</span></li>
+          <li><span class="arr">→</span><span>Pace bắt chước ngay tốc độ audio</span></li>
+          <li><span class="arr">→</span><span>Luyện <strong>30–40 câu/ngày</strong>, chia sáng/tối</span></li>
         </ul>
-        <div class="method-box">
-          <div class="mtitle">Workflow mỗi câu RS</div>
-          Nghe → nhẩm lại ngay trong đầu → nói trong 3 giây → <code>không replay</code> → sang câu tiếp
-        </div>
+        <div class="method-box"><div class="mtitle">Workflow mỗi câu RS</div>Nghe → nhẩm lại → nói trong 3 giây → <code>không replay</code> → sang câu tiếp</div>
       </div>
-
       <div class="scard" style="border-color:var(--orange)">
-        <div class="scard-head">
-          <div class="scard-title">🟠 WFD — Write From Dictation</div>
-          <span class="scard-badge" style="background:var(--orange-s);color:var(--orange)">44% → 65%</span>
-        </div>
+        <div class="scard-head"><div class="scard-title">🟠 WFD — Write From Dictation</div><span class="scard-badge" style="background:var(--orange-s);color:var(--orange)">44% → 65%</span></div>
         <ul>
-          <li><span class="arr">→</span> <span>Nghe xong <strong>nhẩm lại nguyên câu</strong> trước khi gõ</span></li>
-          <li><span class="arr">→</span> <span>Chú ý 3 điểm hay sai: <strong>articles (a/the)</strong>, <strong>-s/-es</strong>, <strong>preposition</strong></span></li>
-          <li><span class="arr">→</span> <span>Gõ nhanh — không được sửa quá nhiều vì hết giờ</span></li>
-          <li><span class="arr">→</span> <span>Sau mỗi câu sai: ghi lại lỗi, luyện lại câu đó</span></li>
-          <li><span class="arr">→</span> <span><strong>20 câu/ngày</strong> — chia buổi sáng 12, tối 8</span></li>
-          <li><span class="arr">→</span> <span>Dùng app PTE Magic hoặc E2 PTE để có câu gần thi thật</span></li>
+          <li><span class="arr">→</span><span>Nghe xong <strong>nhẩm lại nguyên câu</strong> trước khi gõ</span></li>
+          <li><span class="arr">→</span><span>Chú ý: <strong>articles (a/the)</strong>, <strong>-s/-es</strong>, <strong>preposition</strong></span></li>
+          <li><span class="arr">→</span><span>Gõ nhanh — không sửa quá nhiều vì hết giờ</span></li>
+          <li><span class="arr">→</span><span>Sau mỗi câu sai: ghi lỗi, luyện lại câu đó</span></li>
+          <li><span class="arr">→</span><span><strong>30 câu/ngày</strong> — Mon → Fri không nghỉ</span></li>
         </ul>
-        <div class="method-box">
-          <div class="mtitle">Checklist sau mỗi câu WFD</div>
-          <code>a/an/the</code> → <code>plural -s</code> → <code>past tense -ed</code> → <code>prepositions</code>
-        </div>
+        <div class="method-box"><div class="mtitle">Checklist sau mỗi câu WFD</div><code>a/an/the</code> → <code>plural -s</code> → <code>past tense -ed</code> → <code>prepositions</code></div>
       </div>
-
       <div class="scard" style="border-color:var(--purple)">
-        <div class="scard-head">
-          <div class="scard-title">🟣 SST — Summarize Spoken Text</div>
-          <span class="scard-badge" style="background:#a78bfa20;color:var(--purple)">0% → 45%</span>
-        </div>
+        <div class="scard-head"><div class="scard-title">🟣 SST — Summarize Spoken Text</div><span class="scard-badge" style="background:#a78bfa20;color:var(--purple)">0% → 45%</span></div>
         <ul>
-          <li><span class="arr">→</span> <span><strong>Không bỏ trắng</strong> — bất kỳ gì cũng hơn 0 điểm</span></li>
-          <li><span class="arr">→</span> <span>Trong khi nghe: ghi note <strong>5–6 keyword</strong> (noun, verb chính)</span></li>
-          <li><span class="arr">→</span> <span>Dùng template cứng — học thuộc 1 lần dùng mãi</span></li>
-          <li><span class="arr">→</span> <span>Viết <strong>50–70 từ</strong> — không cần nhiều hơn</span></li>
-          <li><span class="arr">→</span> <span>Luyện <strong>1–2 bài SST/ngày</strong> — mỗi bài 10 phút</span></li>
+          <li><span class="arr">→</span><span><strong>Không bỏ trắng</strong> — bất kỳ gì cũng hơn 0 điểm</span></li>
+          <li><span class="arr">→</span><span>Khi nghe: ghi note <strong>5–6 keyword</strong> chính</span></li>
+          <li><span class="arr">→</span><span>Dùng template cứng — học thuộc 1 lần dùng mãi</span></li>
+          <li><span class="arr">→</span><span>Viết <strong>50–70 từ</strong> — không cần nhiều hơn</span></li>
+          <li><span class="arr">→</span><span><strong>3 bài/ngày</strong> Mon và Wed</span></li>
         </ul>
-        <div class="method-box">
-          <div class="mtitle">Template SST — học thuộc ngay</div>
-          <em style="color:var(--blue);font-size:11px;">
-            "The lecture discussed [TOPIC]. The speaker explained that [POINT 1].
-            Furthermore, [POINT 2] was highlighted as an important factor.
-            In conclusion, [MAIN IDEA] appears to be significant."
-          </em>
-        </div>
+        <div class="method-box"><div class="mtitle">Template SST</div><em style="color:var(--blue);font-size:11px;">"The lecture discussed [TOPIC]. The speaker explained that [POINT 1]. Furthermore, [POINT 2] was highlighted. In conclusion, [MAIN IDEA] appears significant."</em></div>
       </div>
-
       <div class="scard" style="border-color:var(--yellow)">
-        <div class="scard-head">
-          <div class="scard-title">🟡 FIB-rw — Reading Drag & Drop</div>
-          <span class="scard-badge" style="background:var(--yellow-s);color:var(--yellow)">37% → 55%</span>
-        </div>
+        <div class="scard-head"><div class="scard-title">🟡 FIB-rw — Reading Drag & Drop</div><span class="scard-badge" style="background:var(--yellow-s);color:var(--yellow)">37% → 55%</span></div>
         <ul>
-          <li><span class="arr">→</span> <span><strong>Đọc cả đoạn văn trước</strong> — không nhìn từ cần điền ngay</span></li>
-          <li><span class="arr">→</span> <span>Nhận dạng pattern: danh từ sau adjective, động từ sau to/modal</span></li>
-          <li><span class="arr">→</span> <span>Loại trừ: đặt 1 từ vào → đọc thử → nếu nghe tự nhiên → chọn</span></li>
-          <li><span class="arr">→</span> <span><strong>10 bài/ngày</strong> — focus vào review lỗi sai</span></li>
-          <li><span class="arr">→</span> <span>Bỏ hoàn toàn FIB-r (dropdown) — vocabulary too hard cho 5 ngày</span></li>
+          <li><span class="arr">→</span><span><strong>Đọc cả đoạn văn trước</strong> — không nhìn từ cần điền ngay</span></li>
+          <li><span class="arr">→</span><span>Nhận dạng pattern: noun sau adjective, verb sau to/modal</span></li>
+          <li><span class="arr">→</span><span>Loại trừ: đặt từ vào → đọc thử → nếu tự nhiên → chọn</span></li>
+          <li><span class="arr">→</span><span><strong>10 bài/ngày</strong> Mon, Wed, Fri</span></li>
+          <li><span class="arr">→</span><span>Bỏ FIB-r (dropdown) — vocabulary quá sâu cho 1 tháng</span></li>
         </ul>
       </div>
-
       <div class="scard" style="border-color:var(--blue)">
-        <div class="scard-head">
-          <div class="scard-title">🔵 RA — Read Aloud (phòng thủ)</div>
-          <span class="scard-badge" style="background:var(--blue-s);color:var(--blue)">Giữ sàn Fluency</span>
-        </div>
+        <div class="scard-head"><div class="scard-title">🔵 RA — Read Aloud (phòng thủ)</div><span class="scard-badge" style="background:var(--blue-s);color:var(--blue)">Giữ sàn Fluency</span></div>
         <ul>
-          <li><span class="arr">→</span> <span><strong>Pronunciation bạn ổn (14.45/18.7 trong mock)</strong> — vấn đề là Fluency chỉ 18.7</span></li>
-          <li><span class="arr">→</span> <span>Đọc <strong>không dừng giữa chừng</strong> — dù sai từ vẫn đọc tiếp</span></li>
-          <li><span class="arr">→</span> <span>Pace đều — không đọc nhanh đột ngột hay chậm hẳn</span></li>
-          <li><span class="arr">→</span> <span>Luyện <strong>5–6 bài/ngày</strong> — không cần nhiều hơn</span></li>
-          <li><span class="arr">→</span> <span>Metric mới: đếm số bài đọc không dừng ≥ 85% passage</span></li>
+          <li><span class="arr">→</span><span>Pronunciation ổn — vấn đề là Fluency chỉ 18.7</span></li>
+          <li><span class="arr">→</span><span><strong>Không dừng giữa chừng</strong> — dù sai từ vẫn đọc tiếp</span></li>
+          <li><span class="arr">→</span><span>Pace đều — không đọc nhanh đột ngột hay chậm hẳn</span></li>
+          <li><span class="arr">→</span><span><strong>10 bài/ngày</strong> Mon, Wed, Fri</span></li>
         </ul>
       </div>
-
       <div class="scard" style="border-color:var(--dim)">
-        <div class="scard-head">
-          <div class="scard-title">💤 Tasks — SKIP hoàn toàn</div>
-          <span class="scard-badge" style="background:var(--border);color:var(--muted)">5 ngày không đủ</span>
-        </div>
+        <div class="scard-head"><div class="scard-title">💤 SKIP hoàn toàn</div><span class="scard-badge" style="background:var(--border);color:var(--muted)">5 ngày không đủ</span></div>
         <ul>
-          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>FIB-r dropdown 18%</strong> — cần vocabulary sâu, không học được nhanh</span></li>
-          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>MCQ Reading/Listening</strong> — điểm thấp, ROI kém</span></li>
-          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>Re-order Paragraph</strong> — cần luyện logic dài hạn</span></li>
-          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>Essay WE</strong> — chỉ dùng template có sẵn, không luyện thêm</span></li>
-          <li><span class="arr" style="color:var(--red)">✗</span> <span><strong>ASQ</strong> — unpredictable, skip</span></li>
+          <li><span class="arr" style="color:var(--red)">✗</span><span><strong>FIB-r dropdown 18%</strong> — cần vocabulary sâu</span></li>
+          <li><span class="arr" style="color:var(--red)">✗</span><span><strong>MCQ Reading/Listening</strong> — ROI kém</span></li>
+          <li><span class="arr" style="color:var(--red)">✗</span><span><strong>Re-order Paragraph</strong> — cần luyện dài hạn</span></li>
+          <li><span class="arr" style="color:var(--red)">✗</span><span><strong>Essay</strong> — chỉ dùng template có sẵn</span></li>
         </ul>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ═══════ TAB: SCHEDULE ═══════ -->
+<!-- TAB: SCHEDULE (weekly table từ ảnh) -->
 <div id="tab-schedule" style="display:none">
   <div class="section">
-    <h2>📅 Lịch 5 ngày chi tiết <span class="tag tag-blue">tối ưu theo giờ học thực tế</span></h2>
-    <div class="days-wrap" id="daysWrap"></div>
+    <h2>📅 Lịch học tuần <span class="tag tag-blue">lặp lại mỗi tuần · Chủ nhật = Mock Test</span></h2>
+    <div class="week-wrap">
+      <table class="week-table">
+        <thead>
+          <tr>
+            <th class="task-h">Task</th>
+            <th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th><th>SUN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- SPEAKING -->
+          <tr><td class="sect-row" colspan="8">Speaking</td></tr>
+          <tr>
+            <td class="task-label">RA<span>Read Aloud</span></td>
+            <td class="num">10</td><td class="empty"></td><td class="num">10</td><td class="empty"></td><td class="num">10</td><td class="empty"></td>
+            <td class="mock-cell" rowspan="21">MOCK</td>
+          </tr>
+          <tr>
+            <td class="task-label">RS<span>Repeat Sentence</span></td>
+            <td class="num">30</td><td class="empty"></td><td class="num">30</td><td class="empty"></td><td class="num">30</td><td class="empty"></td>
+          </tr>
+          <tr>
+            <td class="task-label">DI<span>Describe Image</span></td>
+            <td class="num">15</td><td class="empty"></td><td class="num">15</td><td class="empty"></td><td class="num">15</td><td class="empty"></td>
+          </tr>
+          <tr>
+            <td class="task-label">RL<span>Retell Lecture</span></td>
+            <td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="task-label">ASQ<span>Answer Short Question</span></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="num">20</td>
+          </tr>
+          <tr>
+            <td class="task-label">SGD<span>Summarize Group Disc.</span></td>
+            <td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="num">5</td>
+          </tr>
+          <tr>
+            <td class="task-label">RTAS<span>Respond to a Situation</span></td>
+            <td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="num">5</td>
+          </tr>
+          <!-- WRITING -->
+          <tr><td class="sect-row" colspan="8">Writing</td></tr>
+          <tr>
+            <td class="task-label">SWT<span>Summarize Written Text</span></td>
+            <td class="empty"></td><td class="num">3</td><td class="empty"></td><td class="num">3</td><td class="empty"></td><td class="num">3</td>
+          </tr>
+          <tr>
+            <td class="task-label">ESSAY<span>Write Essay</span></td>
+            <td class="empty"></td><td class="num">2</td><td class="empty"></td><td class="num">2</td><td class="empty"></td><td class="num">2</td>
+          </tr>
+          <!-- READING -->
+          <tr><td class="sect-row" colspan="8">Reading</td></tr>
+          <tr>
+            <td class="task-label">Dropdown<span>FIB-r (Reading)</span></td>
+            <td class="num">10</td><td class="empty"></td><td class="num">10</td><td class="empty"></td><td class="num">10</td><td class="empty"></td>
+          </tr>
+          <tr>
+            <td class="task-label">Drag&amp;Drop<span>FIB-rw (Reading)</span></td>
+            <td class="num">10</td><td class="empty"></td><td class="num">10</td><td class="empty"></td><td class="num">10</td><td class="empty"></td>
+          </tr>
+          <tr>
+            <td class="task-label">RO<span>Re-order Paragraphs</span></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="num">10</td>
+          </tr>
+          <tr>
+            <td class="task-label">MCQs<span>MC Reading</span></td>
+            <td class="note-cell" colspan="6" style="text-align:center;">Luyện 4 tuần 1 lần</td>
+          </tr>
+          <!-- LISTENING -->
+          <tr><td class="sect-row" colspan="8">Listening</td></tr>
+          <tr>
+            <td class="task-label">SST<span>Summarize Spoken Text</span></td>
+            <td class="num">3</td><td class="empty"></td><td class="num">3</td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <td class="task-label">FIBL<span>FIB Listening</span></td>
+            <td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <td class="task-label">HIW<span>Highlight Incorrect Words</span></td>
+            <td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="num">5</td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr>
+            <td class="task-label">WFD<span>Write From Dictation</span></td>
+            <td class="num">30</td><td class="num">30</td><td class="num">30</td><td class="num">30</td><td class="num">30</td><td class="empty"></td>
+          </tr>
+          <tr>
+            <td class="task-label">MCQs<span>MC Listening</span></td>
+            <td class="note-cell" colspan="6" style="text-align:center;">Luyện 4 tuần 1 lần</td>
+          </tr>
+          <tr>
+            <td class="task-label">HCS / SMW<span>Highlight Correct S. · Select MW</span></td>
+            <td class="note-cell" colspan="6" style="text-align:center;">Luyện 4 tuần 1 lần</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:16px;flex-wrap:wrap;font-size:11px;">
+      <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:14px;background:#eab308;border-radius:2px;"></span><span style="color:var(--muted)">Số câu/bài luyện trong ngày</span></span>
+      <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:14px;background:var(--bg);border:1px solid var(--border);border-radius:2px;"></span><span style="color:var(--muted)">Không luyện task đó</span></span>
+      <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:14px;background:#7c3aed22;border:1px solid #7c3aed40;border-radius:2px;"></span><span style="color:var(--muted)">Chủ nhật: Mock Test toàn bộ</span></span>
+    </div>
   </div>
 </div>
 
-<!-- ═══════ TAB: TRACKER ═══════ -->
+<!-- TAB: TRACKER -->
 <div id="tab-tracker" style="display:none">
-
   <div class="overall-box">
     <div class="overall-top">
       <div>
-        <div style="font-size:10px;color:var(--muted);margin-bottom:2px">PREDICTED SCORE (từ data nhập)</div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:2px">PREDICTED SCORE</div>
         <div class="overall-num c-yellow" id="predScore">—</div>
       </div>
       <div class="overall-target">Mục tiêu: <span>50</span><br>
         <span style="font-size:11px;color:var(--muted)">Gap: <span id="predGap" style="font-family:monospace">—</span></span>
       </div>
     </div>
-    <div class="prog-bg">
-      <div class="prog-fill" id="progFill" style="width:0%;background:var(--red)"></div>
-    </div>
+    <div class="prog-bg"><div class="prog-fill" id="progFill" style="width:0%;background:var(--red)"></div></div>
     <div class="prog-labels"><span>0</span><span>Target 50</span><span>90</span></div>
     <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px;">
-      <div class="skill-row"><span class="skill-name">Speaking</span>
-        <div class="skill-bar-bg"><div class="skill-bar-f" id="sb-speaking" style="width:0%;background:#38bdf8"></div></div>
-        <span class="skill-val" id="sv-speaking">—</span></div>
-      <div class="skill-row"><span class="skill-name">Writing</span>
-        <div class="skill-bar-bg"><div class="skill-bar-f" id="sb-writing" style="width:0%;background:#a78bfa"></div></div>
-        <span class="skill-val" id="sv-writing">—</span></div>
-      <div class="skill-row"><span class="skill-name">Reading</span>
-        <div class="skill-bar-bg"><div class="skill-bar-f" id="sb-reading" style="width:0%;background:#22c55e"></div></div>
-        <span class="skill-val" id="sv-reading">—</span></div>
-      <div class="skill-row"><span class="skill-name">Listening</span>
-        <div class="skill-bar-bg"><div class="skill-bar-f" id="sb-listening" style="width:0%;background:#fb923c"></div></div>
-        <span class="skill-val" id="sv-listening">—</span></div>
+      <div class="skill-row"><span class="skill-name">Speaking</span><div class="skill-bar-bg"><div class="skill-bar-f" id="sb-speaking" style="width:0%;background:#38bdf8"></div></div><span class="skill-val" id="sv-speaking">—</span></div>
+      <div class="skill-row"><span class="skill-name">Writing</span><div class="skill-bar-bg"><div class="skill-bar-f" id="sb-writing" style="width:0%;background:#a78bfa"></div></div><span class="skill-val" id="sv-writing">—</span></div>
+      <div class="skill-row"><span class="skill-name">Reading</span><div class="skill-bar-bg"><div class="skill-bar-f" id="sb-reading" style="width:0%;background:#22c55e"></div></div><span class="skill-val" id="sv-reading">—</span></div>
+      <div class="skill-row"><span class="skill-name">Listening</span><div class="skill-bar-bg"><div class="skill-bar-f" id="sb-listening" style="width:0%;background:#fb923c"></div></div><span class="skill-val" id="sv-listening">—</span></div>
     </div>
   </div>
-
   <div class="section">
     <h2>✏️ Nhập điểm luyện tập <span class="tag tag-blue">format: số/số ví dụ 18/24</span></h2>
     <div class="tracker-grid" id="trackerGrid"></div>
   </div>
-
 </div>
 
-<!-- ═══════ TAB: RULES ═══════ -->
+<!-- TAB: RULES -->
 <div id="tab-rules" style="display:none">
   <div class="section">
     <h2>⚡ 6 quy tắc vàng — không phá vỡ</h2>
     <div class="rules-grid">
-      <div class="rule-card">
-        <div class="rule-n">01</div>
-        <div class="rule-t">RS mỗi ngày — sáng trước tiên</div>
-        <div class="rule-b">Làm RS ngay sau khi thức dậy khi não còn tươi. Không để chiều tối mới làm RS vì não mệt = nhớ kém = điểm thấp.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-n">02</div>
-        <div class="rule-t">WFD — checklist sau mỗi câu</div>
-        <div class="rule-b">Mỗi câu WFD sai, ghi lỗi ra giấy: articles / plural-s / preposition. Luyện lại câu đó 3 lần. Không học câu mới liên tục mà không review.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-n">03</div>
-        <div class="rule-t">SST — không được bỏ trắng</div>
-        <div class="rule-b">Dù không nghe được gì — vẫn viết template. 1 câu summary dở còn hơn không có gì. 0 điểm là thất bại hoàn toàn, 30% là chấp nhận được.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-n">04</div>
-        <div class="rule-t">Không học kỹ năng mới</div>
-        <div class="rule-b">5 ngày không đủ để học FIB-r, vocabulary mới, hay strategy mới cho MCQ. Tập trung 100% vào RS + WFD + SST. Ba task này đủ đẩy +9 điểm.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-n">05</div>
-        <div class="rule-t">Ngủ đủ 7h mỗi đêm</div>
-        <div class="rule-b">RS và WFD cần short-term memory hoạt động tốt. Thiếu ngủ 1 đêm = RS rớt 5–10% ngày hôm sau. Không thức sau 23h.</div>
-      </div>
-      <div class="rule-card">
-        <div class="rule-n">06</div>
-        <div class="rule-t">Ngày thi: làm đúng thứ tự</div>
-        <div class="rule-b">Không skip câu, không dừng lâu ở 1 task. Đặc biệt SST: dù không hiểu vẫn viết template. WFD: gõ nhanh và review grammar nhỏ.</div>
-      </div>
+      <div class="rule-card"><div class="rule-n">01</div><div class="rule-t">RS mỗi ngày — sáng trước tiên</div><div class="rule-b">Làm RS ngay sau khi thức dậy. Não mệt buổi tối = nhớ kém = điểm thấp.</div></div>
+      <div class="rule-card"><div class="rule-n">02</div><div class="rule-t">WFD — checklist sau mỗi câu</div><div class="rule-b">Mỗi câu WFD sai, ghi lỗi ra giấy: articles / plural-s / preposition. Luyện lại câu đó 3 lần.</div></div>
+      <div class="rule-card"><div class="rule-n">03</div><div class="rule-t">SST — không được bỏ trắng</div><div class="rule-b">Dù không nghe được gì — vẫn viết template. 30% còn hơn 0%.</div></div>
+      <div class="rule-card"><div class="rule-n">04</div><div class="rule-t">Không học kỹ năng mới</div><div class="rule-b">Tập trung 100% vào RS + WFD + SST. Ba task này đủ đẩy +9 điểm.</div></div>
+      <div class="rule-card"><div class="rule-n">05</div><div class="rule-t">Ngủ đủ 7h mỗi đêm</div><div class="rule-b">Thiếu ngủ 1 đêm = RS rớt 5–10% ngày hôm sau. Không thức sau 23h.</div></div>
+      <div class="rule-card"><div class="rule-n">06</div><div class="rule-t">Ngày thi: làm đúng thứ tự</div><div class="rule-b">Không skip câu. SST: dù không hiểu vẫn viết template. WFD: gõ nhanh và review grammar nhỏ.</div></div>
     </div>
   </div>
 </div>
 
-</div>
+</div><!-- /wrap -->
 
 <script>
-// ═══════ DATA ═══════
-const TODAY_STR = new Date().toISOString().slice(0,10);
-const EXAM_DATE = new Date("2026-07-28"); // 5 days from 23/07
-
-function daysLeft(){
-  return Math.max(0,Math.ceil((EXAM_DATE-new Date())/86400000));
-}
+const EXAM_DATE = new Date("2026-07-28");
+function daysLeft(){return Math.max(0,Math.ceil((EXAM_DATE-new Date())/86400000));}
 document.getElementById("daysLeft").textContent = daysLeft();
 
-// ═══════ TASKS for tracker ═══════
 const TRACKER_TASKS = [
-  { id:"RS",  name:"Repeat Sentence",      vi:"Nhắc lại câu",       skill:"speaking",  w:7,  baseline:20,  target:55,  color:"#38bdf8" },
-  { id:"WFD", name:"Write From Dictation", vi:"Nghe và viết lại",   skill:"both",      w:5,  baseline:44,  target:65,  color:"#a78bfa" },
-  { id:"SST", name:"Summarize Spoken Text",vi:"Tóm tắt nghe",       skill:"listening", w:4,  baseline:0,   target:45,  color:"#fb923c" },
-  { id:"FIBrw",name:"FIB Drag & Drop",     vi:"Điền từ Reading",    skill:"reading",   w:6,  baseline:37,  target:55,  color:"#22c55e" },
-  { id:"RA",  name:"Read Aloud",           vi:"Đọc thành tiếng",    skill:"speaking",  w:4,  baseline:50,  target:55,  color:"#38bdf8" },
-  { id:"DI",  name:"Describe Image",       vi:"Mô tả hình",         skill:"speaking",  w:15, baseline:68,  target:68,  color:"#38bdf8" },
-  { id:"RL",  name:"Retell Lecture",       vi:"Kể lại bài giảng",   skill:"speaking",  w:6,  baseline:47,  target:50,  color:"#38bdf8" },
-  { id:"SWT", name:"Summarize Written Text",vi:"Tóm tắt viết",      skill:"writing",   w:7,  baseline:56,  target:60,  color:"#a78bfa" },
-  { id:"FIBl",name:"FIB Listening",        vi:"Điền từ Listening",  skill:"listening", w:3,  baseline:25,  target:50,  color:"#fb923c" },
+  {id:"RS",  name:"Repeat Sentence",       skill:"speaking",  w:7, baseline:20, target:55, color:"#38bdf8"},
+  {id:"WFD", name:"Write From Dictation",  skill:"both",      w:5, baseline:44, target:65, color:"#a78bfa"},
+  {id:"SST", name:"Summarize Spoken Text", skill:"listening", w:4, baseline:0,  target:45, color:"#fb923c"},
+  {id:"FIBrw",name:"FIB Drag & Drop",     skill:"reading",   w:6, baseline:37, target:55, color:"#22c55e"},
+  {id:"RA",  name:"Read Aloud",            skill:"speaking",  w:4, baseline:50, target:55, color:"#38bdf8"},
+  {id:"DI",  name:"Describe Image",        skill:"speaking",  w:15,baseline:68, target:68, color:"#38bdf8"},
+  {id:"RL",  name:"Retell Lecture",        skill:"speaking",  w:6, baseline:47, target:50, color:"#38bdf8"},
+  {id:"SWT", name:"Summarize Written Text",skill:"writing",   w:7, baseline:56, target:60, color:"#a78bfa"},
+  {id:"FIBl",name:"FIB Listening",         skill:"listening", w:3, baseline:25, target:50, color:"#fb923c"},
 ];
 
-// skill contrib weights (simplified)
 const SKILL_CONTRIB = {
-  RS:   {speaking:16,listening:17},
-  WFD:  {writing:23,listening:13},
-  SST:  {writing:18,listening:10},
-  FIBrw:{reading:20},
-  RA:   {speaking:9},
-  DI:   {speaking:31},
-  RL:   {speaking:13,listening:13},
-  SWT:  {writing:28,reading:23},
-  FIBl: {listening:8},
+  RS:{speaking:16,listening:17}, WFD:{writing:23,listening:13},
+  SST:{writing:18,listening:10}, FIBrw:{reading:20}, RA:{speaking:9},
+  DI:{speaking:31}, RL:{speaking:13,listening:13}, SWT:{writing:28,reading:23}, FIBl:{listening:8},
 };
-const SKILL_MAX = {speaking:100,writing:100,reading:100,listening:100};
 
-// storage
 function load(){try{return JSON.parse(localStorage.getItem("pte5d")||"{}");}catch{return{};}}
 function save(){localStorage.setItem("pte5d",JSON.stringify(DATA));}
-const DATA = load();
-if(!DATA.entries) DATA.entries={};
+const DATA=load();
+if(!DATA.entries)DATA.entries={};
 
-function parseScore(v){
-  const m=(v||"").trim().match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/);
-  return m?{raw:+m[1],max:+m[2]}:null;
-}
-function calcPct(arr){
-  let r=0,mx=0,cnt=0;
-  (arr||[]).forEach(v=>{const p=parseScore(v);if(p&&p.max>0){r+=p.raw;mx+=p.max;cnt++;}});
-  return{raw:r,max:mx,cnt,pct:mx>0?(r/mx)*100:null};
-}
+function parseScore(v){const m=(v||"").trim().match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/);return m?{raw:+m[1],max:+m[2]}:null;}
+function calcPct(arr){let r=0,mx=0,cnt=0;(arr||[]).forEach(v=>{const p=parseScore(v);if(p&&p.max>0){r+=p.raw;mx+=p.max;cnt++;}});return{raw:r,max:mx,cnt,pct:mx>0?(r/mx)*100:null};}
 function scoreClass(p){return p==null?"gs-na":p>=70?"gs-done":p>=45?"gs-almost":"gs-need";}
-function getStatusLabel(p,target){
-  if(p==null)return"No data";
-  if(p>=target+10)return"✅ Mastered";
-  if(p>=target)return"✅ Achieved";
-  if(p>=target-10)return"🔄 Almost";
-  return"⚠️ Need Work";
-}
+function getStatusLabel(p,target){if(p==null)return"No data";if(p>=target+10)return"✅ Mastered";if(p>=target)return"✅ Achieved";if(p>=target-10)return"🔄 Almost";return"⚠️ Need Work";}
 
 function calcPrediction(){
   const skillAcc={speaking:[],writing:[],reading:[],listening:[]};
@@ -650,14 +484,10 @@ function calcPrediction(){
     const c=calcPct(arr);
     const pct=c.pct!=null?c.pct:t.baseline;
     const contrib=SKILL_CONTRIB[t.id]||{};
-    Object.entries(contrib).forEach(([sk,cw])=>{
-      if(skillAcc[sk]) skillAcc[sk].push({pct,cw});
-    });
-    totalW+=t.w; wSum+=(pct/100)*t.w;
+    Object.entries(contrib).forEach(([sk,cw])=>{if(skillAcc[sk])skillAcc[sk].push({pct,cw});});
+    totalW+=t.w;wSum+=(pct/100)*t.w;
   });
-  const weighted=(wSum/totalW)*100;
-  const pred=Math.min(90,weighted*0.9);
-  // skill scores
+  const pred=Math.min(90,(wSum/totalW)*100*0.9);
   const skills={};
   Object.entries(skillAcc).forEach(([sk,arr])=>{
     if(!arr.length){skills[sk]=null;return;}
@@ -668,131 +498,64 @@ function calcPrediction(){
   return{pred,skills};
 }
 
-// ═══════ BUILD TRACKER ═══════
 function buildTracker(){
   const grid=document.getElementById("trackerGrid");
   grid.innerHTML="";
   TRACKER_TASKS.forEach(t=>{
     const arr=DATA.entries[t.id]||[];
-    if(!arr.length) arr.push("");
+    if(!arr.length)arr.push("");
     DATA.entries[t.id]=arr;
-
-    const card=document.createElement("div");
-    card.className="tcard";
-    card.dataset.id=t.id;
-
-    const c=calcPct(arr);
-    const pct=c.pct;
+    const c=calcPct(arr);const pct=c.pct;
     const barW=pct!=null?Math.min(100,pct):0;
-    const baseW=Math.min(100,t.baseline);
-    const targetW=Math.min(100,t.target);
-    const statusLabel=getStatusLabel(pct,t.target);
-    const statusCls=scoreClass(pct);
-
+    const card=document.createElement("div");card.className="tcard";card.dataset.id=t.id;
     card.innerHTML=`
-      <div class="tcard-head">
-        <div class="tcard-name">${t.name}</div>
-        <div class="tcard-weight">${t.w}% overall</div>
-      </div>
-      <div class="tcard-baseline">
-        Mock: <span style="color:var(--muted)">${t.baseline}%</span>
-        → Target: <span style="color:var(--yellow)">${t.target}%</span>
-        → Now: <span style="color:var(--blue);font-weight:700">${pct!=null?pct.toFixed(1)+"%":"—"}</span>
-      </div>
-      <div class="bar-wrap" style="height:8px">
-        <div class="bar-base" style="width:${baseW}%;background:${t.color}"></div>
-        <div class="bar-now" style="width:${barW}%;background:${t.color}"></div>
-        <div class="bar-target-line" style="left:${targetW}%"></div>
-      </div>
-      <div style="font-size:9px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:6px">
-        <span>0%</span><span style="color:var(--yellow)">▲${t.target}%</span><span>100%</span>
-      </div>
+      <div class="tcard-head"><div class="tcard-name">${t.name}</div><div class="tcard-weight">${t.w}% overall</div></div>
+      <div class="tcard-baseline">Mock: <span style="color:var(--muted)">${t.baseline}%</span> → Target: <span style="color:var(--yellow)">${t.target}%</span> → Now: <span style="color:var(--blue);font-weight:700">${pct!=null?pct.toFixed(1)+"%":"—"}</span></div>
+      <div class="bar-wrap" style="height:8px"><div class="bar-base" style="width:${Math.min(100,t.baseline)}%;background:${t.color}"></div><div class="bar-now" style="width:${barW}%;background:${t.color}"></div><div class="bar-target-line" style="left:${Math.min(100,t.target)}%"></div></div>
+      <div style="font-size:9px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:6px"><span>0%</span><span style="color:var(--yellow)">▲${t.target}%</span><span>100%</span></div>
       <div class="entries-list" id="list_${t.id}"></div>
       <button class="add-btn" data-id="${t.id}">+ Thêm bài (Enter)</button>
-      <div class="tcard-total">
-        <span style="color:var(--muted);font-size:11px">${c.cnt} bài · ${c.raw.toFixed(1)}/${c.max.toFixed(1)}</span>
-        <span class="goal-status ${statusCls}">${statusLabel}</span>
-      </div>`;
-
+      <div class="tcard-total"><span style="color:var(--muted);font-size:11px">${c.cnt} bài · ${c.raw.toFixed(1)}/${c.max.toFixed(1)}</span><span class="goal-status ${scoreClass(pct)}">${getStatusLabel(pct,t.target)}</span></div>`;
     grid.appendChild(card);
     renderEntries(t.id);
-
     card.querySelector(".add-btn").addEventListener("click",()=>addEntry(t.id));
   });
 }
 
 function renderEntries(id){
-  const list=document.getElementById("list_"+id);
-  if(!list) return;
+  const list=document.getElementById("list_"+id);if(!list)return;
   const arr=DATA.entries[id]||[];
   const t=TRACKER_TASKS.find(x=>x.id===id);
   list.innerHTML="";
   arr.forEach((val,idx)=>{
-    const row=document.createElement("div");
-    row.className="input-grid";
-    const sc=parseScore(val);
-    const pct=sc&&sc.max>0?(sc.raw/sc.max)*100:null;
+    const row=document.createElement("div");row.className="input-grid";
+    const sc=parseScore(val);const pct=sc&&sc.max>0?(sc.raw/sc.max)*100:null;
     const pctColor=pct==null?"var(--muted)":pct>=t.target?"var(--green)":pct>=t.target-10?"var(--yellow)":"var(--red)";
-    row.innerHTML=`
-      <input class="entry-input" type="text" value="${val}" placeholder="vd: 9.8/13" data-id="${id}" data-idx="${idx}">
-      <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px">
-        <span class="entry-pct" style="color:${pctColor}">${pct!=null?pct.toFixed(1)+"%":"—"}</span>
-        <button class="remove-btn" data-id="${id}" data-idx="${idx}">✕</button>
-      </div>`;
+    row.innerHTML=`<input class="entry-input" type="text" value="${val}" placeholder="vd: 9.8/13" data-id="${id}" data-idx="${idx}"><div style="display:flex;align-items:center;justify-content:flex-end;gap:6px"><span class="entry-pct" style="color:${pctColor}">${pct!=null?pct.toFixed(1)+"%":"—"}</span><button class="remove-btn" data-id="${id}" data-idx="${idx}">✕</button></div>`;
     list.appendChild(row);
-
-    row.querySelector(".entry-input").addEventListener("input",function(){
-      DATA.entries[id][idx]=this.value.trim();
-      save(); refreshCard(id); updateOverall();
-    });
-    row.querySelector(".entry-input").addEventListener("keydown",function(e){
-      if(e.key==="Enter"){e.preventDefault();addEntry(id);}
-    });
-    row.querySelector(".remove-btn").addEventListener("click",function(){
-      DATA.entries[id].splice(idx,1);
-      if(!DATA.entries[id].length) DATA.entries[id]=[""];
-      save(); refreshCard(id); updateOverall();
-    });
+    row.querySelector(".entry-input").addEventListener("input",function(){DATA.entries[id][idx]=this.value.trim();save();refreshCard(id);updateOverall();});
+    row.querySelector(".entry-input").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();addEntry(id);}});
+    row.querySelector(".remove-btn").addEventListener("click",function(){DATA.entries[id].splice(idx,1);if(!DATA.entries[id].length)DATA.entries[id]=[""];save();refreshCard(id);updateOverall();});
   });
 }
 
 function addEntry(id){
-  if(!DATA.entries[id]) DATA.entries[id]=[];
-  DATA.entries[id].push("");
-  save(); refreshCard(id);
-  setTimeout(()=>{
-    const list=document.getElementById("list_"+id);
-    if(list){const inp=list.querySelectorAll(".entry-input");if(inp.length)inp[inp.length-1].focus();}
-  },50);
+  if(!DATA.entries[id])DATA.entries[id]=[];
+  DATA.entries[id].push("");save();refreshCard(id);
+  setTimeout(()=>{const list=document.getElementById("list_"+id);if(list){const inp=list.querySelectorAll(".entry-input");if(inp.length)inp[inp.length-1].focus();}},50);
 }
 
 function refreshCard(id){
   const t=TRACKER_TASKS.find(x=>x.id===id);
   const arr=DATA.entries[id]||[];
-  const c=calcPct(arr);
-  const pct=c.pct;
+  const c=calcPct(arr);const pct=c.pct;
   const barW=pct!=null?Math.min(100,pct):0;
-  const targetW=Math.min(100,t.target);
-  const baseW=Math.min(100,t.baseline);
-  const card=document.querySelector(`.tcard[data-id="${id}"]`);
-  if(!card) return;
-
-  // update bar
-  const barNow=card.querySelector(".bar-now");
-  if(barNow) barNow.style.width=barW+"%";
-  // update baseline text
+  const card=document.querySelector(`.tcard[data-id="${id}"]`);if(!card)return;
+  const barNow=card.querySelector(".bar-now");if(barNow)barNow.style.width=barW+"%";
   const baseline=card.querySelector(".tcard-baseline");
-  if(baseline) baseline.innerHTML=`
-    Mock: <span style="color:var(--muted)">${t.baseline}%</span>
-    → Target: <span style="color:var(--yellow)">${t.target}%</span>
-    → Now: <span style="color:var(--blue);font-weight:700">${pct!=null?pct.toFixed(1)+"%":"—"}</span>`;
-  // update total
+  if(baseline)baseline.innerHTML=`Mock: <span style="color:var(--muted)">${t.baseline}%</span> → Target: <span style="color:var(--yellow)">${t.target}%</span> → Now: <span style="color:var(--blue);font-weight:700">${pct!=null?pct.toFixed(1)+"%":"—"}</span>`;
   const tot=card.querySelector(".tcard-total");
-  const statusLabel=getStatusLabel(pct,t.target);
-  const statusCls=scoreClass(pct);
-  if(tot) tot.innerHTML=`
-    <span style="color:var(--muted);font-size:11px">${c.cnt} bài · ${c.raw.toFixed(1)}/${c.max.toFixed(1)}</span>
-    <span class="goal-status ${statusCls}">${statusLabel}</span>`;
+  if(tot)tot.innerHTML=`<span style="color:var(--muted);font-size:11px">${c.cnt} bài · ${c.raw.toFixed(1)}/${c.max.toFixed(1)}</span><span class="goal-status ${scoreClass(pct)}">${getStatusLabel(pct,t.target)}</span>`;
   renderEntries(id);
 }
 
@@ -801,170 +564,28 @@ function updateOverall(){
   const predEl=document.getElementById("predScore");
   const gapEl=document.getElementById("predGap");
   const fillEl=document.getElementById("progFill");
-  if(predEl) predEl.textContent=pred.toFixed(1);
-  if(gapEl){ const g=pred-50; gapEl.textContent=(g>=0?"+":"")+g.toFixed(1); gapEl.style.color=g>=0?"var(--green)":"var(--red)"; }
-  if(fillEl){
-    const pct=Math.min(100,(pred/90)*100);
-    fillEl.style.width=pct+"%";
-    fillEl.style.background=pred>=50?"var(--green)":pred>=40?"var(--yellow)":"var(--red)";
-  }
-  const predMainEl=document.querySelector(".banner-right .bstat:first-child .num");
-
-  const skillDefs=[
-    {key:"speaking",id:"speaking",color:"#38bdf8"},
-    {key:"writing",id:"writing",color:"#a78bfa"},
-    {key:"reading",id:"reading",color:"#22c55e"},
-    {key:"listening",id:"listening",color:"#fb923c"},
-  ];
-  skillDefs.forEach(s=>{
+  if(predEl)predEl.textContent=pred.toFixed(1);
+  if(gapEl){const g=pred-50;gapEl.textContent=(g>=0?"+":"")+g.toFixed(1);gapEl.style.color=g>=0?"var(--green)":"var(--red)";}
+  if(fillEl){fillEl.style.width=Math.min(100,(pred/90)*100)+"%";fillEl.style.background=pred>=50?"var(--green)":pred>=40?"var(--yellow)":"var(--red)";}
+  [{key:"speaking",id:"speaking",color:"#38bdf8"},{key:"writing",id:"writing",color:"#a78bfa"},{key:"reading",id:"reading",color:"#22c55e"},{key:"listening",id:"listening",color:"#fb923c"}].forEach(s=>{
     const sc=skills[s.key];
-    const barEl=document.getElementById("sb-"+s.id);
-    const valEl=document.getElementById("sv-"+s.id);
-    if(barEl) barEl.style.width=(sc!=null?Math.min(100,(sc/90)*100):0)+"%";
-    if(valEl){
-      valEl.textContent=sc!=null?sc.toFixed(1):"—";
-      valEl.style.color=sc!=null?(sc>=50?"var(--green)":sc>=40?"var(--yellow)":"var(--red)"):"var(--muted)";
-    }
+    const barEl=document.getElementById("sb-"+s.id);const valEl=document.getElementById("sv-"+s.id);
+    if(barEl)barEl.style.width=(sc!=null?Math.min(100,(sc/90)*100):0)+"%";
+    if(valEl){valEl.textContent=sc!=null?sc.toFixed(1):"—";valEl.style.color=sc!=null?(sc>=50?"var(--green)":sc>=40?"var(--yellow)":"var(--red)"):"var(--muted)";}
   });
 }
 
-// ═══════ 5-DAY SCHEDULE ═══════
-const SCHEDULE=[
-  {
-    date:"24/07",dow:"Thứ 5",hrs:10,
-    focus:"RS Intensive + WFD Core + SST Template",
-    isToday:true,
-    tasks:[
-      {id:"RS", name:"Repeat Sentence",  pill:"red",   reps:"×35 câu",  boost:true},
-      {id:"WFD",name:"Write From Dict.", pill:"red",   reps:"×20 câu",  boost:true},
-      {id:"SST",name:"Summ. Spoken",    pill:"purple", reps:"×2 bài"},
-      {id:"FIBrw",name:"FIB Drag&Drop", pill:"yellow", reps:"×10 bài"},
-      {id:"RA", name:"Read Aloud",       pill:"blue",  reps:"×6 fluency"},
-    ],
-    note:{t:"critical",s:"NGÀY 1 — Lập thói quen đúng ngay từ hôm nay. RS làm sáng trước khi ăn sáng. SST học template 30 phút đầu."}
-  },
-  {
-    date:"25/07",dow:"Thứ 6",hrs:8,
-    focus:"RS tiếp tục + WFD + FIB-rw",
-    tasks:[
-      {id:"RS", name:"Repeat Sentence",  pill:"red",   reps:"×35 câu",  boost:true},
-      {id:"WFD",name:"Write From Dict.", pill:"red",   reps:"×20 câu",  boost:true},
-      {id:"SST",name:"Summ. Spoken",    pill:"purple", reps:"×2 bài"},
-      {id:"FIBrw",name:"FIB Drag&Drop", pill:"yellow", reps:"×12 bài"},
-      {id:"RA", name:"Read Aloud",       pill:"blue",  reps:"×5 fluency"},
-    ],
-    note:{t:"strat",s:"RS ngày 2: focus câu 11–14 từ. WFD: ghi lỗi ra giấy, luyện lại câu sai."}
-  },
-  {
-    date:"26/07",dow:"Thứ 7",hrs:10,
-    focus:"Full sprint — RS + WFD + SST + FIB",
-    tasks:[
-      {id:"RS", name:"Repeat Sentence",  pill:"red",   reps:"×40 câu",  boost:true},
-      {id:"WFD",name:"Write From Dict.", pill:"red",   reps:"×22 câu",  boost:true},
-      {id:"SST",name:"Summ. Spoken",    pill:"purple", reps:"×2 bài"},
-      {id:"FIBrw",name:"FIB Drag&Drop", pill:"yellow", reps:"×15 bài"},
-      {id:"RA", name:"Read Aloud",       pill:"blue",  reps:"×6 fluency"},
-      {id:"RL", name:"Retell Lecture",   pill:"gray",  reps:"×3 template"},
-    ],
-    note:{t:"strat",s:"Ngày T7 10h — cơ hội tốt nhất. Push RS lên 40 câu. Review toàn bộ lỗi WFD tuần."}
-  },
-  {
-    date:"27/07",dow:"CN",hrs:8,
-    focus:"Mini mock + review + consolidate",
-    tasks:[
-      {id:"RS", name:"Repeat Sentence",  pill:"red",   reps:"×30 câu"},
-      {id:"WFD",name:"Write From Dict.", pill:"red",   reps:"×18 câu"},
-      {id:"SST",name:"Summ. Spoken",    pill:"purple", reps:"×2 bài"},
-      {id:"FIBrw",name:"FIB Drag&Drop", pill:"yellow", reps:"×10 bài"},
-    ],
-    note:{t:"strat",s:"Làm 1 mini mock 30 phút buổi sáng để đo tiến độ thật. Review lỗi buổi chiều."}
-  },
-  {
-    date:"28/07",dow:"Thứ 2",hrs:4,
-    focus:"Light warm-up — không học nặng",
-    isExamEve:true,
-    tasks:[
-      {id:"RS", name:"Repeat Sentence",  pill:"green", reps:"×15 nhẹ"},
-      {id:"WFD",name:"Write From Dict.", pill:"green", reps:"×10 nhẹ"},
-      {id:"RA", name:"Read Aloud",       pill:"blue",  reps:"×5 fluency"},
-    ],
-    note:{t:"critical",s:"NGÀY THI — warm-up nhẹ sáng sớm. Không học mới. Ngủ đủ đêm hôm trước. Ăn uống đầy đủ."}
-  },
-];
-
-const pillMap={red:"dpill-red",purple:"dpill-blue",yellow:"dpill-yellow",blue:"dpill-blue",green:"dpill-green",gray:"dpill-gray"};
-const pillStyle={
-  red:"background:var(--red-s);color:var(--red);border:1px solid var(--red-b)",
-  purple:"background:#a78bfa18;color:#a78bfa;border:1px solid #a78bfa40",
-  yellow:"background:var(--yellow-s);color:var(--yellow);border:1px solid var(--yellow-b)",
-  blue:"background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-b)",
-  green:"background:var(--green-s);color:var(--green);border:1px solid var(--green-b)",
-  gray:"background:#33415520;color:var(--muted);border:1px solid #33415540",
-};
-
-function buildSchedule(){
-  const wrap=document.getElementById("daysWrap");
-  wrap.innerHTML="";
-  SCHEDULE.forEach((d,i)=>{
-    const cls=d.isToday?"today":d.isExamEve?"exam-eve":"";
-    const badge=d.isToday?'<span class="dbadge dbadge-blue">📍 HÔM NAY</span>':
-                 d.isExamEve?'<span class="dbadge dbadge-yellow">🎯 NGÀY THI</span>':
-                 `<span class="dbadge dbadge-gray">Ngày ${i+1}</span>`;
-    const hrsLight=d.hrs<=5?'<span class="dbadge dbadge-yellow" style="margin-top:3px">⏱ '+d.hrs+'h</span>':'';
-
-    const taskRows=d.tasks.map(t=>`
-      <div class="dtask-row">
-        <span class="dpill" style="${pillStyle[t.pill]}">${t.id}</span>
-        <span class="dtask-name">${t.name}</span>
-        <span class="dtask-reps ${t.boost?"hi":""}">${t.reps}</span>
-      </div>`).join("");
-
-    const noteHtml=d.note?`<div class="dnote ${d.note.t==="critical"?"crit":"strat"}">${d.note.s}</div>`:"";
-    const fillPct=Math.min(100,(d.hrs/10)*100);
-
-    wrap.innerHTML+=`
-      <div class="dcard ${cls}">
-        <div class="dhead">
-          <div class="dhead-left">
-            <div class="ddate">${d.date}</div>
-            <div class="ddow">${d.dow} · ${d.hrs}h</div>
-          </div>
-          <div class="dhead-right">${badge}${hrsLight}</div>
-        </div>
-        <div class="dbody">
-          <div class="dfocus">FOCUS HÔM NAY</div>
-          <div class="dfocus-text">${d.focus}</div>
-          <div class="dtasks">${taskRows}</div>
-          <div class="dhrs">
-            <span>${d.hrs}h</span>
-            <div class="dhrs-bar"><div class="dhrs-fill" style="width:${fillPct}%"></div></div>
-            <span>budget</span>
-          </div>
-          ${noteHtml}
-        </div>
-      </div>`;
-  });
-}
-
-// ═══════ TABS ═══════
 document.querySelectorAll(".tab").forEach(tab=>{
   tab.addEventListener("click",()=>{
     document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
     tab.classList.add("active");
-    ["analysis","strategy","schedule","tracker","rules"].forEach(id=>{
-      const el=document.getElementById("tab-"+id);
-      if(el) el.style.display="none";
-    });
+    ["analysis","strategy","schedule","tracker","rules"].forEach(id=>{const el=document.getElementById("tab-"+id);if(el)el.style.display="none";});
     const t=tab.dataset.t;
-    const el=document.getElementById("tab-"+t);
-    if(el) el.style.display="block";
-    if(t==="tracker"){ buildTracker(); updateOverall(); }
-    if(t==="schedule") buildSchedule();
+    const el=document.getElementById("tab-"+t);if(el)el.style.display="block";
+    if(t==="tracker"){buildTracker();updateOverall();}
   });
 });
 
-// ═══════ INIT ═══════
-buildSchedule();
 setInterval(save,30000);
 window.addEventListener("beforeunload",save);
 </script>
